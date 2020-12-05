@@ -16,7 +16,6 @@ spring:
     hibernate:
       ddl-auto: update
 
-
   springdoc:
     swagger-ui:
     path: /swagger-ui.html
