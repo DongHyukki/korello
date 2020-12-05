@@ -1,6 +1,6 @@
-package com.donghyukki.korello.board.repository
+package com.donghyukki.korello.domain.board.repository
 
-import com.donghyukki.korello.board.domain.Board
+import com.donghyukki.korello.domain.board.model.Board
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 

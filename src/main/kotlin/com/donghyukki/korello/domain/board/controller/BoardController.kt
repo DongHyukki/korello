@@ -1,7 +1,7 @@
-package com.donghyukki.korello.board.controller
+package com.donghyukki.korello.domain.board.controller
 
-import com.donghyukki.korello.board.dto.BoardDTO.Companion.Create
-import com.donghyukki.korello.board.service.BoardService
+import com.donghyukki.korello.domain.board.dto.BoardDTO.Companion.Create
+import com.donghyukki.korello.domain.board.service.BoardCrudService
 import com.donghyukki.korello.core.dto.response.KorelloResponse
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.http.HttpStatus
@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 class BoardController(
-    val boardService: BoardService
+    val boardCrudService: BoardCrudService
 ) {
 
     @Operation(summary = "BOARD 조회", description = "모든 BOARD를 조회 한다")
     @GetMapping("api/v1/boards")
     fun getBoards(): KorelloResponse {
-        return KorelloResponse(boardService.getAllBoards())
+        return KorelloResponse(boardCrudService.getAllBoards())
     }
 
     @Operation(summary = "BOARD 조회", description = "특정 BOARD를 조회 한다")
@@ -26,7 +26,7 @@ class BoardController(
     @Operation(summary = "BOARD 생성", description = "BOARD를 생성 한다.")
     @PostMapping("api/v1/board")
     fun createBoard(@RequestBody boardCreateDTO: Create): KorelloResponse {
-        boardService.createBoard(boardCreateDTO)
+        boardCrudService.createBoard(boardCreateDTO)
         return KorelloResponse(HttpStatus.CREATED)
     }
 
