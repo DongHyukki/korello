@@ -14,8 +14,10 @@ class H2ServerConfiguration {
     @ConfigurationProperties("spring.datasource.hikari")
     fun dataSource(): HikariDataSource = run {
         val server: Server = h2TcpServer()
-        if(!server.isRunning(true)) {
-            server.start()
+        if(server.isRunning(true)) {
+            server.stop().apply {
+                server.start()
+            }
         }
         return HikariDataSource()
     }

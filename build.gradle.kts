@@ -25,9 +25,19 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
-    runtimeOnly("mysql:mysql-connector-java")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+    //Open API
+    implementation("org.springdoc:springdoc-openapi-kotlin:1.5.0")
+    implementation("org.springdoc:springdoc-openapi-ui:1.5.0")
+
+    //Devtools
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
+
+    //MySQL
+    runtimeOnly("mysql:mysql-connector-java")
+
+    //AssertJ
     testImplementation("org.assertj:assertj-core:3.13.2")
 }
 
