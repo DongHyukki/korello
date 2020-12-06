@@ -11,5 +11,8 @@ class MemberDTO {
         ) {
             fun toEntity() = Member(name)
         }
+        data class Delete(
+            val id: String
+        )
     }
 }

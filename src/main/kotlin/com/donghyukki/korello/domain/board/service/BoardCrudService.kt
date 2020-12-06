@@ -1,6 +1,7 @@
 package com.donghyukki.korello.domain.board.service
 
 import com.donghyukki.korello.domain.board.dto.BoardDTO.Companion.Create
+import com.donghyukki.korello.domain.board.dto.BoardDTO.Companion.Delete
 import com.donghyukki.korello.domain.board.model.Board
 import com.donghyukki.korello.domain.board.repository.BoardRepository
 import org.springframework.stereotype.Service
@@ -24,4 +25,10 @@ class BoardCrudService(
     fun createBoard(boardCreateDTO: Create): Board {
         return boardRepository.save(boardCreateDTO.toEntity())
     }
+
+    @Transactional
+    fun deleteBoard(boardDeleteDTO: Delete) {
+        return boardRepository.deleteById(boardDeleteDTO.id.toLong())
+    }
+
 }

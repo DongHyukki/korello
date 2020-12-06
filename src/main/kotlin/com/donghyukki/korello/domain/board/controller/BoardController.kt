@@ -1,45 +1,32 @@
 package com.donghyukki.korello.domain.board.controller
 
-import com.donghyukki.korello.domain.board.dto.BoardDTO.Companion.Create
-import com.donghyukki.korello.domain.board.service.BoardCrudService
 import com.donghyukki.korello.core.dto.response.KorelloResponse
+import com.donghyukki.korello.domain.board.dto.BoardDTO.Companion.JoinMember
+import com.donghyukki.korello.domain.board.dto.BoardDTO.Companion.ExitMember
+import com.donghyukki.korello.domain.board.service.BoardService
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.http.HttpStatus
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class BoardController(
-    val boardCrudService: BoardCrudService
+    private val boardService: BoardService
 ) {
 
-    @Operation(summary = "BOARD 조회", description = "모든 BOARD를 조회 한다")
-    @GetMapping("api/v1/boards")
-    fun getBoards(): KorelloResponse {
-        return KorelloResponse(boardCrudService.getAllBoards())
+    @Operation(summary = "BOARD 멤버 참여", description = "특정 BOARD에 멤버를 참여 시킨다.")
+    @PostMapping("api/v1/member/{id}/member/join")
+    fun memberJoinToBoard(@PathVariable id: String, @RequestBody joinMemberDTO: JoinMember): KorelloResponse {
+        boardService.inviteMember(joinMemberDTO)
+        return KorelloResponse(HttpStatus.OK)
     }
 
-    @Operation(summary = "BOARD 조회", description = "특정 BOARD를 조회 한다")
-    @GetMapping("api/v1/board/{id}")
-    fun getBoard(@PathVariable id: String) {
+    @Operation(summary = "BOARD 멤버 제외", description = "특정 BOARD에 멤버를 제외 시킨다.")
+    @PostMapping("api/v1/member/{id}/member/exit")
+    fun memberExitFromBoard(@PathVariable id: String, @RequestBody exitMemberDTO: ExitMember): KorelloResponse {
+        boardService.exitJoinMember(exitMemberDTO)
+        return KorelloResponse(HttpStatus.OK)
     }
-
-    @Operation(summary = "BOARD 생성", description = "BOARD를 생성 한다.")
-    @PostMapping("api/v1/board")
-    fun createBoard(@RequestBody boardCreateDTO: Create): KorelloResponse {
-        boardCrudService.createBoard(boardCreateDTO)
-        return KorelloResponse(HttpStatus.CREATED)
-    }
-
-    @Operation(summary = "BOARD 수정", description = "BOARD를 수정 한다.")
-    @PutMapping("api/v1/board")
-    fun updateBoard() {
-    }
-
-    @Operation(summary = "BOARD 삭제", description = "BOARD를 삭제 한다.")
-    @DeleteMapping("api/v1/board")
-    fun deleteBoard() {
-
-    }
-
-
 }

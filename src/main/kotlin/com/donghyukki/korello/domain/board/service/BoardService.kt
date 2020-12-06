@@ -1,5 +1,7 @@
 package com.donghyukki.korello.domain.board.service
 
+import com.donghyukki.korello.domain.board.dto.BoardDTO.Companion.ExitMember
+import com.donghyukki.korello.domain.board.dto.BoardDTO.Companion.JoinMember
 import com.donghyukki.korello.domain.board.model.BoardMembers
 import com.donghyukki.korello.domain.member.service.MemberCrudService
 import org.springframework.stereotype.Service
@@ -12,16 +14,16 @@ class BoardService(
     val memberCrudService: MemberCrudService,
 ) {
     @Transactional
-    fun inviteMember(boardId: Long, memberId: Long): BoardMembers {
-        val member = memberCrudService.getMember(memberId)
-        val board = boardCrudService.getBoard(boardId)
+    fun inviteMember(joinMember: JoinMember): BoardMembers {
+        val member = memberCrudService.getMember(joinMember.memberId.toLong())
+        val board = boardCrudService.getBoard(joinMember.boardId.toLong())
         return boardMembersService.joinBoard(member, board)
     }
 
     @Transactional
-    fun exitJoinMember(boardId: Long, memberId: Long) {
-        val board = boardCrudService.getBoard(boardId)
-        val member = memberCrudService.getMember(memberId)
+    fun exitJoinMember(ExitMember: ExitMember) {
+        val board = boardCrudService.getBoard(ExitMember.boardId.toLong())
+        val member = memberCrudService.getMember(ExitMember.memberId.toLong())
         val joinBoardMembers = member.boards.first { boardMembers -> boardMembers.board == board }
         boardMembersService.exitBoard(joinBoardMembers)
         board.deleteMember(joinBoardMembers)

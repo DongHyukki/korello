@@ -22,8 +22,9 @@ internal class BoardServiceTest(
     fun inviteMember() {
         val member = memberCrudService.createMember(MemberDTO.Companion.Create("test member"))
         val board = boardCrudService.createBoard(BoardDTO.Companion.Create("test board"))
+        val joinMemberDTO = BoardDTO.Companion.JoinMember(member.id.toString(), board.id.toString())
 
-        val boardMembers = BoardService.inviteMember(board.id!!, member.id!!)
+        val boardMembers = BoardService.inviteMember(joinMemberDTO)
 
         assertThat(boardMembers.board.name).isEqualTo("test board")
         assertThat(boardMembers.member.name).isEqualTo("test member")
@@ -40,10 +41,12 @@ internal class BoardServiceTest(
     fun exitJoinMember() {
         val member = memberCrudService.createMember(MemberDTO.Companion.Create("test member"))
         val board = boardCrudService.createBoard(BoardDTO.Companion.Create("test board"))
+        val joinMemberDTO = BoardDTO.Companion.JoinMember(member.id.toString(), board.id.toString())
+        val exitMemberDTO = BoardDTO.Companion.ExitMember(member.id.toString(), board.id.toString())
 
-        val boardMembers = BoardService.inviteMember(board.id!!, member.id!!)
+        val boardMembers = BoardService.inviteMember(joinMemberDTO)
 
-        BoardService.exitJoinMember(board.id!!, member.id!!)
+        BoardService.exitJoinMember(exitMemberDTO)
 
         val findMember = memberCrudService.getMember(member.id!!)
         val findBoard = boardCrudService.getBoard(board.id!!)

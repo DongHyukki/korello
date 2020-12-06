@@ -11,6 +11,8 @@ data class KorelloResponse(
     val result_time: LocalDateTime,
     val result_body: Any?
 ) {
+    constructor(): this(HttpStatus.OK.value(), "success", LocalDateTime.now(), null)
     constructor(result_body: Any): this(HttpStatus.OK.value(), "success", LocalDateTime.now(), result_body)
     constructor(result_code: HttpStatus): this(result_code.value(), "success", LocalDateTime.now(), null)
+    constructor(result_code: HttpStatus, result_body: Any): this(result_code.value(), "success", LocalDateTime.now(), result_body)
 }
