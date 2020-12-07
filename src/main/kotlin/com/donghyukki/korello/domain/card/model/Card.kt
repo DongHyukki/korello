@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
-data class Card (
+class Card (
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

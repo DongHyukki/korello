@@ -17,14 +17,14 @@ class BoardController(
 ) {
 
     @Operation(summary = "BOARD 멤버 참여", description = "특정 BOARD에 멤버를 참여 시킨다.")
-    @PostMapping("api/v1/member/{id}/member/join")
+    @PostMapping("api/v1/board/{id}/member/join")
     fun memberJoinToBoard(@PathVariable id: String, @RequestBody joinMemberDTO: JoinMember): KorelloResponse {
         boardService.inviteMember(joinMemberDTO)
         return KorelloResponse(HttpStatus.OK)
     }
 
     @Operation(summary = "BOARD 멤버 제외", description = "특정 BOARD에 멤버를 제외 시킨다.")
-    @PostMapping("api/v1/member/{id}/member/exit")
+    @PostMapping("api/v1/board/{id}/member/exit")
     fun memberExitFromBoard(@PathVariable id: String, @RequestBody exitMemberDTO: ExitMember): KorelloResponse {
         boardService.exitJoinMember(exitMemberDTO)
         return KorelloResponse(HttpStatus.OK)

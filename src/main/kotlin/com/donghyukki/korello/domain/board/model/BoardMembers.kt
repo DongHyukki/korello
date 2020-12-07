@@ -6,8 +6,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators
 import javax.persistence.*
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator::class, property = "id")
-data class BoardMembers(
+class BoardMembers(
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
