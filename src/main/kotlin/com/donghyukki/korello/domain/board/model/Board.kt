@@ -9,8 +9,7 @@ import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator::class, property = "id")
-data class Board (
+class Board (
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
