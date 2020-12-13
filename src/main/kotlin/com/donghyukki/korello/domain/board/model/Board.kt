@@ -18,8 +18,8 @@ class Board (
     val name: String,
     @OneToMany(mappedBy = "board")
     val members: MutableList<BoardMembers>,
-//    @OneToMany(mappedBy = "board")
-//    val cards: MutableList<Card>
+    @OneToMany(mappedBy = "board", cascade = [CascadeType.ALL], orphanRemoval = true)
+    var cards: MutableSet<Card>
 ){
     @Column
     @CreationTimestamp
@@ -29,7 +29,7 @@ class Board (
     @UpdateTimestamp
     lateinit var updateDate: LocalDateTime
 
-    constructor(name: String): this(null, name, arrayListOf())
+    constructor(name: String): this(null, name, arrayListOf(), hashSetOf())
 
     fun deleteMember(boardMembers: BoardMembers) {
         members.remove(boardMembers)
@@ -37,6 +37,14 @@ class Board (
 
     fun addMembers(boardMembers: BoardMembers) {
         members.add(boardMembers)
+    }
+
+    fun addCard(card: Card) {
+        cards.add(card)
+    }
+
+    fun deleteCard(cardId: Long) {
+        this@Board.cards.removeIf { card -> card.id == cardId }
     }
 
     override fun toString(): String {

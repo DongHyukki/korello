@@ -11,9 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.transaction.annotation.Transactional
 
 internal class BoardServiceTest(
-    @Autowired val BoardService: BoardService,
+    @Autowired val boardService: BoardService,
     @Autowired val boardCrudService: BoardCrudService,
-    @Autowired val boardMembersService: BoardMembersService,
     @Autowired val memberCrudService: MemberCrudService,
 ) : KorelloApplicationTests() {
 
@@ -22,9 +21,9 @@ internal class BoardServiceTest(
     fun inviteMember() {
         val member = memberCrudService.createMember(MemberDTO.Companion.Create("test member"))
         val board = boardCrudService.createBoard(BoardDTO.Companion.Create("test board"))
-        val joinMemberDTO = BoardDTO.Companion.JoinMember(member.id.toString(), board.id.toString())
+        val joinMemberDTO = BoardDTO.Companion.MemberJoin(member.id.toString(), board.id.toString())
 
-        val boardMembers = BoardService.inviteMember(joinMemberDTO)
+        val boardMembers = boardService.inviteMember(joinMemberDTO)
 
         assertThat(boardMembers.board.name).isEqualTo("test board")
         assertThat(boardMembers.member.name).isEqualTo("test member")
@@ -41,12 +40,12 @@ internal class BoardServiceTest(
     fun exitJoinMember() {
         val member = memberCrudService.createMember(MemberDTO.Companion.Create("test member"))
         val board = boardCrudService.createBoard(BoardDTO.Companion.Create("test board"))
-        val joinMemberDTO = BoardDTO.Companion.JoinMember(member.id.toString(), board.id.toString())
-        val exitMemberDTO = BoardDTO.Companion.ExitMember(member.id.toString(), board.id.toString())
+        val joinMemberDTO = BoardDTO.Companion.MemberJoin(member.id.toString(), board.id.toString())
+        val exitMemberDTO = BoardDTO.Companion.MemberExit(member.id.toString(), board.id.toString())
 
-        val boardMembers = BoardService.inviteMember(joinMemberDTO)
+        val boardMembers = boardService.inviteMember(joinMemberDTO)
 
-        BoardService.exitJoinMember(exitMemberDTO)
+        boardService.exitJoinMember(exitMemberDTO)
 
         val findMember = memberCrudService.getMember(member.id!!)
         val findBoard = boardCrudService.getBoard(board.id!!)
