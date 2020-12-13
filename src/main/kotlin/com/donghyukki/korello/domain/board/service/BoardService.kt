@@ -1,7 +1,9 @@
 package com.donghyukki.korello.domain.board.service
 
-import com.donghyukki.korello.domain.board.dto.BoardDTO.Companion.ExitMember
-import com.donghyukki.korello.domain.board.dto.BoardDTO.Companion.JoinMember
+import com.donghyukki.korello.domain.board.dto.BoardDTO
+import com.donghyukki.korello.domain.board.dto.BoardDTO.Companion.MemberExit
+import com.donghyukki.korello.domain.board.dto.BoardDTO.Companion.MemberJoin
+import com.donghyukki.korello.domain.board.dto.BoardDTO.Companion.MemberResponse
 import com.donghyukki.korello.domain.board.model.BoardMembers
 import com.donghyukki.korello.domain.member.service.MemberCrudService
 import org.springframework.stereotype.Service
@@ -13,17 +15,25 @@ class BoardService(
     val boardMembersService: BoardMembersService,
     val memberCrudService: MemberCrudService,
 ) {
+
     @Transactional
-    fun inviteMember(joinMember: JoinMember): BoardMembers {
-        val member = memberCrudService.getMember(joinMember.memberId.toLong())
-        val board = boardCrudService.getBoard(joinMember.boardId.toLong())
+    fun getJoinMembers(boardId: String): List<MemberResponse> {
+        return boardCrudService.getBoard(boardId.toLong()).members.map {
+                boardMembers -> MemberResponse(boardMembers.member.id.toString(), boardMembers.member.name)
+        }.toList()
+    }
+
+    @Transactional
+    fun inviteMember(memberJoin: MemberJoin): BoardMembers {
+        val member = memberCrudService.getMember(memberJoin.memberId.toLong())
+        val board = boardCrudService.getBoard(memberJoin.boardId.toLong())
         return boardMembersService.joinBoard(member, board)
     }
 
     @Transactional
-    fun exitJoinMember(ExitMember: ExitMember) {
-        val board = boardCrudService.getBoard(ExitMember.boardId.toLong())
-        val member = memberCrudService.getMember(ExitMember.memberId.toLong())
+    fun exitJoinMember(MemberExit: MemberExit) {
+        val board = boardCrudService.getBoard(MemberExit.boardId.toLong())
+        val member = memberCrudService.getMember(MemberExit.memberId.toLong())
         val joinBoardMembers = member.boards.first { boardMembers -> boardMembers.board == board }
         boardMembersService.exitBoard(joinBoardMembers)
         board.deleteMember(joinBoardMembers)

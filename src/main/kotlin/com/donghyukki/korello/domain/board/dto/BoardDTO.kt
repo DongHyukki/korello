@@ -13,13 +13,17 @@ class BoardDTO {
         data class Delete(
             val id: String
         )
-        data class JoinMember(
+        data class MemberJoin(
             val memberId: String,
             val boardId: String
         )
-        data class ExitMember(
+        data class MemberExit(
             val memberId: String,
             val boardId: String
+        )
+        data class MemberResponse(
+            val memberId: String,
+            val memberName: String
         )
     }
 }

@@ -1,6 +1,7 @@
 package com.donghyukki.korello.domain.member.model
 
 import com.donghyukki.korello.domain.board.model.BoardMembers
+import com.donghyukki.korello.domain.card.model.Card
 import com.fasterxml.jackson.annotation.JsonIdentityInfo
 import com.fasterxml.jackson.annotation.ObjectIdGenerators
 import org.hibernate.annotations.CreationTimestamp
@@ -17,6 +18,8 @@ class Member (
     val name: String,
     @OneToMany(mappedBy = "member")
     val boards: MutableList<BoardMembers>,
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "members")
+    val cards: MutableList<Card>
 ) {
     @Column
     @CreationTimestamp
@@ -26,10 +29,14 @@ class Member (
     @UpdateTimestamp
     lateinit var updateDate: LocalDateTime
 
-    constructor(name: String): this(null, name, arrayListOf())
+    constructor(name: String): this(null, name, arrayListOf(), arrayListOf())
 
     fun addBoards(boardMembers: BoardMembers) {
         boards.add(boardMembers)
+    }
+
+    fun exitBoard(joinBoardMembers: BoardMembers) {
+        boards.remove(joinBoardMembers)
     }
 
     override fun toString(): String {
@@ -49,9 +56,7 @@ class Member (
         return id?.hashCode() ?: 0
     }
 
-    fun exitBoard(joinBoardMembers: BoardMembers) {
-        boards.remove(joinBoardMembers)
-    }
+
 
 
 }
