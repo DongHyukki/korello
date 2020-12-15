@@ -1,9 +1,8 @@
 package com.donghyukki.korello.domain.board.repository
 
-import com.donghyukki.korello.domain.board.model.BoardMembers
+import com.donghyukki.korello.domain.board.model.BoardJoinMembers
 import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 
 @Repository
-interface BoardMembersRepository: JpaRepository<BoardMembers, Long>
+interface BoardMembersRepository: JpaRepository<BoardJoinMembers, Long>

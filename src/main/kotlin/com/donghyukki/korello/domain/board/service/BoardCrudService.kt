@@ -1,7 +1,7 @@
 package com.donghyukki.korello.domain.board.service
 
-import com.donghyukki.korello.domain.board.dto.BoardDTO.Companion.Create
-import com.donghyukki.korello.domain.board.dto.BoardDTO.Companion.Delete
+import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.Create
+import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.Delete
 import com.donghyukki.korello.domain.board.model.Board
 import com.donghyukki.korello.domain.board.repository.BoardRepository
 import org.springframework.stereotype.Service
