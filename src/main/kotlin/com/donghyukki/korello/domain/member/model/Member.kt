@@ -1,9 +1,7 @@
 package com.donghyukki.korello.domain.member.model
 
-import com.donghyukki.korello.domain.board.model.BoardMembers
+import com.donghyukki.korello.domain.board.model.BoardJoinMembers
 import com.donghyukki.korello.domain.card.model.Card
-import com.fasterxml.jackson.annotation.JsonIdentityInfo
-import com.fasterxml.jackson.annotation.ObjectIdGenerators
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
 import java.time.LocalDateTime
@@ -17,7 +15,7 @@ class Member (
     @Column
     val name: String,
     @OneToMany(mappedBy = "member")
-    val boards: MutableList<BoardMembers>,
+    val boardJoins: MutableList<BoardJoinMembers>,
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "members")
     val cards: MutableList<Card>
 ) {
@@ -31,12 +29,12 @@ class Member (
 
     constructor(name: String): this(null, name, arrayListOf(), arrayListOf())
 
-    fun addBoards(boardMembers: BoardMembers) {
-        boards.add(boardMembers)
+    fun addBoards(boardJoinMembers: BoardJoinMembers) {
+        boardJoins.add(boardJoinMembers)
     }
 
-    fun exitBoard(joinBoardMembers: BoardMembers) {
-        boards.remove(joinBoardMembers)
+    fun exitBoard(joinBoardJoinMembers: BoardJoinMembers) {
+        boardJoins.remove(joinBoardJoinMembers)
     }
 
     override fun toString(): String {

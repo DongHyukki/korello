@@ -1,7 +1,7 @@
 package com.donghyukki.korello.domain.member.service
 
-import com.donghyukki.korello.domain.member.dto.MemberDTO.Companion.Create
-import com.donghyukki.korello.domain.member.dto.MemberDTO.Companion.Delete
+import com.donghyukki.korello.presentation.dto.MemberDTO.Companion.Create
+import com.donghyukki.korello.presentation.dto.MemberDTO.Companion.Delete
 import com.donghyukki.korello.domain.member.model.Member
 import com.donghyukki.korello.domain.member.repository.MemberRepository
 import org.springframework.stereotype.Service

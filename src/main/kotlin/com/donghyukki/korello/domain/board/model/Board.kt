@@ -1,8 +1,6 @@
 package com.donghyukki.korello.domain.board.model
 
 import com.donghyukki.korello.domain.card.model.Card
-import com.fasterxml.jackson.annotation.JsonIdentityInfo
-import com.fasterxml.jackson.annotation.ObjectIdGenerators
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
 import java.time.LocalDateTime
@@ -17,7 +15,7 @@ class Board (
     @Column
     val name: String,
     @OneToMany(mappedBy = "board")
-    val members: MutableList<BoardMembers>,
+    val members: MutableList<BoardJoinMembers>,
     @OneToMany(mappedBy = "board", cascade = [CascadeType.ALL], orphanRemoval = true)
     var cards: MutableSet<Card>
 ){
@@ -31,12 +29,12 @@ class Board (
 
     constructor(name: String): this(null, name, arrayListOf(), hashSetOf())
 
-    fun deleteMember(boardMembers: BoardMembers) {
-        members.remove(boardMembers)
+    fun deleteMember(boardJoinMembers: BoardJoinMembers) {
+        members.remove(boardJoinMembers)
     }
 
-    fun addMembers(boardMembers: BoardMembers) {
-        members.add(boardMembers)
+    fun addMembers(boardJoinMembers: BoardJoinMembers) {
+        members.add(boardJoinMembers)
     }
 
     fun addCard(card: Card) {
