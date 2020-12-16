@@ -39,6 +39,9 @@ dependencies {
 
     //AssertJ
     testImplementation("org.assertj:assertj-core:3.13.2")
+
+    //MariaDB
+    implementation("org.mariadb.jdbc:mariadb-java-client")
 }
 
 allOpen {
