@@ -2,6 +2,8 @@ spring:
   h2:
     console:
       enabled: true
+  profiles:
+    active: local
   datasource:
     hikari:
       jdbc-url: jdbc:h2:mem:korello
@@ -12,7 +14,7 @@ spring:
     database-platform: H2
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
 
   springdoc:
     swagger-ui:
