@@ -13,7 +13,7 @@ class MemberCrudController(
     private val memberCrudService: MemberCrudService
 ) {
 
-    @Operation(summary = "MEMBER 조회", description = "모든 MEMBER를 조회 한다")
+    @Operation(summary = "MEMBER 조회", description = "모든 MEMBER를 조회 한다", deprecated = true)
     @GetMapping("api/v1/members")
     fun getMembers(): KorelloResponse {
         return KorelloResponse(memberCrudService.getAllMembers())

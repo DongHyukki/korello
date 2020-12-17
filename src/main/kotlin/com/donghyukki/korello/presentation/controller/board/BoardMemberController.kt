@@ -4,6 +4,8 @@ import com.donghyukki.korello.presentation.dto.response.KorelloResponse
 import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.MemberJoin
 import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.MemberExit
 import com.donghyukki.korello.application.services.BoardMemberService
+import com.donghyukki.korello.presentation.dto.BoardDTO
+import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.MemberBoards
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
@@ -32,4 +34,12 @@ class BoardMemberController(
         boardMemberService.exitJoinMember(memberExitDTO)
         return KorelloResponse(HttpStatus.OK)
     }
+
+    @Operation(summary = "멤버가 속한 BOARD 리스트", description = "멤버가 속한 BOARD들을 가져온다.")
+    @PostMapping("api/v1/board/self")
+    fun getJoinBoards(@RequestBody memberBoardsDTO: MemberBoards): KorelloResponse {
+        return KorelloResponse(boardMemberService.getJoinBoards(memberBoardsDTO))
+    }
+
+
 }

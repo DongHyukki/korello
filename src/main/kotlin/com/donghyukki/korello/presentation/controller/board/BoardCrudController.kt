@@ -13,7 +13,7 @@ class BoardCrudController(
     private val boardCrudService: BoardCrudService
 ) {
 
-    @Operation(summary = "BOARD 조회", description = "모든 BOARD를 조회 한다")
+    @Operation(summary = "BOARD 조회", description = "모든 BOARD를 조회 한다", deprecated = true)
     @GetMapping("api/v1/boards")
     fun getBoards(): KorelloResponse {
         return KorelloResponse(boardCrudService.getAllBoards())

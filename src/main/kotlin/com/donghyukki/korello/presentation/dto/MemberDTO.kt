@@ -14,5 +14,9 @@ class MemberDTO {
         data class Delete(
             val id: String
         )
+        data class Response(
+            val id: String,
+            val name: String
+        )
     }
 }

@@ -1,6 +1,7 @@
 package com.donghyukki.korello.presentation.dto
 
 import com.donghyukki.korello.domain.board.model.Board
+import java.time.LocalDateTime
 
 class BoardDTO {
 
@@ -21,9 +22,19 @@ class BoardDTO {
             val memberId: String,
             val boardId: String
         )
+        data class MemberBoards(
+            val memberId: String
+        )
         data class MemberResponse(
             val memberId: String,
             val memberName: String
+        )
+        data class Response(
+            val id: String,
+            val name: String,
+            val memberNames: List<String>,
+            val createDate: LocalDateTime,
+            val updateDate: LocalDateTime
         )
     }
 }

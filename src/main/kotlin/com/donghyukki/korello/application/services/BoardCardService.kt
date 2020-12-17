@@ -9,6 +9,7 @@ import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateName
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateTag
 import com.donghyukki.korello.domain.card.model.Card
 import com.donghyukki.korello.domain.card.repository.CardRepository
+import com.donghyukki.korello.domain.todo.repository.TodoRepository
 import com.donghyukki.korello.domain.member.model.Member
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -17,8 +18,8 @@ import java.lang.IllegalStateException
 
 @Service
 class BoardCardService(
-    val boardRepository: BoardRepository,
-    val cardRepository: CardRepository,
+    private val boardRepository: BoardRepository,
+    private val cardRepository: CardRepository,
 ) {
 
     @Transactional(readOnly = true)
@@ -73,4 +74,5 @@ class BoardCardService(
         val updateMembers = joinMembers.filter { member -> cardUpdateMembersDTO.memberNames.contains(member.name) }
         card.changeMembers(updateMembers)
     }
+
 }
