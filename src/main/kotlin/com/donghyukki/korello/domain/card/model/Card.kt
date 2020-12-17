@@ -22,6 +22,7 @@ class Card(
     val board: Board?,
     @ManyToMany(fetch = FetchType.LAZY)
     var members: MutableList<Member>
+
 ){
     @Column
     @CreationTimestamp

@@ -2,6 +2,8 @@ package com.donghyukki.korello.domain.member.model
 
 import com.donghyukki.korello.domain.board.model.BoardJoinMembers
 import com.donghyukki.korello.domain.card.model.Card
+import com.donghyukki.korello.presentation.dto.BoardDTO
+import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.Response
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
 import java.time.LocalDateTime
@@ -35,6 +37,18 @@ class Member (
 
     fun exitBoard(joinBoardJoinMembers: BoardJoinMembers) {
         boardJoins.remove(joinBoardJoinMembers)
+    }
+
+    fun getJoinBoards(): List<Response> {
+        return boardJoins.map { boardJoinMembers ->
+            Response(
+                boardJoinMembers.board.id.toString()
+                , boardJoinMembers.board.name
+                , boardJoinMembers.board.members.map { boardJoinMembers -> boardJoinMembers.member.name }.toList()
+                , boardJoinMembers.board.createDate
+                , boardJoinMembers.board.updateDate
+            )
+        }.toList()
     }
 
     override fun toString(): String {
