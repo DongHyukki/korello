@@ -28,7 +28,7 @@ class LoggingFilter: OncePerRequestFilter() {
         val requestContents = requestCacheWrapperObject.contentAsByteArray
 
         if(requestContents.isNotEmpty()) {
-            val requestData = mapper.readValue<Any>(requestCacheWrapperObject.contentAsByteArray)
+            val requestData = mapper.readValue<Any>(requestContents)
             logger.info(requestData.toString())
         }
 
