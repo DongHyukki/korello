@@ -13,7 +13,6 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-
-  springdoc:
-    swagger-ui:
-    path: /swagger-ui.html
+    properties:
+      hibernate:
+        format_sql: true

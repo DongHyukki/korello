@@ -1,0 +1,9 @@
+springdoc:
+  swagger-ui:
+  path: /swagger-ui.html
+
+
+logging:
+  file:
+    path: ./log
+    name: ./log/korello-http.log

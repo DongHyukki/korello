@@ -1,5 +1,8 @@
 package com.donghyukki.korello.infrastructure.web
 
+import com.donghyukki.korello.infrastructure.filter.LoggingFilter
+import org.springframework.boot.web.servlet.FilterRegistrationBean
+import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
@@ -12,5 +15,15 @@ class WebConfig: WebMvcConfigurer {
             .allowedOrigins("*")
             .allowedMethods("GET", "POST", "DELETE", "PUT")
             .maxAge(3000)
+    }
+}
+
+@Configuration
+class FilterRegistration {
+    @Bean
+    fun getFilterRegistrationBean(): FilterRegistrationBean<LoggingFilter> {
+        val filter = FilterRegistrationBean(LoggingFilter())
+        filter.addUrlPatterns("/api/v1/**")
+        return filter
     }
 }
