@@ -42,6 +42,9 @@ dependencies {
 
     //MariaDB
     implementation("org.mariadb.jdbc:mariadb-java-client")
+
+    //logback
+    implementation("net.logstash.logback:logstash-logback-encoder:5.1")
 }
 
 allOpen {

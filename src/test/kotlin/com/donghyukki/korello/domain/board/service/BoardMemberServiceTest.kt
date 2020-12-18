@@ -29,8 +29,8 @@ internal class BoardMemberServiceTest(
         assertThat(boardMembers.board.name).isEqualTo("test board")
         assertThat(boardMembers.member.name).isEqualTo("test member")
 
-        val findMember = memberCrudService.getMember(member.id!!)
-        val findBoard = boardCrudService.getBoard(board.id!!)
+        val findMember = memberCrudService.getMemberEntity(member.id!!)
+        val findBoard = boardCrudService.getBoardEntity(board.id!!)
         assertThat(findMember.boardJoins).isNotEmpty
         assertThat(findBoard.members).isNotEmpty
 
@@ -48,8 +48,8 @@ internal class BoardMemberServiceTest(
 
         boardMemberService.exitJoinMember(exitMemberDTO)
 
-        val findMember = memberCrudService.getMember(member.id!!)
-        val findBoard = boardCrudService.getBoard(board.id!!)
+        val findMember = memberCrudService.getMemberEntity(member.id!!)
+        val findBoard = boardCrudService.getBoardEntity(board.id!!)
 
         assertThat(findMember.boardJoins).isEmpty()
         assertThat(findBoard.members).isEmpty()
