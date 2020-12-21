@@ -1,6 +1,6 @@
 package com.donghyukki.korello.presentation.dto
 
-import com.donghyukki.korello.domain.board.model.Board
+import com.donghyukki.korello.domain.label.model.Label
 import java.time.LocalDateTime
 
 class CardDTO {
@@ -25,13 +25,22 @@ class CardDTO {
             val id: String,
             val memberNames: List<String>,
         )
+        data class LabelResponse(
+            val id: String,
+            val name: String,
+            val color: String,
+            val createDate: LocalDateTime,
+            val updateDate: LocalDateTime
+        )
         data class Response(
             val id: String,
             val name: String,
             val tagValue: String,
             val memberNames: List<String>?,
+            val labels: List<LabelResponse>,
             val createDate: LocalDateTime,
             val updateDate: LocalDateTime
-        )
+        ) {
+        }
     }
 }

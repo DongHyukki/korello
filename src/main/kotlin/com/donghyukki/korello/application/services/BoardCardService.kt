@@ -11,6 +11,8 @@ import com.donghyukki.korello.domain.card.model.Card
 import com.donghyukki.korello.domain.card.repository.CardRepository
 import com.donghyukki.korello.domain.todo.repository.TodoRepository
 import com.donghyukki.korello.domain.member.model.Member
+import com.donghyukki.korello.presentation.dto.CardDTO
+import com.donghyukki.korello.presentation.dto.CardDTO.Companion.LabelResponse
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.lang.IllegalStateException
@@ -30,6 +32,7 @@ class BoardCardService(
                 , card.name
                 , card.cardTag.tagValue
                 , card.members.map { member -> member.name }.toList()
+                , card.labels.map { label -> LabelResponse(label.id.toString(), label.name, label.color, label.createDate, label.updateDate) }
                 , card.createDate
                 , card.updateDate)
         }.toList()
