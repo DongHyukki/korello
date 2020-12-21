@@ -23,7 +23,7 @@ class FilterRegistration {
     @Bean
     fun getFilterRegistrationBean(): FilterRegistrationBean<LoggingFilter> {
         val filter = FilterRegistrationBean(LoggingFilter())
-        filter.addUrlPatterns("/api/v1/**")
+        filter.addUrlPatterns("/api/v1/*")
         return filter
     }
 }

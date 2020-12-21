@@ -1,6 +1,5 @@
 package com.donghyukki.korello.presentation.dto
 
-import com.donghyukki.korello.domain.label.model.Label
 import java.time.LocalDateTime
 
 class LabelDTO {

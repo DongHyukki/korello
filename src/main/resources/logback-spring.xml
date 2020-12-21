@@ -4,12 +4,14 @@
     <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
     <include resource="org/springframework/boot/logging/logback/file-appender.xml" />
 
+    <property name="LOG_DIR" value="./log" />
+
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_PATH}/access.log</file>
+        <file>${LOG_DIR}/access.log</file>
         <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- rollover daily -->
-            <fileNamePattern>${LOG_PATH}/access.log-%d{yyyyMMdd}.%i</fileNamePattern>
+            <fileNamePattern>${LOG_DIR}/access.log-%d{yyyyMMdd}.%i</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy
                     class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <!-- or whenever the file size reaches 256MB -->
@@ -21,11 +23,11 @@
     </appender>
 
     <appender name="FILE_HTTP" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/korello-http.log</file>
         <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
-        <file>${LOG_PATH}/korello-http.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- rollover daily -->
-            <fileNamePattern>${LOG_PATH}/korello-http.log-%d{yyyy-MM-dd}.%i</fileNamePattern>
+            <fileNamePattern>${LOG_DIR}/korello-http.log-%d{yyyy-MM-dd}.%i</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy
                     class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <!-- or whenever the file size reaches 256MB -->
@@ -47,20 +49,20 @@
         <appender-ref ref="FILE_HTTP"/>
     </logger>
 
-    <logger name="org.springframework" additivity="false" level="INFO">
-        <appender-ref ref="FILE"/>
-        <appender-ref ref="CONSOLE"/>
-    </logger>
+<!--    <logger name="org.springframework" additivity="false" level="INFO">-->
+<!--        <appender-ref ref="FILE"/>-->
+<!--        <appender-ref ref="CONSOLE"/>-->
+<!--    </logger>-->
 
-    <logger name="org.hibernate" additivity="false" level="INFO">
-        <appender-ref ref="FILE"/>
-        <appender-ref ref="CONSOLE"/>
-    </logger>
+<!--    <logger name="org.hibernate" additivity="false" level="INFO">-->
+<!--        <appender-ref ref="FILE"/>-->
+<!--        <appender-ref ref="CONSOLE"/>-->
+<!--    </logger>-->
 
-    <logger name="org.apache.catalina" additivity="false" level="INFO">
-        <appender-ref ref="FILE"/>
-        <appender-ref ref="CONSOLE"/>
-    </logger>
+<!--    <logger name="org.apache.catalina" additivity="false" level="INFO">-->
+<!--        <appender-ref ref="FILE"/>-->
+<!--        <appender-ref ref="CONSOLE"/>-->
+<!--    </logger>-->
 
     <springProfile name="local">
         <root level="INFO">
@@ -71,7 +73,6 @@
     <springProfile name="dev">
         <root level="INFO">
             <appender-ref ref="FILE" />
-            <appender-ref ref="CONSOLE" />
         </root>
     </springProfile>
 </configuration>
