@@ -1,6 +1,7 @@
 package com.donghyukki.korello.domain.board.model
 
 import com.donghyukki.korello.domain.card.model.Card
+import com.donghyukki.korello.domain.label.model.Label
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
 import java.time.LocalDateTime
@@ -17,7 +18,7 @@ class Board (
     @OneToMany(mappedBy = "board")
     val members: MutableList<BoardJoinMembers>,
     @OneToMany(mappedBy = "board", cascade = [CascadeType.ALL], orphanRemoval = true)
-    var cards: MutableSet<Card>
+    var cards: MutableSet<Card>,
 ){
     @Column
     @CreationTimestamp

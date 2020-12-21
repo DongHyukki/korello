@@ -1,6 +1,7 @@
 package com.donghyukki.korello.domain.card.model
 
 import com.donghyukki.korello.domain.board.model.Board
+import com.donghyukki.korello.domain.label.model.Label
 import com.donghyukki.korello.domain.member.model.Member
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
@@ -21,7 +22,9 @@ class Card(
     @JoinColumn(name = "BOARD_ID")
     val board: Board?,
     @ManyToMany(fetch = FetchType.LAZY)
-    var members: MutableList<Member>
+    var members: MutableList<Member>,
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "cards")
+    var labels: MutableList<Label>
 
 ){
     @Column
@@ -32,8 +35,8 @@ class Card(
     @UpdateTimestamp
     lateinit var updateDate: LocalDateTime
 
-    constructor(name: String, tagValue: String, board: Board) : this(null, name, CardTag(tagValue), board, arrayListOf())
-    constructor(name: String, tagValue: String, board: Board, members: List<Member>) : this(null, name, CardTag(tagValue), board, members.toMutableList())
+    constructor(name: String, tagValue: String, board: Board) : this(null, name, CardTag(tagValue), board, arrayListOf(), arrayListOf())
+    constructor(name: String, tagValue: String, board: Board, members: List<Member>) : this(null, name, CardTag(tagValue), board, members.toMutableList(), arrayListOf())
 
     fun changeName(name: String) {
         this@Card.name = name
@@ -45,6 +48,14 @@ class Card(
 
     fun changeMembers(members: List<Member>) {
         this@Card.members = members.toMutableList()
+    }
+
+    fun addLabels(labels: List<Label>) {
+        this@Card.labels.addAll(labels)
+    }
+
+    fun deleteLabels(labels: List<Label>) {
+        this@Card.labels.removeAll(labels)
     }
 
     override fun equals(other: Any?): Boolean {
