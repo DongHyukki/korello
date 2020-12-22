@@ -19,13 +19,13 @@ class BoardMemberService(
     val memberCrudService: MemberCrudService,
 ) {
 
-    @Transactional
+    @Transactional(readOnly = true)
     fun getJoinBoards(memberBoardsDTO: MemberBoards): List<Response> {
         val member = memberCrudService.getMemberEntity(memberBoardsDTO.memberId.toLong())
         return member.getJoinBoards()
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     fun getJoinMembers(boardId: String): List<MemberResponse> {
         return boardCrudService.getBoardEntity(boardId.toLong()).members.map {
                 boardMembers -> MemberResponse(boardMembers.member.id.toString(), boardMembers.member.name)
