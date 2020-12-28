@@ -1,5 +1,6 @@
 package com.donghyukki.korello.infrastructure.filter
 
+import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import org.slf4j.LoggerFactory
@@ -18,6 +19,8 @@ class LoggingFilter: OncePerRequestFilter() {
         filterChain: FilterChain
     ) {
         val logger = LoggerFactory.getLogger("HTTP_LOGGER")
+        var requestData: String? = null
+        var responseData: String? = null
 
         val mapper = ObjectMapper()
         val requestCacheWrapperObject = ContentCachingRequestWrapper(request)
@@ -28,13 +31,36 @@ class LoggingFilter: OncePerRequestFilter() {
         val requestContents = requestCacheWrapperObject.contentAsByteArray
 
         if(requestContents.isNotEmpty()) {
-            val requestData = mapper.readValue<Any>(requestContents)
-            logger.info(requestData.toString())
+            requestData = mapper.readValue<Any>(requestContents).toString()
         }
 
-        val responseData = mapper.readValue<Any>(responseCacheWrapperObject.contentAsByteArray)
-        logger.info(responseData.toString())
+        val responseContents = responseCacheWrapperObject.contentAsByteArray
+
+        if(responseContents.isNotEmpty()) {
+            responseData = mapper.readValue<Any>(responseCacheWrapperObject.contentAsByteArray).toString()
+        }
+
+        val logObject = LogObject(
+            requestCacheWrapperObject.requestURL.toString(),
+            requestCacheWrapperObject.method,
+            requestData,
+            responseData
+        )
+
+        logger.info(logObject.toString())
 
         responseCacheWrapperObject.copyBodyToResponse()
+    }
+}
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+data class LogObject(
+    val http_url: String,
+    val http_method: String,
+    var request_body: String?,
+    val response_body: String?
+) {
+    override fun toString(): String {
+        return "(http_url='$http_url', http_method='$http_method', request_body='$request_body', response_body='$response_body')"
     }
 }
