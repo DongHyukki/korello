@@ -26,4 +26,11 @@ class BoardLabelService(
         val board = boardRepository.findById(boardId.toLong()).orElseThrow()
         return labelRepository.save(Label(board, labelCreateDTO.name, labelCreateDTO.color))
     }
+
+    @Transactional
+    fun clearLabel(boardId: String) {
+        return labelRepository.getLabelsByBoardId(boardId.toLong()).forEach { label -> label.clearBoard() }
+    }
+
+
 }

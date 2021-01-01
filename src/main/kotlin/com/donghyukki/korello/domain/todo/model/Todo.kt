@@ -13,10 +13,10 @@ class Todo(
     @GeneratedValue(strategy = GenerationType.AUTO)
     val id: Long? = null,
     @Column
-    val title: String,
+    var title: String,
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "CARD_ID")
-    val card: Card,
+    var card: Card?,
     @Column
     var status: Boolean
 
@@ -34,5 +34,13 @@ class Todo(
 
     fun changeStatus() {
         this@Todo.status = !status
+    }
+
+    fun changeTitle(title: String) {
+        this@Todo.title = title
+    }
+
+    fun clearCard() {
+        this@Todo.card = null
     }
 }

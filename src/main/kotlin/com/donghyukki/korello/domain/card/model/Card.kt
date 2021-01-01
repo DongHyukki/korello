@@ -3,6 +3,7 @@ package com.donghyukki.korello.domain.card.model
 import com.donghyukki.korello.domain.board.model.Board
 import com.donghyukki.korello.domain.label.model.Label
 import com.donghyukki.korello.domain.member.model.Member
+import com.donghyukki.korello.domain.todo.model.Todo
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
 import java.time.LocalDateTime
@@ -20,11 +21,13 @@ class Card(
     var cardTag: CardTag,
     @ManyToOne
     @JoinColumn(name = "BOARD_ID")
-    val board: Board?,
+    var board: Board?,
     @ManyToMany(fetch = FetchType.LAZY)
     var members: MutableList<Member>,
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "cards")
-    var labels: MutableList<Label>
+    var labels: MutableList<Label>,
+    @OneToMany(mappedBy = "card", cascade = [CascadeType.ALL], orphanRemoval = true)
+    var todos: MutableSet<Todo>
 
 ){
     @Column
@@ -35,8 +38,8 @@ class Card(
     @UpdateTimestamp
     lateinit var updateDate: LocalDateTime
 
-    constructor(name: String, tagValue: String, board: Board) : this(null, name, CardTag(tagValue), board, arrayListOf(), arrayListOf())
-    constructor(name: String, tagValue: String, board: Board, members: List<Member>) : this(null, name, CardTag(tagValue), board, members.toMutableList(), arrayListOf())
+    constructor(name: String, tagValue: String, board: Board) : this(null, name, CardTag(tagValue), board, arrayListOf(), arrayListOf(), mutableSetOf())
+    constructor(name: String, tagValue: String, board: Board, members: List<Member>) : this(null, name, CardTag(tagValue), board, members.toMutableList(), arrayListOf(), mutableSetOf())
 
     fun changeName(name: String) {
         this@Card.name = name
@@ -54,8 +57,21 @@ class Card(
         this@Card.labels.addAll(labels)
     }
 
+    fun addTodo(todo: Todo) {
+        this@Card.todos.add(todo)
+    }
+
     fun deleteLabels(labels: List<Label>) {
         this@Card.labels.removeAll(labels)
+    }
+
+    fun clearBoard() {
+        this@Card.board = null
+    }
+
+    fun clearLabels() {
+        this@Card.labels.forEach { label -> label.deleteCard(this) }
+        this@Card.labels.clear()
     }
 
     override fun equals(other: Any?): Boolean {

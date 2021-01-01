@@ -52,6 +52,8 @@ class BoardCardService(
     @Transactional
     fun deleteCardFromBoard(boardId: String, cardDeleteDTO: Delete) {
         val board = boardRepository.findById(boardId.toLong()).orElseThrow()
+        val card = cardRepository.findById(cardDeleteDTO.id.toLong()).orElseThrow()
+        card.clearLabels()
         board.deleteCard(cardDeleteDTO.id.toLong())
     }
 

@@ -15,7 +15,7 @@ class Label(
     val id: Long? = null,
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BOARD_ID")
-    val board: Board,
+    var board: Board?,
     @Column
     var name: String,
     @Column
@@ -47,6 +47,10 @@ class Label(
 
     fun changeColor(color: String) {
         this@Label.color = color
+    }
+
+    fun clearBoard() {
+        this@Label.board = null
     }
 
     override fun equals(other: Any?): Boolean {

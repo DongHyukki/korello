@@ -48,6 +48,8 @@ class BoardCrudService(
 
     @Transactional
     fun deleteBoard(boardDeleteDTO: Delete) {
+        val board = boardRepository.findById(boardDeleteDTO.id.toLong()).orElseThrow()
+        board.clearCard()
         return boardRepository.deleteById(boardDeleteDTO.id.toLong())
     }
 

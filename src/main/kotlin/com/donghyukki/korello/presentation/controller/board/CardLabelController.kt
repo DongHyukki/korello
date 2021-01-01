@@ -23,7 +23,7 @@ class CardLabelController(
 
     @Operation(summary = "Label 삭제", description = "특정 CARD의 LABEL을 삭제한다.")
     @PostMapping("api/v1/card/{id}/label/delete")
-    fun addLabelToCard(@RequestBody labelDeleteDTO: Delete, @PathVariable id: String): KorelloResponse {
+    fun deleteLabelToCard(@RequestBody labelDeleteDTO: Delete, @PathVariable id: String): KorelloResponse {
         cardLabelService.deleteLabelFromCard(id, labelDeleteDTO)
         return KorelloResponse(HttpStatus.OK)
     }

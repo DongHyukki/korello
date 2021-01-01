@@ -46,6 +46,15 @@ class Board (
         this@Board.cards.removeIf { card -> card.id == cardId }
     }
 
+    fun clearCard() {
+        this@Board.cards.forEach { card ->
+            run {
+                card.clearLabels()
+                card.clearBoard()
+            }
+        }
+    }
+
     override fun toString(): String {
         return "Board(id=$id, name='$name')"
     }

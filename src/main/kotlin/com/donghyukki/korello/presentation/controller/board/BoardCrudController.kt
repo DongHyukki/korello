@@ -1,5 +1,6 @@
 package com.donghyukki.korello.presentation.controller.board
 
+import com.donghyukki.korello.application.services.BoardLabelService
 import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.Create
 import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.Delete
 import com.donghyukki.korello.domain.board.service.BoardCrudService
@@ -10,7 +11,8 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 class BoardCrudController(
-    private val boardCrudService: BoardCrudService
+    private val boardCrudService: BoardCrudService,
+    private val boardLabelService: BoardLabelService
 ) {
 
     @Operation(summary = "BOARD 조회", description = "모든 BOARD를 조회 한다", deprecated = true)
@@ -41,6 +43,7 @@ class BoardCrudController(
     @Operation(summary = "BOARD 삭제", description = "BOARD를 삭제 한다.")
     @PostMapping("api/v1/board/delete")
     fun deleteBoard(@RequestBody boardDeleteDTO: Delete): KorelloResponse {
+        boardLabelService.clearLabel(boardDeleteDTO.id)
         boardCrudService.deleteBoard(boardDeleteDTO)
         return KorelloResponse()
     }
