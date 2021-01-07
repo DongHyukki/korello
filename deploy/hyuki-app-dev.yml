@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hyuki-app-dev
+  namespace: hyuki-namespace
+  labels:
+    app: hyuki-app-dev
+spec:
+  selector:
+    matchLabels:
+      app: hyuki-app-dev
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: hyuki-app-dev
+    spec:
+      containers:
+        - name: hyuki-dev
+          image: kderr2791/hyuki-app:latest
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: "1"
+              memory: 0.5Gi
+            requests:
+              cpu: "1"
+              memory: 0.25Gi
+          ports:
+            - containerPort: 8080
+          env:
+            - name: spring_profiles_active
+              value: dev
+            - name: application_name
+              value: hyuki-app-dev
+            - name: instance_name
+              value: "8080"
+          readinessProbe:
+            httpGet:
+              path: /health_check.html
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 5
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/sleep","2"]
+      terminationGracePeriodSeconds: 60
+      imagePullSecrets:
+        - name: regcred
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hyuki-app-dev
+  namespace: hyuki-namespace
+spec:
+  ports:
+    - port: 443
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: hyuki-app-dev
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: hyuki-app-dev
+  namespace: hyuki-namespace
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
+spec:
+  tls:
+    - hosts:
+        - hyuki.app
+      secretName: hyuki-tls
+  rules:
+    - host: hyuki.app
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: hyuki-app-dev
+              servicePort: 443
