@@ -7,12 +7,15 @@ class TodoDTO {
             val cardId: String,
             val title: String,
         )
+
         data class Delete(
             val id: String,
         )
+
         data class Update(
             val title: String
         )
+
         data class Response(
             val todoId: String,
             val title: String,

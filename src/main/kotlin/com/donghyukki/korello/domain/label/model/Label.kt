@@ -31,7 +31,7 @@ class Label(
     @UpdateTimestamp
     lateinit var updateDate: LocalDateTime
 
-    constructor(board: Board, name: String, color: String): this(null, board, name, color, arrayListOf())
+    constructor(board: Board, name: String, color: String) : this(null, board, name, color, arrayListOf())
 
     fun addCard(card: Card) {
         this@Label.cards.add(card)

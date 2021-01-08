@@ -22,5 +22,6 @@ class H2ServerConfiguration {
         "-tcp",
         "-tcpAllowOthers",
         "-ifNotExists",
-        "-tcpPort", "9093" + "").start()
+        "-tcpPort", "9093" + ""
+    ).start()
 }

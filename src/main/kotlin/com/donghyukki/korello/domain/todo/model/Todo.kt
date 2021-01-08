@@ -30,7 +30,7 @@ class Todo(
     @UpdateTimestamp
     lateinit var updateDate: LocalDateTime
 
-    constructor(title: String, card: Card): this(null, title, card, false)
+    constructor(title: String, card: Card) : this(null, title, card, false)
 
     fun changeStatus() {
         this@Todo.status = !status

@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 
 @Repository
-interface LabelRepository: JpaRepository<Label, Long> {
+interface LabelRepository : JpaRepository<Label, Long> {
 
     @Query("select l from Label l join fetch l.board where l.board.id=:boardId")
     fun getLabelsByBoardId(@Param("boardId") boardId: Long): List<Label>

@@ -37,7 +37,7 @@ class BoardCrudController(
     @Operation(summary = "BOARD 수정", description = "BOARD를 수정 한다.")
     @PutMapping("api/v1/board")
     fun updateBoard(): KorelloResponse {
-        return KorelloResponse(HttpStatus.NOT_IMPLEMENTED,"미구현")
+        return KorelloResponse(HttpStatus.NOT_IMPLEMENTED, "미구현")
     }
 
     @Operation(summary = "BOARD 삭제", description = "BOARD를 삭제 한다.")

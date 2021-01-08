@@ -27,8 +27,8 @@ class BoardMemberService(
 
     @Transactional(readOnly = true)
     fun getJoinMembers(boardId: String): List<MemberResponse> {
-        return boardCrudService.getBoardEntity(boardId.toLong()).members.map {
-                boardMembers -> MemberResponse(boardMembers.member.id.toString(), boardMembers.member.name)
+        return boardCrudService.getBoardEntity(boardId.toLong()).members.map { boardMembers ->
+            MemberResponse(boardMembers.member.id.toString(), boardMembers.member.name)
         }.toList()
     }
 

@@ -22,5 +22,6 @@ class BoardJoinMembersService(
     @Transactional
     fun exitBoard(boardJoinMembers: BoardJoinMembers) {
         boardMembersRepository.delete(boardJoinMembers)
+
     }
 }

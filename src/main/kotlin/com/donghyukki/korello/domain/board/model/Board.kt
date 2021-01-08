@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
-class Board (
+class Board(
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,7 +19,7 @@ class Board (
     val members: MutableList<BoardJoinMembers>,
     @OneToMany(mappedBy = "board", cascade = [CascadeType.ALL], orphanRemoval = true)
     var cards: MutableSet<Card>,
-){
+) {
     @Column
     @CreationTimestamp
     lateinit var createDate: LocalDateTime
@@ -28,7 +28,7 @@ class Board (
     @UpdateTimestamp
     lateinit var updateDate: LocalDateTime
 
-    constructor(name: String): this(null, name, arrayListOf(), hashSetOf())
+    constructor(name: String) : this(null, name, arrayListOf(), hashSetOf())
 
     fun deleteMember(boardJoinMembers: BoardJoinMembers) {
         members.remove(boardJoinMembers)

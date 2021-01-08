@@ -5,7 +5,7 @@ plugins {
     id("io.spring.dependency-management") version "1.0.10.RELEASE"
     id("org.jetbrains.kotlin.plugin.allopen") version "1.4.10"
     id("org.jetbrains.kotlin.plugin.jpa") version "1.4.10"
-    id( "org.jetbrains.kotlin.plugin.noarg") version "1.4.10"
+    id("org.jetbrains.kotlin.plugin.noarg") version "1.4.10"
     kotlin("jvm") version "1.4.10"
     kotlin("plugin.spring") version "1.4.10"
 }

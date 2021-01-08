@@ -29,7 +29,7 @@ class Card(
     @OneToMany(mappedBy = "card", cascade = [CascadeType.ALL], orphanRemoval = true)
     var todos: MutableSet<Todo>
 
-){
+) {
     @Column
     @CreationTimestamp
     lateinit var createDate: LocalDateTime
@@ -38,8 +38,25 @@ class Card(
     @UpdateTimestamp
     lateinit var updateDate: LocalDateTime
 
-    constructor(name: String, tagValue: String, board: Board) : this(null, name, CardTag(tagValue), board, arrayListOf(), arrayListOf(), mutableSetOf())
-    constructor(name: String, tagValue: String, board: Board, members: List<Member>) : this(null, name, CardTag(tagValue), board, members.toMutableList(), arrayListOf(), mutableSetOf())
+    constructor(name: String, tagValue: String, board: Board) : this(
+        null,
+        name,
+        CardTag(tagValue),
+        board,
+        arrayListOf(),
+        arrayListOf(),
+        mutableSetOf()
+    )
+
+    constructor(name: String, tagValue: String, board: Board, members: List<Member>) : this(
+        null,
+        name,
+        CardTag(tagValue),
+        board,
+        members.toMutableList(),
+        arrayListOf(),
+        mutableSetOf()
+    )
 
     fun changeName(name: String) {
         this@Card.name = name

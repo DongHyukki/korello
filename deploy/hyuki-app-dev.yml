@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: hyuki-dev
-          image: kderr2791/hyuki-app:latest
+          image: kderr2791/hyuki-app:1.0
           imagePullPolicy: Always
           resources:
             limits:
@@ -44,7 +44,7 @@ spec:
           lifecycle:
             preStop:
               exec:
-                command: ["/bin/sleep","2"]
+                command: [ "/bin/sleep","2" ]
       terminationGracePeriodSeconds: 60
       imagePullSecrets:
         - name: regcred
@@ -52,33 +52,37 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: hyuki-app-dev
+  name: hyuki-app-svc-dev
   namespace: hyuki-namespace
 spec:
   ports:
-    - port: 443
-      protocol: TCP
+    - name: service
+      port: 80
       targetPort: 8080
   selector:
     app: hyuki-app-dev
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: hyuki-app-dev
+  name: hyuki.app
   namespace: hyuki-namespace
   annotations:
-    ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: "nginx"
 spec:
   tls:
     - hosts:
         - hyuki.app
-      secretName: hyuki-tls
+      secretName: ca-secret
   rules:
     - host: hyuki.app
       http:
         paths:
-          - path: /
+          - pathType: Prefix
+            path: "/"
             backend:
-              serviceName: hyuki-app-dev
-              servicePort: 443
+              service:
+                name: hyuki-app-svc-dev
+                port:
+                  number: 80

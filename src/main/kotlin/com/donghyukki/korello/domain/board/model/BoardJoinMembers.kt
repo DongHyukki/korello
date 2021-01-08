@@ -11,14 +11,14 @@ class BoardJoinMembers(
     val id: Long? = null,
 
     @ManyToOne
-    @JoinColumn(name= "BOARD_ID")
+    @JoinColumn(name = "BOARD_ID")
     val board: Board,
 
     @ManyToOne
-    @JoinColumn(name= "MEMBER_ID")
+    @JoinColumn(name = "MEMBER_ID")
     val member: Member,
 ) {
-    constructor(board: Board, member: Member): this(null, board, member)
+    constructor(board: Board, member: Member) : this(null, board, member)
 
     fun joinBoard() {
         board.addMembers(this)

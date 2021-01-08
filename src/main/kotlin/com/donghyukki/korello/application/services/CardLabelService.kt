@@ -2,6 +2,7 @@ package com.donghyukki.korello.application.services
 
 import com.donghyukki.korello.domain.card.repository.CardRepository
 import com.donghyukki.korello.domain.label.repository.LabelRepository
+import com.donghyukki.korello.infrastructure.exception.KorelloNotFoundException
 import com.donghyukki.korello.presentation.dto.LabelDTO
 import com.donghyukki.korello.presentation.dto.LabelDTO.Companion.AddCard
 import com.donghyukki.korello.presentation.dto.LabelDTO.Companion.Delete
@@ -15,22 +16,23 @@ class CardLabelService(
 ) {
     @Transactional
     fun updateLabel(labelId: String, labelUpdateDTO: LabelDTO.Companion.Update) {
-        val label = labelRepository.findById(labelId.toLong()).orElseThrow()
+        val label = labelRepository.findById(labelId.toLong()).orElseThrow { KorelloNotFoundException() }
         label.changeName(labelUpdateDTO.name)
         label.changeColor(labelUpdateDTO.color)
     }
 
     @Transactional
     fun addLabelToCard(cardId: String, labelAddCardDTO: AddCard) {
-        val card = cardRepository.findById(cardId.toLong()).orElseThrow()
-        val label = labelRepository.findById(labelAddCardDTO.labelId.toLong()).orElseThrow()
+        val card = cardRepository.findById(cardId.toLong()).orElseThrow { KorelloNotFoundException() }
+        val label =
+            labelRepository.findById(labelAddCardDTO.labelId.toLong()).orElseThrow { KorelloNotFoundException() }
         label.addCard(card)
         card.addLabels(listOf(label))
     }
 
     @Transactional
     fun deleteLabelFromCard(cardId: String, labelDeleteDTO: Delete) {
-        val card = cardRepository.findById(cardId.toLong()).orElseThrow()
+        val card = cardRepository.findById(cardId.toLong()).orElseThrow { KorelloNotFoundException() }
         val labelIds = labelDeleteDTO.labelIds.map { s -> s.toLong() }.toLongArray().asIterable()
         val labels = labelRepository.findAllById(labelIds)
         labels.forEach { label -> label.deleteCard(card) }

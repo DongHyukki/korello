@@ -1,15 +1,17 @@
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
-import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.ResponseBody
+package com.donghyukki.korello.presentation.controller
 
-@Controller
+import com.donghyukki.korello.presentation.dto.response.KorelloResponse
+import io.swagger.v3.oas.annotations.Operation
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RestController
+
+@RestController
 class HealthController {
 
-    @get:ResponseBody
-    @get:GetMapping(value = ["/health_check.html"])
-    val ratingStatus: ResponseEntity<String>
-        get() = ResponseEntity("Health", HttpStatus.OK)
+    @Operation(summary = "HEALTH CHECK", description = "HEALTH CHECK")
+    @GetMapping("/health_check.html")
+    fun healthCheck(): KorelloResponse {
+        return KorelloResponse()
+    }
 
 }

@@ -11,24 +11,30 @@ class BoardDTO {
         ) {
             fun toEntity() = Board(name)
         }
+
         data class Delete(
             val id: String
         )
+
         data class MemberJoin(
             val memberId: String,
             val boardId: String
         )
+
         data class MemberExit(
             val memberId: String,
             val boardId: String
         )
+
         data class MemberBoards(
             val memberId: String
         )
+
         data class MemberResponse(
             val memberId: String,
             val memberName: String
         )
+
         data class Response(
             val id: String,
             val name: String,

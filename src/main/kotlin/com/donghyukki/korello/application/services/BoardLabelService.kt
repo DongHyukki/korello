@@ -3,6 +3,7 @@ package com.donghyukki.korello.application.services
 import com.donghyukki.korello.domain.board.repository.BoardRepository
 import com.donghyukki.korello.domain.label.model.Label
 import com.donghyukki.korello.domain.label.repository.LabelRepository
+import com.donghyukki.korello.infrastructure.exception.KorelloNotFoundException
 import com.donghyukki.korello.presentation.dto.LabelDTO
 import com.donghyukki.korello.presentation.dto.LabelDTO.Companion.Create
 import com.donghyukki.korello.presentation.dto.LabelDTO.Companion.Response
@@ -17,13 +18,14 @@ class BoardLabelService(
 
     @Transactional(readOnly = true)
     fun getBoardLabels(boardId: String): List<Response> {
-        return labelRepository.getLabelsByBoardId(boardId.toLong()).map {
-                label -> Response(label.id.toString(), label.name, label.color, label.createDate, label.updateDate ) }.toList()
+        return labelRepository.getLabelsByBoardId(boardId.toLong())
+            .map { label -> Response(label.id.toString(), label.name, label.color, label.createDate, label.updateDate) }
+            .toList()
     }
 
     @Transactional
     fun createLabel(boardId: String, labelCreateDTO: Create): Label {
-        val board = boardRepository.findById(boardId.toLong()).orElseThrow()
+        val board = boardRepository.findById(boardId.toLong()).orElseThrow { KorelloNotFoundException() }
         return labelRepository.save(Label(board, labelCreateDTO.name, labelCreateDTO.color))
     }
 

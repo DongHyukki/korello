@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired
 
 internal class BoardMemberServiceTest(
     @Autowired val boardCrudService: BoardCrudService
-): KorelloApplicationTests() {
+) : KorelloApplicationTests() {
 
     @Test
     fun getAllBoards() {

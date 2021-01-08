@@ -11,7 +11,7 @@ import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-class LoggingFilter: OncePerRequestFilter() {
+class LoggingFilter : OncePerRequestFilter() {
 
     override fun doFilterInternal(
         request: HttpServletRequest,
@@ -30,13 +30,13 @@ class LoggingFilter: OncePerRequestFilter() {
 
         val requestContents = requestCacheWrapperObject.contentAsByteArray
 
-        if(requestContents.isNotEmpty()) {
+        if (requestContents.isNotEmpty()) {
             requestData = mapper.readValue<Any>(requestContents).toString()
         }
 
         val responseContents = responseCacheWrapperObject.contentAsByteArray
 
-        if(responseContents.isNotEmpty()) {
+        if (responseContents.isNotEmpty()) {
             responseData = mapper.readValue<Any>(responseCacheWrapperObject.contentAsByteArray).toString()
         }
 

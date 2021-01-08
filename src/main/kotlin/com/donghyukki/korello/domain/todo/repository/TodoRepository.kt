@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 
 @Repository
-interface TodoRepository: JpaRepository<Todo, Long> {
+interface TodoRepository : JpaRepository<Todo, Long> {
 
     @Query("select t from Todo t join fetch t.card where t.card.id=:cardId")
     fun getTodosByCardId(@Param("cardId") cardId: Long): List<Todo>

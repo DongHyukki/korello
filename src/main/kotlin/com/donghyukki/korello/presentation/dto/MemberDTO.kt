@@ -11,9 +11,11 @@ class MemberDTO {
         ) {
             fun toEntity() = Member(name)
         }
+
         data class Delete(
             val id: String
         )
+
         data class Response(
             val id: String,
             val name: String

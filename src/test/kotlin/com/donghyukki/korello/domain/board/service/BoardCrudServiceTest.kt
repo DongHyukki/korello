@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional
 
 internal class BoardCrudServiceTest(
     @Autowired val boardCrudService: BoardCrudService
-): KorelloApplicationTests() {
+) : KorelloApplicationTests() {
 
     @Test
     @Transactional

@@ -35,7 +35,7 @@ class MemberCrudController(
     @Operation(summary = "MEMBER 수정", description = "MEMBER를 수정 한다.")
     @PutMapping("api/v1/member")
     fun updateMember(): KorelloResponse {
-        return KorelloResponse(HttpStatus.NOT_IMPLEMENTED,"미구현")
+        return KorelloResponse(HttpStatus.NOT_IMPLEMENTED, "미구현")
     }
 
     @Operation(summary = "MEMBER 삭제", description = "MEMBER를 삭제 한다.")

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
-    <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
-    <include resource="org/springframework/boot/logging/logback/file-appender.xml" />
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+    <include resource="org/springframework/boot/logging/logback/file-appender.xml"/>
 
-    <property name="LOG_DIR" value="./log" />
+    <property name="LOG_DIR" value="./log"/>
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_DIR}/access.log</file>
@@ -49,30 +49,30 @@
         <appender-ref ref="FILE_HTTP"/>
     </logger>
 
-<!--    <logger name="org.springframework" additivity="false" level="INFO">-->
-<!--        <appender-ref ref="FILE"/>-->
-<!--        <appender-ref ref="CONSOLE"/>-->
-<!--    </logger>-->
+    <!--    <logger name="org.springframework" additivity="false" level="INFO">-->
+    <!--        <appender-ref ref="FILE"/>-->
+    <!--        <appender-ref ref="CONSOLE"/>-->
+    <!--    </logger>-->
 
-<!--    <logger name="org.hibernate" additivity="false" level="INFO">-->
-<!--        <appender-ref ref="FILE"/>-->
-<!--        <appender-ref ref="CONSOLE"/>-->
-<!--    </logger>-->
+    <!--    <logger name="org.hibernate" additivity="false" level="INFO">-->
+    <!--        <appender-ref ref="FILE"/>-->
+    <!--        <appender-ref ref="CONSOLE"/>-->
+    <!--    </logger>-->
 
-<!--    <logger name="org.apache.catalina" additivity="false" level="INFO">-->
-<!--        <appender-ref ref="FILE"/>-->
-<!--        <appender-ref ref="CONSOLE"/>-->
-<!--    </logger>-->
+    <!--    <logger name="org.apache.catalina" additivity="false" level="INFO">-->
+    <!--        <appender-ref ref="FILE"/>-->
+    <!--        <appender-ref ref="CONSOLE"/>-->
+    <!--    </logger>-->
 
     <springProfile name="local">
         <root level="INFO">
-            <appender-ref ref="FILE" />
-            <appender-ref ref="CONSOLE" />
+            <appender-ref ref="FILE"/>
+            <appender-ref ref="CONSOLE"/>
         </root>
     </springProfile>
     <springProfile name="dev">
         <root level="INFO">
-            <appender-ref ref="FILE" />
+            <appender-ref ref="FILE"/>
         </root>
     </springProfile>
 </configuration>

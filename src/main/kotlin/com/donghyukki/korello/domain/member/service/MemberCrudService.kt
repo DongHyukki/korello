@@ -4,6 +4,7 @@ import com.donghyukki.korello.presentation.dto.MemberDTO.Companion.Create
 import com.donghyukki.korello.presentation.dto.MemberDTO.Companion.Delete
 import com.donghyukki.korello.domain.member.model.Member
 import com.donghyukki.korello.domain.member.repository.MemberRepository
+import com.donghyukki.korello.infrastructure.exception.KorelloNotFoundException
 import com.donghyukki.korello.presentation.dto.MemberDTO
 import com.donghyukki.korello.presentation.dto.MemberDTO.Companion.Response
 import org.springframework.stereotype.Service
@@ -16,7 +17,7 @@ class MemberCrudService(
 ) {
     @Transactional(readOnly = true)
     fun getMemberEntity(memberId: Long): Member {
-        return memberRepository.findById(memberId).orElseThrow { IllegalArgumentException("Member Not Existed") }
+        return memberRepository.findById(memberId).orElseThrow { KorelloNotFoundException() }
     }
 
     @Transactional(readOnly = true)
@@ -26,7 +27,7 @@ class MemberCrudService(
 
     @Transactional(readOnly = true)
     fun getMember(memberId: Long): Response {
-        val member = memberRepository.findById(memberId).orElseThrow { IllegalArgumentException("Member Not Existed") }
+        val member = memberRepository.findById(memberId).orElseThrow { KorelloNotFoundException() }
         return Response(member.id.toString(), member.name)
     }
 

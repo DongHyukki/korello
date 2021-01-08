@@ -3,6 +3,7 @@ package com.donghyukki.korello.application.services
 import com.donghyukki.korello.domain.card.repository.CardRepository
 import com.donghyukki.korello.domain.todo.model.Todo
 import com.donghyukki.korello.domain.todo.repository.TodoRepository
+import com.donghyukki.korello.infrastructure.exception.KorelloNotFoundException
 import com.donghyukki.korello.presentation.dto.TodoDTO
 import com.donghyukki.korello.presentation.dto.TodoDTO.Companion.Create
 import com.donghyukki.korello.presentation.dto.TodoDTO.Companion.Delete
@@ -18,12 +19,13 @@ class CardTodoService(
 
     @Transactional(readOnly = true)
     fun getTodosByCardId(cardId: String): List<Response> {
-        return todoRepository.getTodosByCardId(cardId.toLong()).map { todo -> Response(todo.id.toString(), todo.title, todo.status) }.toList()
+        return todoRepository.getTodosByCardId(cardId.toLong())
+            .map { todo -> Response(todo.id.toString(), todo.title, todo.status) }.toList()
     }
 
     @Transactional
     fun createTodo(cardId: String, todoCreateDTO: Create): Todo {
-        val card = cardRepository.findById(cardId.toLong()).orElseThrow()
+        val card = cardRepository.findById(cardId.toLong()).orElseThrow { KorelloNotFoundException() }
         val todo = Todo(todoCreateDTO.title, card)
         card.addTodo(todo)
         return todoRepository.save(todo)

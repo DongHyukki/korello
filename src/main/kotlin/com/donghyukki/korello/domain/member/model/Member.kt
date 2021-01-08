@@ -10,7 +10,7 @@ import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
-class Member (
+class Member(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     val id: Long?,
@@ -29,7 +29,7 @@ class Member (
     @UpdateTimestamp
     lateinit var updateDate: LocalDateTime
 
-    constructor(name: String): this(null, name, arrayListOf(), arrayListOf())
+    constructor(name: String) : this(null, name, arrayListOf(), arrayListOf())
 
     fun addBoards(boardJoinMembers: BoardJoinMembers) {
         boardJoins.add(boardJoinMembers)
@@ -42,11 +42,11 @@ class Member (
     fun getJoinBoards(): List<Response> {
         return boardJoins.map { boardJoinMembers ->
             Response(
-                boardJoinMembers.board.id.toString()
-                , boardJoinMembers.board.name
-                , boardJoinMembers.board.members.map { boardJoinMembers -> boardJoinMembers.member.name }.toList()
-                , boardJoinMembers.board.createDate
-                , boardJoinMembers.board.updateDate
+                boardJoinMembers.board.id.toString(),
+                boardJoinMembers.board.name,
+                boardJoinMembers.board.members.map { boardJoinMembers -> boardJoinMembers.member.name }.toList(),
+                boardJoinMembers.board.createDate,
+                boardJoinMembers.board.updateDate
             )
         }.toList()
     }
@@ -67,8 +67,6 @@ class Member (
     override fun hashCode(): Int {
         return id?.hashCode() ?: 0
     }
-
-
 
 
 }

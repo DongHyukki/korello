@@ -9,16 +9,20 @@ class LabelDTO {
             val name: String,
             val color: String,
         )
+
         data class AddCard(
             val labelId: String,
         )
+
         data class Delete(
             val labelIds: List<String>
         )
+
         data class Update(
             val color: String,
             val name: String,
         )
+
         data class Response(
             val id: String,
             val name: String,

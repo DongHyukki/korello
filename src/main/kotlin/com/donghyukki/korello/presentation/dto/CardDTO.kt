@@ -10,21 +10,26 @@ class CardDTO {
             val tagValue: String,
             val members: List<String>?
         )
+
         data class Delete(
             val id: String,
         )
+
         data class UpdateTag(
             val id: String,
             val tagValue: String,
         )
+
         data class UpdateName(
             val id: String,
             val name: String,
         )
+
         data class UpdateMembers(
             val id: String,
             val memberNames: List<String>,
         )
+
         data class LabelResponse(
             val id: String,
             val name: String,
@@ -32,6 +37,7 @@ class CardDTO {
             val createDate: LocalDateTime,
             val updateDate: LocalDateTime
         )
+
         data class Response(
             val id: String,
             val name: String,
