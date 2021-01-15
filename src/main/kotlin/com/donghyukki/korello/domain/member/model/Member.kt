@@ -2,7 +2,6 @@ package com.donghyukki.korello.domain.member.model
 
 import com.donghyukki.korello.domain.board.model.BoardJoinMembers
 import com.donghyukki.korello.domain.card.model.Card
-import com.donghyukki.korello.presentation.dto.BoardDTO
 import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.Response
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
@@ -15,11 +14,21 @@ class Member(
     @GeneratedValue(strategy = GenerationType.AUTO)
     val id: Long?,
     @Column
-    val name: String,
+    var name: String,
     @OneToMany(mappedBy = "member")
     val boardJoins: MutableList<BoardJoinMembers>,
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "members")
-    val cards: MutableList<Card>
+    val cards: MutableList<Card>,
+    @Column
+    val role: String,
+    @Column
+    val providerId: String,
+    @Column
+    val registrationId: String,
+    @Column
+    var accessToken: String,
+    @Column
+    var refreshToken: String
 ) {
     @Column
     @CreationTimestamp
@@ -29,7 +38,8 @@ class Member(
     @UpdateTimestamp
     lateinit var updateDate: LocalDateTime
 
-    constructor(name: String) : this(null, name, arrayListOf(), arrayListOf())
+    constructor(name: String, role: Role, providerId: String, registrationId: String, accessToken: String, refreshToken: String)
+            : this(null, name, arrayListOf(), arrayListOf(), role.type, providerId, registrationId, accessToken, refreshToken)
 
     fun addBoards(boardJoinMembers: BoardJoinMembers) {
         boardJoins.add(boardJoinMembers)
@@ -51,6 +61,16 @@ class Member(
         }.toList()
     }
 
+    fun changeAuth(name: String, accessToken: String, refreshToken: String) {
+        this@Member.name = name
+        this@Member.accessToken = accessToken
+        this@Member.refreshToken = refreshToken
+    }
+
+    fun changeName(name: String) {
+        this@Member.name = name
+    }
+
     override fun toString(): String {
         return "Member(id=$id, name='$name')"
     }
@@ -60,12 +80,15 @@ class Member(
         if (other !is Member) return false
 
         if (id != other.id) return false
+        if (providerId != other.providerId) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        return id?.hashCode() ?: 0
+        var result = id?.hashCode() ?: 0
+        result = 31 * result + providerId.hashCode()
+        return result
     }
 
 

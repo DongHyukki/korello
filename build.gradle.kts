@@ -27,6 +27,12 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 
+    //Security
+    implementation("org.springframework.boot:spring-boot-starter-security")
+
+    //OAuth
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+
     //Open API
     implementation("org.springdoc:springdoc-openapi-kotlin:1.5.0")
     implementation("org.springdoc:springdoc-openapi-ui:1.5.0")
@@ -45,6 +51,9 @@ dependencies {
 
     //logback
     implementation("net.logstash.logback:logstash-logback-encoder:5.1")
+
+    //jwt
+    implementation("io.jsonwebtoken:jjwt:0.7.0")
 }
 
 allOpen {

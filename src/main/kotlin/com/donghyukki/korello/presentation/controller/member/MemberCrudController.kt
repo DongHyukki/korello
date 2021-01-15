@@ -44,4 +44,10 @@ class MemberCrudController(
         memberCrudService.deleteMember(memberDeleteDTO)
         return KorelloResponse()
     }
+
+    @GetMapping("/login/oauth")
+    fun authorizeMember(): KorelloResponse {
+        return KorelloResponse()
+    }
+
 }

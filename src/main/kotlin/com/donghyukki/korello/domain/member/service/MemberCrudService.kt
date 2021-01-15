@@ -5,8 +5,8 @@ import com.donghyukki.korello.presentation.dto.MemberDTO.Companion.Delete
 import com.donghyukki.korello.domain.member.model.Member
 import com.donghyukki.korello.domain.member.repository.MemberRepository
 import com.donghyukki.korello.infrastructure.exception.KorelloNotFoundException
-import com.donghyukki.korello.presentation.dto.MemberDTO
 import com.donghyukki.korello.presentation.dto.MemberDTO.Companion.Response
+import com.donghyukki.korello.presentation.dto.MemberDTO.Companion.Update
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
@@ -31,11 +31,29 @@ class MemberCrudService(
         return Response(member.id.toString(), member.name)
     }
 
+    @Transactional
+    fun changeAuth(memberUpdateDTO: Update): Member {
+        val member = memberRepository.findMemberByNameAndProviderId(memberUpdateDTO.name, memberUpdateDTO.providerId).get()
+        member.changeAuth(memberUpdateDTO.name, memberUpdateDTO.accessToken, memberUpdateDTO.refreshToken)
+        return member
+    }
+
+//    @Transactional(readOnly = true)
+//    fun findMemberByNameAndProviderId(memberId: Long): Response {
+//        val member = memberRepository.findMemberByNameAndProviderId(name, providerId).isPresent
+//        return Response(member.id.toString(), member.name)
+//    }
+
     fun createMember(memberCreateDTO: Create): Member {
         return memberRepository.save(memberCreateDTO.toEntity())
     }
 
     fun deleteMember(memberDeleteDTO: Delete) {
         return memberRepository.deleteById(memberDeleteDTO.id.toLong())
+    }
+
+    @Transactional(readOnly = true)
+    fun findMemberByNameAndProviderId(name: String, providerId: String): Optional<Member> {
+        return memberRepository.findMemberByNameAndProviderId(name, providerId)
     }
 }
