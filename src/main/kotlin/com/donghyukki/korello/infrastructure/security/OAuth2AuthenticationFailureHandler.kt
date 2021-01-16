@@ -13,5 +13,6 @@ class OAuth2AuthenticationFailureHandler: AuthenticationFailureHandler {
         exception: AuthenticationException?
     ) {
         println("1222")
+        exception?.printStackTrace()
     }
 }
