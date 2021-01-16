@@ -61,3 +61,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+LOG_FILE_IS_UNDEFINED
+log

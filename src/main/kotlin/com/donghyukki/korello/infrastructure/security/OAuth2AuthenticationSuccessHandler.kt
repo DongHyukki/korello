@@ -17,6 +17,6 @@ class OAuth2AuthenticationSuccessHandler : AuthenticationSuccessHandler {
         val accessToken = oAuth2User.attributes["accessToken"].toString()
         val refreshToken = oAuth2User.attributes["refreshToken"].toString()
 
-        response?.sendRedirect("http://hyuki-local.com:8080?accessToken=${accessToken}&refreshToken=${refreshToken}")
+        response?.sendRedirect("http://korello.s3-website.ap-northeast-2.amazonaws.com?accessToken=${accessToken}&refreshToken=${refreshToken}")
     }
 }
