@@ -40,7 +40,7 @@ class SecurityConfig(
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
                 .authorizeRequests()
-                    .antMatchers("/", "/swagger-ui.html", "/oauth2/authorization/**").permitAll()
+                    .antMatchers("/", "/swagger-ui.html", "/health_check.html", "/oauth2/authorization/**", "/oauth2/refresh").permitAll()
                     .antMatchers("/api/v1/**").hasRole(Role.USER.name)
             .and()
                 .exceptionHandling()

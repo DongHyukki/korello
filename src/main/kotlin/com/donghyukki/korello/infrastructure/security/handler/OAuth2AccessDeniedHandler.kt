@@ -1,7 +1,5 @@
 package com.donghyukki.korello.infrastructure.security.handler
 
-import com.donghyukki.korello.infrastructure.exception.ResultCode
-import com.donghyukki.korello.infrastructure.exception.ResultCode.Companion.COMMON_ERROR
 import com.donghyukki.korello.infrastructure.exception.ResultCode.Companion.EXPIRED_TOKEN
 import com.donghyukki.korello.infrastructure.exception.ResultCode.Companion.ILLEGAL_TOKEN
 import com.donghyukki.korello.infrastructure.exception.ResultCode.Companion.NULL_TOKEN

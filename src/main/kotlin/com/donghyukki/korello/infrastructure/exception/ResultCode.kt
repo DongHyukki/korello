@@ -9,6 +9,6 @@ class ResultCode(
         val NOT_FOUND_DATA = ResultCode(500_001, "Not Found Data")
         val EXPIRED_TOKEN = ResultCode(401_001, "Token Expired")
         val ILLEGAL_TOKEN = ResultCode(401_002, "Illegal Token")
-        val NULL_TOKEN = ResultCode(401_003, "Access Token Required")
+        val NULL_TOKEN = ResultCode(401_003, "Authorization Token Required")
     }
 }

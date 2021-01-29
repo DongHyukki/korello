@@ -28,12 +28,13 @@ class AuthenticationFilter(
     private val ANONYMOUS = "ROLE_ANONYMOUS"
     private val CLAIM_PROVIDER_KEY = "providerId"
     private val CLAIM_NAME_KEY = "name"
+    private val REFRESH_URL = "/oauth2/refresh"
 
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain) {
         val token = getTokenFromHeader(request.getHeader(AUTHORIZATION_HEADER_KEY))
         var authentication = UsernamePasswordAuthenticationToken(null, null, roleToAuthorities(ANONYMOUS))
 
-        if (token != ANONYMOUS) {
+        if (token != ANONYMOUS && request.requestURI != REFRESH_URL) {
             try {
                 val claims = jwtConfig.getClaim(token)
                 authentication = claimsToAuthentication(claims)

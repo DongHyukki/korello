@@ -47,6 +47,7 @@ class CustomOAuth2UserService(
         val accessToken = jwtConfig.createAccessToken(providerId, memberName)
         val refreshToken = jwtConfig.createRefreshToken(providerId, memberName)
         val newAttributes = oAuthAttributes.attributes.toMutableMap()
+
         newAttributes["accessToken"] = accessToken
         newAttributes["refreshToken"] = refreshToken
 

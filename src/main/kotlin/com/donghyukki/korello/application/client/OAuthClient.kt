@@ -7,6 +7,7 @@ import org.springframework.util.LinkedMultiValueMap
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.client.getForObject
 
+@Deprecated("사용안함")
 class OAuthClient {
 
     companion object {
