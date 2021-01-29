@@ -10,15 +10,15 @@ spec:
     matchLabels:
       app: hyuki-app-dev
   replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 50%
   template:
     metadata:
       labels:
         app: hyuki-app-dev
     spec:
-      strategy:
-        type: RollingUpdate
-        rollingUpdate:
-          maxUnavailable: 50%
       containers:
         - name: hyuki-dev
           image: kderr2791/hyuki-app:latest
