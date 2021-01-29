@@ -27,7 +27,7 @@ class OAuth2AccessDeniedHandler: AccessDeniedHandler {
         when(response?.status) {
             EXPIRED_TOKEN.result_code -> response.writer.write(KorelloExceptionResponse(EXPIRED_TOKEN.result_code, EXPIRED_TOKEN.result_message).toJsonString()!!)
             ILLEGAL_TOKEN.result_code -> response.writer.write(KorelloExceptionResponse(ILLEGAL_TOKEN.result_code, ILLEGAL_TOKEN.result_message).toJsonString()!!)
-            else -> response.writer.write(KorelloExceptionResponse(NULL_TOKEN.result_code, NULL_TOKEN.result_message).toJsonString()!!)
+            else -> response?.writer?.write(KorelloExceptionResponse(NULL_TOKEN.result_code, NULL_TOKEN.result_message).toJsonString()!!)
         }
 
         response?.status = HttpStatus.UNAUTHORIZED.value()
