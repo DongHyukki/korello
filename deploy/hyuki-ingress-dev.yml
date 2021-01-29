@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hyuki.app
+  namespace: hyuki-namespace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/session-cookie-name: "hyuki-app"
+    nginx.ingress.kubernetes.io/session-cookie-expires: "172800"
+    nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
+    nginx.ingress.kubernetes.io/affinity-mode: persistent
+    nginx.ingress.kubernetes.io/session-cookie-hash: sha1
+spec:
+  tls:
+    - hosts:
+        - hyuki.app
+      secretName: ca-secret
+  rules:
+    - host: hyuki.app
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: hyuki-app-svc-dev
+                port:
+                  number: 80
