@@ -1,4 +1,4 @@
-package com.donghyukki.korello.infrastructure.security
+package com.donghyukki.korello.infrastructure.security.handler
 
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.web.authentication.AuthenticationFailureHandler
@@ -12,7 +12,8 @@ class OAuth2AuthenticationFailureHandler: AuthenticationFailureHandler {
         response: HttpServletResponse?,
         exception: AuthenticationException?
     ) {
-        println("1222")
+
         exception?.printStackTrace()
+
     }
 }

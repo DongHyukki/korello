@@ -1,8 +1,10 @@
-package com.donghyukki.korello.infrastructure.security
+package com.donghyukki.korello.infrastructure.security.service
 
 import com.donghyukki.korello.domain.member.model.Member
 import com.donghyukki.korello.domain.member.model.Role
 import com.donghyukki.korello.domain.member.service.MemberCrudService
+import com.donghyukki.korello.infrastructure.security.config.JwtConfig
+import com.donghyukki.korello.infrastructure.security.model.OAuthAttributes
 import com.donghyukki.korello.presentation.dto.MemberDTO
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService
@@ -41,9 +43,9 @@ class CustomOAuth2UserService(
         val memberName = parseMemberName(oAuthAttributes.attributes)
         val providerId = parseProviderId(oAuthAttributes.attributes, oAuthAttributes.nameAttributeKey)
         val registrationId = oAuthAttributes.registrationId
+        val role = Role.USER
         val accessToken = jwtConfig.createAccessToken(providerId, memberName)
         val refreshToken = jwtConfig.createRefreshToken(providerId, memberName)
-        val role = Role.USER
         val newAttributes = oAuthAttributes.attributes.toMutableMap()
         newAttributes["accessToken"] = accessToken
         newAttributes["refreshToken"] = refreshToken

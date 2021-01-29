@@ -6,6 +6,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.allopen") version "1.4.10"
     id("org.jetbrains.kotlin.plugin.jpa") version "1.4.10"
     id("org.jetbrains.kotlin.plugin.noarg") version "1.4.10"
+    id("com.google.cloud.tools.jib") version "2.7.1"
     kotlin("jvm") version "1.4.10"
     kotlin("plugin.spring") version "1.4.10"
 }
@@ -13,6 +14,8 @@ plugins {
 group = "com.donghyukki"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
+
+jib.to.image = "kderr2791/hyuki-app:latest"
 
 repositories {
     mavenCentral()

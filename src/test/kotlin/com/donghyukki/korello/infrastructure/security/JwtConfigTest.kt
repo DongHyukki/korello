@@ -1,7 +1,7 @@
 package com.donghyukki.korello.infrastructure.security
 
 import com.donghyukki.korello.KorelloApplicationTests
-import org.assertj.core.api.Assertions
+import com.donghyukki.korello.infrastructure.security.config.JwtConfig
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 

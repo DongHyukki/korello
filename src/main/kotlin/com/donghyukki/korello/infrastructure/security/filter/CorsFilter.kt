@@ -1,4 +1,4 @@
-package com.donghyukki.korello.infrastructure.security
+package com.donghyukki.korello.infrastructure.security.filter
 
 import java.io.IOException
 import javax.servlet.*
@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse
 
 class CorsFilter : Filter {
     override fun init(filterConfig: FilterConfig?) {}
+
     @Throws(IOException::class, ServletException::class)
     override fun doFilter(req: ServletRequest, res: ServletResponse, chain: FilterChain) {
         val response = res as HttpServletResponse

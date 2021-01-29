@@ -1,4 +1,4 @@
-package com.donghyukki.korello.infrastructure.security
+package com.donghyukki.korello.infrastructure.security.handler
 
 import org.springframework.security.core.Authentication
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User
@@ -17,6 +17,7 @@ class OAuth2AuthenticationSuccessHandler : AuthenticationSuccessHandler {
         val accessToken = oAuth2User.attributes["accessToken"].toString()
         val refreshToken = oAuth2User.attributes["refreshToken"].toString()
 
-        response?.sendRedirect("http://korello.s3-website.ap-northeast-2.amazonaws.com?accessToken=${accessToken}&refreshToken=${refreshToken}")
+//        response?.sendRedirect("http://ec2-15-164-153-156.ap-northeast-2.compute.amazonaws.com?accessToken=${accessToken}&refreshToken=${refreshToken}")
+        response?.sendRedirect("http://localhost:8080?accessToken=${accessToken}")
     }
 }

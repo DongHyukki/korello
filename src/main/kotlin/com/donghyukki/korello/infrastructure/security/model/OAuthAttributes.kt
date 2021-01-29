@@ -1,4 +1,4 @@
-package com.donghyukki.korello.infrastructure.security
+package com.donghyukki.korello.infrastructure.security.model
 
 data class OAuthAttributes(
     val providerId: String,

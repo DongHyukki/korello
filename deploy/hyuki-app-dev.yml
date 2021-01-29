@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: hyuki-dev
-          image: kderr2791/hyuki-app:1.0
+          image: kderr2791/hyuki-app:latest
           imagePullPolicy: Always
           resources:
             limits:
@@ -70,6 +70,12 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
     kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/session-cookie-name: "hyuki-app"
+    nginx.ingress.kubernetes.io/session-cookie-expires: "172800"
+    nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
+    nginx.ingress.kubernetes.io/affinity-mode: persistent
+    nginx.ingress.kubernetes.io/session-cookie-hash: sha1
 spec:
   tls:
     - hosts:

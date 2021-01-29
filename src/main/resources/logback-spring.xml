@@ -6,37 +6,37 @@
 
     <property name="LOG_DIR" value="./log"/>
 
-    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_DIR}/access.log</file>
-        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- rollover daily -->
-            <fileNamePattern>${LOG_DIR}/access.log-%d{yyyyMMdd}.%i</fileNamePattern>
-            <timeBasedFileNamingAndTriggeringPolicy
-                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <!-- or whenever the file size reaches 256MB -->
-                <maxFileSize>256MB</maxFileSize>
-            </timeBasedFileNamingAndTriggeringPolicy>
-            <maxHistory>60</maxHistory>
-            <totalSizeCap>5GB</totalSizeCap>
-        </rollingPolicy>
-    </appender>
+<!--    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+<!--        <file>${LOG_DIR}/access.log</file>-->
+<!--        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>-->
+<!--        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+<!--            &lt;!&ndash; rollover daily &ndash;&gt;-->
+<!--            <fileNamePattern>${LOG_DIR}/access.log-%d{yyyyMMdd}.%i</fileNamePattern>-->
+<!--            <timeBasedFileNamingAndTriggeringPolicy-->
+<!--                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">-->
+<!--                &lt;!&ndash; or whenever the file size reaches 256MB &ndash;&gt;-->
+<!--                <maxFileSize>256MB</maxFileSize>-->
+<!--            </timeBasedFileNamingAndTriggeringPolicy>-->
+<!--            <maxHistory>60</maxHistory>-->
+<!--            <totalSizeCap>5GB</totalSizeCap>-->
+<!--        </rollingPolicy>-->
+<!--    </appender>-->
 
-    <appender name="FILE_HTTP" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_DIR}/korello-http.log</file>
-        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- rollover daily -->
-            <fileNamePattern>${LOG_DIR}/korello-http.log-%d{yyyy-MM-dd}.%i</fileNamePattern>
-            <timeBasedFileNamingAndTriggeringPolicy
-                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <!-- or whenever the file size reaches 256MB -->
-                <maxFileSize>256MB</maxFileSize>
-            </timeBasedFileNamingAndTriggeringPolicy>
-            <maxHistory>60</maxHistory>
-            <totalSizeCap>5GB</totalSizeCap>
-        </rollingPolicy>
-    </appender>
+<!--    <appender name="FILE_HTTP" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+<!--        <file>${LOG_DIR}/korello-http.log</file>-->
+<!--        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>-->
+<!--        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+<!--            &lt;!&ndash; rollover daily &ndash;&gt;-->
+<!--            <fileNamePattern>${LOG_DIR}/korello-http.log-%d{yyyy-MM-dd}.%i</fileNamePattern>-->
+<!--            <timeBasedFileNamingAndTriggeringPolicy-->
+<!--                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">-->
+<!--                &lt;!&ndash; or whenever the file size reaches 256MB &ndash;&gt;-->
+<!--                <maxFileSize>256MB</maxFileSize>-->
+<!--            </timeBasedFileNamingAndTriggeringPolicy>-->
+<!--            <maxHistory>60</maxHistory>-->
+<!--            <totalSizeCap>5GB</totalSizeCap>-->
+<!--        </rollingPolicy>-->
+<!--    </appender>-->
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -46,7 +46,7 @@
     </appender>
 
     <logger name="HTTP_LOGGER" additivity="false" level="INFO">
-        <appender-ref ref="FILE_HTTP"/>
+        <appender-ref ref="CONSOLE"/>
     </logger>
 
     <!--    <logger name="org.springframework" additivity="false" level="INFO">-->
@@ -66,13 +66,14 @@
 
     <springProfile name="local">
         <root level="INFO">
-            <appender-ref ref="FILE"/>
+<!--            <appender-ref ref="FILE"/>-->
             <appender-ref ref="CONSOLE"/>
         </root>
     </springProfile>
     <springProfile name="dev">
         <root level="INFO">
-            <appender-ref ref="FILE"/>
+            <appender-ref ref="CONSOLE"/>
+<!--            <appender-ref ref="FILE"/>-->
         </root>
     </springProfile>
 </configuration>
