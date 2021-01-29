@@ -2,22 +2,16 @@ package com.donghyukki.korello.infrastructure.security.filter
 
 import com.donghyukki.korello.domain.member.service.MemberCrudService
 import com.donghyukki.korello.infrastructure.exception.KorelloNotFoundException
+import com.donghyukki.korello.infrastructure.exception.ResultCode
 import com.donghyukki.korello.infrastructure.security.config.JwtConfig
-import com.donghyukki.korello.presentation.dto.response.KorelloExceptionResponse
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.ExpiredJwtException
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
-import org.springframework.http.HttpStatus
-import org.springframework.security.authentication.AbstractAuthenticationToken
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import org.springframework.security.config.annotation.authentication.configurers.provisioning.UserDetailsManagerConfigurer
-import org.springframework.security.config.annotation.authentication.configurers.provisioning.UserDetailsManagerConfigurer.UserDetailsBuilder
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
-import java.util.*
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -44,9 +38,9 @@ class AuthenticationFilter(
                 val claims = jwtConfig.getClaim(token)
                 authentication = claimsToAuthentication(claims)
             } catch (e: ExpiredJwtException) {
-                response.writer.write(KorelloExceptionResponse(9998, "Token Expired").toJsonString()!!)
+                response.status = ResultCode.EXPIRED_TOKEN.result_code
             } catch (e: Exception) {
-                response.writer.write(KorelloExceptionResponse(e.cause.toString()).toJsonString()!!)
+                response.status = ResultCode.ILLEGAL_TOKEN.result_code
             }
         }
 
