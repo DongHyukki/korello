@@ -1,10 +1,14 @@
 spring:
   datasource:
     hikari:
-      jdbc-url: jdbc:mysql://222.117.225.28:8081/korello?serverTimezone=UTC&characterEncoding=UTF-8
+      jdbc-url: jdbc:mysql://hyuki.app:8088/korello?serverTimezone=UTC&characterEncoding=UTF-8
       driver-class-name: com.mysql.cj.jdbc.Driver
       username: root
       password: 1234
+      minimum-idle: 5
+      idle-timeout: 30000
+      connection-test-query: SELECT 1
+
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     show-sql: true

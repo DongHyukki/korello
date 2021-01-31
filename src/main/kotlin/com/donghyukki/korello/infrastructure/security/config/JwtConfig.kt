@@ -37,7 +37,7 @@ class JwtConfig {
             .setClaims(claim)
             .signWith(SignatureAlgorithm.HS256, secretKey)
             .setExpiration(Date.from(ZonedDateTime.now().plusHours(expireHour.toLong()).toInstant()))
-//            .setExpiration(Date.from(ZonedDateTime.now().plusSeconds(expireHour.toLong()).toInstant()))
+//            .setExpiration(Date.from(ZonedDateTime.now().plusMinutes(expireHour.toLong()).toInstant()))
             .compact()
     }
 

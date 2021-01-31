@@ -7,11 +7,9 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class HealthController {
-
     @Operation(summary = "HEALTH CHECK", description = "HEALTH CHECK")
     @GetMapping("/health_check.html")
     fun healthCheck(): KorelloResponse {
         return KorelloResponse()
     }
-
 }

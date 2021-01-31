@@ -1,18 +1,20 @@
 package com.donghyukki.korello.domain.board.service
 
-import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.Create
-import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.Delete
 import com.donghyukki.korello.domain.board.model.Board
 import com.donghyukki.korello.domain.board.repository.BoardRepository
 import com.donghyukki.korello.infrastructure.exception.KorelloNotFoundException
-import com.donghyukki.korello.presentation.dto.BoardDTO
+import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.Create
+import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.Delete
 import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.Response
+import com.donghyukki.korello.presentation.dto.EventDTO
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class BoardCrudService(
-    val boardRepository: BoardRepository
+    private val boardRepository: BoardRepository,
+    private val applicationEventPublisher: ApplicationEventPublisher
 ) {
     @Transactional(readOnly = true)
     fun getAllBoards(): List<Response> {
@@ -46,7 +48,9 @@ class BoardCrudService(
 
     @Transactional
     fun createBoard(boardCreateDTO: Create): Board {
-        return boardRepository.save(boardCreateDTO.toEntity())
+        val board = boardRepository.save(boardCreateDTO.toEntity())
+        applicationEventPublisher.publishEvent(EventDTO(board.id!!, EventDTO.KorelloEventType.BOARD, EventDTO.KorelloActionType.CREATE))
+        return board
     }
 
     @Transactional

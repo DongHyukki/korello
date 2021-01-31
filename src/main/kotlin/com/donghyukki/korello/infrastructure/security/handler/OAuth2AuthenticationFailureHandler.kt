@@ -12,8 +12,6 @@ class OAuth2AuthenticationFailureHandler: AuthenticationFailureHandler {
         response: HttpServletResponse?,
         exception: AuthenticationException?
     ) {
-
-        exception?.printStackTrace()
-
+        response?.sendRedirect("http://ec2-15-164-153-156.ap-northeast-2.compute.amazonaws.com")
     }
 }

@@ -1,4 +1,4 @@
-package com.donghyukki.korello.infrastructure.web
+package com.donghyukki.korello.infrastructure.web.config
 
 import com.donghyukki.korello.infrastructure.filter.LoggingFilter
 import org.springframework.boot.web.servlet.FilterRegistrationBean

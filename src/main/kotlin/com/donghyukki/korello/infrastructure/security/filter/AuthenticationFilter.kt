@@ -12,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
+import java.security.Principal
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -60,7 +61,7 @@ class AuthenticationFilter(
         val findMember = memberCrudService.findMemberByNameAndProviderId(name, providerId).orElseThrow { KorelloNotFoundException() }
         val role = findMember.role
 
-        return UsernamePasswordAuthenticationToken(findMember.id!!, null, roleToAuthorities(role))
+        return UsernamePasswordAuthenticationToken(hashMapOf("name" to name, "id" to findMember.id!!), null, roleToAuthorities(role))
     }
 
     private fun roleToAuthorities(role: String): MutableList<SimpleGrantedAuthority> {

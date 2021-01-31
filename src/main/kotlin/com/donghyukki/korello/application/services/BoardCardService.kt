@@ -1,23 +1,20 @@
 package com.donghyukki.korello.application.services
 
 import com.donghyukki.korello.domain.board.repository.BoardRepository
+import com.donghyukki.korello.domain.card.model.Card
+import com.donghyukki.korello.domain.card.repository.CardRepository
+import com.donghyukki.korello.domain.member.model.Member
+import com.donghyukki.korello.infrastructure.exception.KorelloNotFoundException
+import com.donghyukki.korello.infrastructure.security.model.MemberAuthentication
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.Create
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.Delete
+import com.donghyukki.korello.presentation.dto.CardDTO.Companion.LabelResponse
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.Response
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateMembers
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateName
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateTag
-import com.donghyukki.korello.domain.card.model.Card
-import com.donghyukki.korello.domain.card.repository.CardRepository
-import com.donghyukki.korello.domain.todo.repository.TodoRepository
-import com.donghyukki.korello.domain.member.model.Member
-import com.donghyukki.korello.infrastructure.exception.KorelloException
-import com.donghyukki.korello.infrastructure.exception.KorelloNotFoundException
-import com.donghyukki.korello.presentation.dto.CardDTO
-import com.donghyukki.korello.presentation.dto.CardDTO.Companion.LabelResponse
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.lang.IllegalStateException
 
 
 @Service

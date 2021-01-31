@@ -40,9 +40,6 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-kotlin:1.5.0")
     implementation("org.springdoc:springdoc-openapi-ui:1.5.0")
 
-    //Devtools
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
-
     //MySQL
     runtimeOnly("mysql:mysql-connector-java")
 
@@ -57,6 +54,9 @@ dependencies {
 
     //jwt
     implementation("io.jsonwebtoken:jjwt:0.7.0")
+
+    //kafka
+    implementation("org.springframework.kafka:spring-kafka")
 }
 
 allOpen {
