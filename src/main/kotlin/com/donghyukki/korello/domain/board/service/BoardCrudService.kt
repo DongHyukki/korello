@@ -7,6 +7,8 @@ import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.Create
 import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.Delete
 import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.Response
 import com.donghyukki.korello.presentation.dto.EventDTO
+import com.donghyukki.korello.presentation.dto.type.KorelloActionType
+import com.donghyukki.korello.presentation.dto.type.KorelloEventType
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -49,7 +51,8 @@ class BoardCrudService(
     @Transactional
     fun createBoard(boardCreateDTO: Create): Board {
         val board = boardRepository.save(boardCreateDTO.toEntity())
-        applicationEventPublisher.publishEvent(EventDTO(board.id!!, EventDTO.KorelloEventType.BOARD, EventDTO.KorelloActionType.CREATE))
+//        applicationEventPublisher.publishEvent(EventDTO(board.id!!, KorelloEventType.BOARD.toAddedPostName(), KorelloActionType.CREATE.kor_name))
+        applicationEventPublisher.publishEvent(EventDTO(board.id!!, KorelloEventType.BOARD, KorelloActionType.CREATE))
         return board
     }
 

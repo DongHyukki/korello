@@ -23,8 +23,8 @@ class KorelloEventHandler(
         val principal = memberAuthentication.getAuthentication().principal as Map<*, *>
         val memberName = principal["name"].toString()
         val memberId = principal["id"] as Long
-        event.setMemberId(memberId)
-        event.setMemberName(memberName)
+        event.memberId = memberId
+        event.memberName = memberName
     }
 
 }
