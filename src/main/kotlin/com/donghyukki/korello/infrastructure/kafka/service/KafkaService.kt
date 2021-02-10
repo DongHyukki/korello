@@ -15,7 +15,6 @@ class KafkaService(
     private val kafkaLogger = LoggerFactory.getLogger("KAFKA_LOGGER")
 
     fun sendAsyncMessage(eventDTO: EventDTO) {
-        val str =ObjectMapper().writeValueAsString(eventDTO)
         val future = kafkaTemplate.send(kafkaPropertyConfig.topicName, eventDTO)
         future.addCallback({ result -> println(result?.recordMetadata?.offset()) }, { ex -> ex.printStackTrace() })
     }

@@ -9,14 +9,20 @@ import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.MemberExit
 import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.MemberJoin
 import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.MemberResponse
 import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.Response
+import com.donghyukki.korello.presentation.dto.EventDTO
+import com.donghyukki.korello.presentation.dto.type.KorelloActionType
+import com.donghyukki.korello.presentation.dto.type.KorelloEventType
+import com.donghyukki.korello.presentation.dto.type.KorelloSelectType
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class BoardMemberService(
-    val boardCrudService: BoardCrudService,
-    val boardJoinMembersService: BoardJoinMembersService,
-    val memberCrudService: MemberCrudService,
+    private val boardCrudService: BoardCrudService,
+    private val boardJoinMembersService: BoardJoinMembersService,
+    private val memberCrudService: MemberCrudService,
+    private val applicationEventPublisher: ApplicationEventPublisher
 ) {
 
     @Transactional(readOnly = true)
@@ -36,7 +42,9 @@ class BoardMemberService(
     fun inviteMember(memberJoinDTO: MemberJoin): BoardJoinMembers {
         val member = memberCrudService.getMemberEntity(memberJoinDTO.memberId.toLong())
         val board = boardCrudService.getBoardEntity(memberJoinDTO.boardId.toLong())
-        return boardJoinMembersService.joinBoard(member, board)
+        val joinBoard = boardJoinMembersService.joinBoard(member, board)
+        applicationEventPublisher.publishEvent(EventDTO(board.id!!, KorelloSelectType.BOARD, KorelloEventType.MEMBER, KorelloActionType.INVITE))
+        return joinBoard
     }
 
     @Transactional
@@ -47,5 +55,6 @@ class BoardMemberService(
         boardJoinMembersService.exitBoard(joinBoardMembers)
         board.deleteMember(joinBoardMembers)
         member.exitBoard(joinBoardMembers)
+        applicationEventPublisher.publishEvent(EventDTO(board.id!!, KorelloSelectType.BOARD, KorelloEventType.MEMBER, KorelloActionType.EXIT))
     }
 }

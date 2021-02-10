@@ -13,6 +13,11 @@ import com.donghyukki.korello.presentation.dto.CardDTO.Companion.Response
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateMembers
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateName
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateTag
+import com.donghyukki.korello.presentation.dto.EventDTO
+import com.donghyukki.korello.presentation.dto.type.KorelloActionType
+import com.donghyukki.korello.presentation.dto.type.KorelloEventType
+import com.donghyukki.korello.presentation.dto.type.KorelloSelectType
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -21,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional
 class BoardCardService(
     private val boardRepository: BoardRepository,
     private val cardRepository: CardRepository,
+    private val applicationEventPublisher: ApplicationEventPublisher
 ) {
 
     @Transactional(readOnly = true)
@@ -56,6 +62,7 @@ class BoardCardService(
         }
         val savedCard = cardRepository.save(Card(cardCreateDTO.name, cardCreateDTO.tagValue, board, members))
         board.addCard(savedCard)
+        applicationEventPublisher.publishEvent(EventDTO(board.id!!, KorelloSelectType.BOARD, KorelloEventType.CARD, KorelloActionType.ADD))
     }
 
     @Transactional
@@ -64,6 +71,7 @@ class BoardCardService(
         val card = cardRepository.findById(cardDeleteDTO.id.toLong()).orElseThrow { KorelloNotFoundException() }
         card.clearLabels()
         board.deleteCard(cardDeleteDTO.id.toLong())
+        applicationEventPublisher.publishEvent(EventDTO(board.id!!, KorelloSelectType.BOARD, KorelloEventType.CARD, KorelloActionType.DELETE))
     }
 
     @Transactional
@@ -72,6 +80,7 @@ class BoardCardService(
         val card = board.cards.firstOrNull { card -> card.id == cardUpdateTagDTO.id.toLong() }
             ?: throw KorelloNotFoundException()
         card.changeTag(cardUpdateTagDTO.tagValue)
+        applicationEventPublisher.publishEvent(EventDTO(board.id!!, KorelloSelectType.BOARD, KorelloEventType.CARD, KorelloActionType.UPDATE))
     }
 
     @Transactional
@@ -80,6 +89,7 @@ class BoardCardService(
         val card = board.cards.firstOrNull { card -> card.id == cardUpdateNameDTO.id.toLong() }
             ?: throw KorelloNotFoundException()
         card.changeName(cardUpdateNameDTO.name)
+        applicationEventPublisher.publishEvent(EventDTO(board.id!!, KorelloSelectType.BOARD, KorelloEventType.CARD, KorelloActionType.UPDATE))
     }
 
     @Transactional
@@ -90,6 +100,7 @@ class BoardCardService(
         val joinMembers = board.members.map { boardMembers -> boardMembers.member }.toList()
         val updateMembers = joinMembers.filter { member -> cardUpdateMembersDTO.memberNames.contains(member.name) }
         card.changeMembers(updateMembers)
+        applicationEventPublisher.publishEvent(EventDTO(board.id!!, KorelloSelectType.BOARD, KorelloEventType.CARD, KorelloActionType.UPDATE))
     }
 
 }
