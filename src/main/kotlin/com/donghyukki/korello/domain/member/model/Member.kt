@@ -2,6 +2,7 @@ package com.donghyukki.korello.domain.member.model
 
 import com.donghyukki.korello.domain.board.model.BoardJoinMembers
 import com.donghyukki.korello.domain.card.model.Card
+import com.donghyukki.korello.domain.common.BaseEntity
 import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.Response
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
@@ -29,15 +30,7 @@ class Member(
     var accessToken: String,
     @Column
     var refreshToken: String
-) {
-    @Column
-    @CreationTimestamp
-    lateinit var createDate: LocalDateTime
-
-    @Column
-    @UpdateTimestamp
-    lateinit var updateDate: LocalDateTime
-
+) : BaseEntity() {
     constructor(name: String, role: Role, providerId: String, registrationId: String, accessToken: String, refreshToken: String)
             : this(null, name, arrayListOf(), arrayListOf(), role.type, providerId, registrationId, accessToken, refreshToken)
 

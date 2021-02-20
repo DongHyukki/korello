@@ -1,17 +1,14 @@
 package com.donghyukki.korello.domain.card.model
 
 import com.donghyukki.korello.domain.board.model.Board
+import com.donghyukki.korello.domain.common.BaseEntity
 import com.donghyukki.korello.domain.label.model.Label
 import com.donghyukki.korello.domain.member.model.Member
 import com.donghyukki.korello.domain.todo.model.Todo
-import org.hibernate.annotations.CreationTimestamp
-import org.hibernate.annotations.UpdateTimestamp
-import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
 class Card(
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     val id: Long? = null,
@@ -29,14 +26,7 @@ class Card(
     @OneToMany(mappedBy = "card", cascade = [CascadeType.ALL], orphanRemoval = true)
     var todos: MutableSet<Todo>
 
-) {
-    @Column
-    @CreationTimestamp
-    lateinit var createDate: LocalDateTime
-
-    @Column
-    @UpdateTimestamp
-    lateinit var updateDate: LocalDateTime
+) : BaseEntity() {
 
     constructor(name: String, tagValue: String, board: Board) : this(
         null,
@@ -94,7 +84,6 @@ class Card(
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is Card) return false
-
         if (id != other.id) return false
 
         return true

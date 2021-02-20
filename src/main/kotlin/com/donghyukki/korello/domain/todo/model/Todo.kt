@@ -1,6 +1,7 @@
 package com.donghyukki.korello.domain.todo.model
 
 import com.donghyukki.korello.domain.card.model.Card
+import com.donghyukki.korello.domain.common.BaseEntity
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
 import java.time.LocalDateTime
@@ -20,16 +21,7 @@ class Todo(
     @Column
     var status: Boolean
 
-) {
-
-    @Column
-    @CreationTimestamp
-    lateinit var createDate: LocalDateTime
-
-    @Column
-    @UpdateTimestamp
-    lateinit var updateDate: LocalDateTime
-
+) : BaseEntity() {
     constructor(title: String, card: Card) : this(null, title, card, false)
 
     fun changeStatus() {

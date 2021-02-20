@@ -1,6 +1,7 @@
 package com.donghyukki.korello.domain.board.model
 
 import com.donghyukki.korello.domain.card.model.Card
+import com.donghyukki.korello.domain.common.BaseEntity
 import com.donghyukki.korello.domain.label.model.Label
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
@@ -19,15 +20,7 @@ class Board(
     val members: MutableList<BoardJoinMembers>,
     @OneToMany(mappedBy = "board", cascade = [CascadeType.ALL], orphanRemoval = true)
     var cards: MutableSet<Card>,
-) {
-    @Column
-    @CreationTimestamp
-    lateinit var createDate: LocalDateTime
-
-    @Column
-    @UpdateTimestamp
-    lateinit var updateDate: LocalDateTime
-
+) : BaseEntity() {
     constructor(name: String) : this(null, name, arrayListOf(), hashSetOf())
 
     fun deleteMember(boardJoinMembers: BoardJoinMembers) {
