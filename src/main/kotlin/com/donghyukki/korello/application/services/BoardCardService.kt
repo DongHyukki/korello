@@ -6,6 +6,7 @@ import com.donghyukki.korello.domain.card.repository.CardRepository
 import com.donghyukki.korello.domain.member.model.Member
 import com.donghyukki.korello.infrastructure.exception.KorelloNotFoundException
 import com.donghyukki.korello.infrastructure.security.model.MemberAuthentication
+import com.donghyukki.korello.presentation.dto.CardDTO
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.Create
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.Delete
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.LabelResponse
@@ -13,6 +14,7 @@ import com.donghyukki.korello.presentation.dto.CardDTO.Companion.Response
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateMembers
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateName
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateTag
+import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateDueDate
 import com.donghyukki.korello.presentation.dto.EventDTO
 import com.donghyukki.korello.presentation.dto.type.KorelloActionType
 import com.donghyukki.korello.presentation.dto.type.KorelloEventType
@@ -100,6 +102,15 @@ class BoardCardService(
         val joinMembers = board.members.map { boardMembers -> boardMembers.member }.toList()
         val updateMembers = joinMembers.filter { member -> cardUpdateMembersDTO.memberNames.contains(member.name) }
         card.changeMembers(updateMembers)
+        applicationEventPublisher.publishEvent(EventDTO(board.id!!, KorelloSelectType.BOARD, KorelloEventType.CARD, KorelloActionType.UPDATE))
+    }
+
+    @Transactional
+    fun updateCardDueDate(boardId: String, cardUpdateDueDateDTO: UpdateDueDate) {
+        val board = boardRepository.findById(boardId.toLong()).orElseThrow { KorelloNotFoundException() }
+        val card = board.cards.firstOrNull { card -> card.id == cardUpdateDueDateDTO.id.toLong() }
+            ?: throw KorelloNotFoundException()
+        card.changeDueDate(cardUpdateDueDateDTO.dueDate)
         applicationEventPublisher.publishEvent(EventDTO(board.id!!, KorelloSelectType.BOARD, KorelloEventType.CARD, KorelloActionType.UPDATE))
     }
 
