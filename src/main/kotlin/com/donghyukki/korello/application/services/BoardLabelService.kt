@@ -44,5 +44,11 @@ class BoardLabelService(
         return label
     }
 
+    @Transactional
+    fun deleteLabel(boardId: String, labelId: String) {
+        val board = boardRepository.findById(boardId.toLong()).orElseThrow { KorelloNotFoundException() }
+        labelRepository.deleteById(labelId.toLong())
+        applicationEventPublisher.publishEvent(EventDTO(boardId.toLong(), KorelloSelectType.BOARD, KorelloEventType.LABEL, KorelloActionType.DELETE))
+    }
 
 }

@@ -24,4 +24,13 @@ class BoardLabelController(
         val label = boardLabelService.createLabel(id, labelCreateDTO)
         return KorelloResponse(HttpStatus.CREATED, label)
     }
+
+    @Operation(summary = "Label 삭제", description = "특정 BOARD의 LABEL을 삭제한다.")
+    @DeleteMapping("api/v1/board/{id}/label/{labelId}")
+    fun deleteLabel(@PathVariable id: String, @PathVariable labelId: String): KorelloResponse {
+        boardLabelService.deleteLabel(id, labelId)
+        return KorelloResponse()
+    }
+
+
 }
