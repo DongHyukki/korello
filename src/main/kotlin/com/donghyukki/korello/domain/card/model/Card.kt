@@ -6,6 +6,7 @@ import com.donghyukki.korello.domain.label.model.Label
 import com.donghyukki.korello.domain.member.model.Member
 import com.donghyukki.korello.domain.todo.model.Todo
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import javax.persistence.*
 
 @Entity
@@ -65,6 +66,10 @@ class Card(
 
     fun changeDueDate(dueDate: LocalDateTime) {
         this@Card.dueDate = dueDate
+    }
+
+    fun deleteDueDate() {
+        this@Card.dueDate = null
     }
 
     fun addLabels(labels: List<Label>) {

@@ -52,7 +52,6 @@ class SecurityConfig(
                         .and()
                     .successHandler(OAuth2AuthenticationSuccessHandler())
                     .failureHandler(OAuth2AuthenticationFailureHandler())
-
     }
 
     override fun authenticationManagerBean(): AuthenticationManager {

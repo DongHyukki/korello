@@ -39,16 +39,16 @@ class BoardCardController(
     }
 
     @Operation(summary = "CARD 태그 수정", description = "특정 CARD의 태그를 수정한다.")
-    @PutMapping("api/v1/board/{id}/card/tag")
-    fun updateCardTag(@PathVariable id: String, @RequestBody cardUpdateTagDTO: UpdateTag): KorelloResponse {
-        boardCardService.updateCardTag(id, cardUpdateTagDTO)
+    @PutMapping("api/v1/card/tag")
+    fun updateCardTag(@RequestBody cardUpdateTagDTO: UpdateTag): KorelloResponse {
+        boardCardService.updateCardTag(cardUpdateTagDTO)
         return KorelloResponse()
     }
 
     @Operation(summary = "CARD 이름 수정", description = "특정 CARD의 이름을 수정한다.")
-    @PutMapping("api/v1/board/{id}/card/name")
-    fun updateCardName(@PathVariable id: String, @RequestBody cardUpdateNameDTO: UpdateName): KorelloResponse {
-        boardCardService.updateCardName(id, cardUpdateNameDTO)
+    @PutMapping("api/v1/card/name")
+    fun updateCardName(@RequestBody cardUpdateNameDTO: UpdateName): KorelloResponse {
+        boardCardService.updateCardName(cardUpdateNameDTO)
         return KorelloResponse()
     }
 
@@ -60,9 +60,16 @@ class BoardCardController(
     }
 
     @Operation(summary = "CARD Due Date 수정", description = "특정 CARD의 Due Date를 수정한다.")
-    @PutMapping("api/v1/board/{id}/card/due-date")
-    fun updateCardDueDate(@PathVariable id: String, @RequestBody cardUpdateDueDateDTO: UpdateDueDate): KorelloResponse {
-        boardCardService.updateCardDueDate(id, cardUpdateDueDateDTO)
+    @PutMapping("api/v1/card/due-date")
+    fun updateCardDueDate(@RequestBody cardUpdateDueDateDTO: UpdateDueDate): KorelloResponse {
+        boardCardService.updateCardDueDate(cardUpdateDueDateDTO)
+        return KorelloResponse()
+    }
+
+    @Operation(summary = "CARD Due Date 삭제", description = "특정 CARD의 Due Date를 삭제한다.")
+    @DeleteMapping("api/v1/card/{cardId}/due-date")
+    fun deleteCardDueDate(@PathVariable cardId: String): KorelloResponse {
+        boardCardService.deleteCardDueDate(cardId)
         return KorelloResponse()
     }
 

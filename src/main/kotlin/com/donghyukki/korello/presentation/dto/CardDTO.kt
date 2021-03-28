@@ -32,7 +32,7 @@ class CardDTO {
 
         data class UpdateDueDate(
             val id: String,
-            val dueDate: LocalDateTime
+            val dueDate: String
         )
 
         data class LabelResponse(
