@@ -27,8 +27,8 @@ class BoardCardController(
     @Operation(summary = "CARD 생성", description = "특정 BOARD의 CARD를 생성 한다")
     @PostMapping("api/v1/board/{id}/card")
     fun addCard(@PathVariable id: String, @RequestBody cardCreateDTO: Create): KorelloResponse {
-        boardCardService.addCardToBoard(id, cardCreateDTO)
-        return KorelloResponse(HttpStatus.CREATED)
+        val card = boardCardService.addCardToBoard(id, cardCreateDTO)
+        return KorelloResponse(HttpStatus.CREATED, card)
     }
 
     @Operation(summary = "CARD 삭제", description = "특정 BOARD의 CARD를 삭제 한다")

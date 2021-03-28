@@ -60,7 +60,7 @@ class BoardCardService(
     }
 
     @Transactional
-    fun addCardToBoard(boardId: String, cardCreateDTO: Create) {
+    fun addCardToBoard(boardId: String, cardCreateDTO: Create): Card {
         val board = boardRepository.findById(boardId.toLong()).orElseThrow { KorelloNotFoundException() }
         val members: List<Member> = arrayListOf()
         if (cardCreateDTO.members != null) {
@@ -70,6 +70,7 @@ class BoardCardService(
 //        val savedCard = cardRepository.save(Card(cardCreateDTO.name, cardCreateDTO.tagValue, board, members))
         board.addCard(savedCard)
         applicationEventPublisher.publishEvent(EventDTO(board.id!!, KorelloSelectType.BOARD, KorelloEventType.CARD, KorelloActionType.ADD))
+        return savedCard
     }
 
     @Transactional

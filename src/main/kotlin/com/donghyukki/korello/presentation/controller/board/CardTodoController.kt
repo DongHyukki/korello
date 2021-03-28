@@ -25,8 +25,8 @@ class CardTodoController(
     @Operation(summary = "TODO 생성", description = "특정 CARD의 TODO를 생성 한다")
     @PostMapping("api/v1/card/{id}/todo")
     fun createTodo(@RequestBody todoCreateDTO: Create, @PathVariable id: String): KorelloResponse {
-        cardTodoService.createTodo(id, todoCreateDTO)
-        return KorelloResponse(HttpStatus.CREATED)
+        val todo = cardTodoService.createTodo(id, todoCreateDTO)
+        return KorelloResponse(HttpStatus.CREATED, todo)
     }
 
     @Operation(summary = "TODO 삭제", description = "특정 CARD의 특정 TODO를 삭제 한다")
