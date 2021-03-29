@@ -24,7 +24,7 @@ class AuthenticationFilter(
 ) :
     BasicAuthenticationFilter(authenticationManager) {
 
-    private val AUTHORIZATION_HEADER_KEY = "Authorization";
+    private val AUTHORIZATION_HEADER_KEY = "Authorization"
     private val BEARER = "Bearer"
     private val ANONYMOUS = "ROLE_ANONYMOUS"
     private val CLAIM_PROVIDER_KEY = "providerId"
@@ -48,7 +48,7 @@ class AuthenticationFilter(
 
         SecurityContextHolder.getContext().authentication = authentication
 
-        chain.doFilter(request, response);
+        chain.doFilter(request, response)
     }
 
     private fun getTokenFromHeader(authorizationHeader: String?): String {

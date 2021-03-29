@@ -4,9 +4,6 @@ import com.donghyukki.korello.domain.board.model.BoardJoinMembers
 import com.donghyukki.korello.domain.card.model.Card
 import com.donghyukki.korello.domain.common.BaseEntity
 import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.Response
-import org.hibernate.annotations.CreationTimestamp
-import org.hibernate.annotations.UpdateTimestamp
-import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity

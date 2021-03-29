@@ -3,7 +3,6 @@ package com.donghyukki.korello.presentation.controller.board
 import com.donghyukki.korello.application.services.CardTodoService
 import com.donghyukki.korello.domain.todo.service.TodoService
 import com.donghyukki.korello.presentation.dto.TodoDTO.Companion.Create
-import com.donghyukki.korello.presentation.dto.TodoDTO.Companion.Delete
 import com.donghyukki.korello.presentation.dto.TodoDTO.Companion.Update
 import com.donghyukki.korello.presentation.dto.response.KorelloResponse
 import io.swagger.v3.oas.annotations.Operation

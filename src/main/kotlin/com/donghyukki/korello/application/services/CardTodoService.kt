@@ -5,9 +5,7 @@ import com.donghyukki.korello.domain.todo.model.Todo
 import com.donghyukki.korello.domain.todo.repository.TodoRepository
 import com.donghyukki.korello.infrastructure.exception.KorelloNotFoundException
 import com.donghyukki.korello.presentation.dto.EventDTO
-import com.donghyukki.korello.presentation.dto.TodoDTO
 import com.donghyukki.korello.presentation.dto.TodoDTO.Companion.Create
-import com.donghyukki.korello.presentation.dto.TodoDTO.Companion.Delete
 import com.donghyukki.korello.presentation.dto.TodoDTO.Companion.Response
 import com.donghyukki.korello.presentation.dto.type.KorelloActionType
 import com.donghyukki.korello.presentation.dto.type.KorelloEventType

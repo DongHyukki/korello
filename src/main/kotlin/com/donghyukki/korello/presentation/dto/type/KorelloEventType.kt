@@ -10,7 +10,8 @@ enum class KorelloEventType(
     CARD("card", "카드"),
     MEMBER("member", "멤버"),
     LABEL("label", "라벨"),
-    TODO("todo", "할일");
+    TODO("todo", "할일")
+    ;
 
     companion object {
         private val ulList = listOf(LABEL, TODO)

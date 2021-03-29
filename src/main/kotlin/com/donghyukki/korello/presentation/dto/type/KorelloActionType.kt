@@ -12,5 +12,5 @@ enum class KorelloActionType(
     JOIN("join", "참여"),
     INVITE("invite", "초대"),
     EXIT("exit", "퇴장"),
-    ADD("add", "추가");
+    ADD("add", "추가")
 }

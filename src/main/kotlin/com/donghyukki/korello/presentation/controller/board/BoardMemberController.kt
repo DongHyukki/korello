@@ -1,11 +1,10 @@
 package com.donghyukki.korello.presentation.controller.board
 
-import com.donghyukki.korello.presentation.dto.response.KorelloResponse
-import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.MemberJoin
-import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.MemberExit
 import com.donghyukki.korello.application.services.BoardMemberService
-import com.donghyukki.korello.presentation.dto.BoardDTO
 import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.MemberBoards
+import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.MemberExit
+import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.MemberJoin
+import com.donghyukki.korello.presentation.dto.response.KorelloResponse
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*

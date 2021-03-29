@@ -1,9 +1,9 @@
 package com.donghyukki.korello.presentation.controller.board
 
 import com.donghyukki.korello.application.services.BoardLabelService
+import com.donghyukki.korello.domain.board.service.BoardCrudService
 import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.Create
 import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.Delete
-import com.donghyukki.korello.domain.board.service.BoardCrudService
 import com.donghyukki.korello.presentation.dto.response.KorelloResponse
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.http.HttpStatus

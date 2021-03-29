@@ -1,7 +1,5 @@
 package com.donghyukki.korello.infrastructure.security.config
 
-import com.donghyukki.korello.domain.member.model.Role
-import com.fasterxml.jackson.databind.ObjectMapper
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
@@ -10,7 +8,6 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.PropertySource
 import java.time.ZonedDateTime
 import java.util.*
-import javax.crypto.SecretKey
 
 
 @Configuration

@@ -2,7 +2,6 @@ package com.donghyukki.korello.infrastructure.kafka.service
 
 import com.donghyukki.korello.infrastructure.kafka.config.KafkaPropertyConfig
 import com.donghyukki.korello.presentation.dto.EventDTO
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.slf4j.LoggerFactory
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service

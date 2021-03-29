@@ -5,7 +5,6 @@ import com.donghyukki.korello.domain.label.model.Label
 import com.donghyukki.korello.domain.label.repository.LabelRepository
 import com.donghyukki.korello.infrastructure.exception.KorelloNotFoundException
 import com.donghyukki.korello.presentation.dto.EventDTO
-import com.donghyukki.korello.presentation.dto.LabelDTO
 import com.donghyukki.korello.presentation.dto.LabelDTO.Companion.Create
 import com.donghyukki.korello.presentation.dto.LabelDTO.Companion.Response
 import com.donghyukki.korello.presentation.dto.type.KorelloActionType

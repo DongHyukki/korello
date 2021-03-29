@@ -3,9 +3,6 @@ package com.donghyukki.korello.domain.label.model
 import com.donghyukki.korello.domain.board.model.Board
 import com.donghyukki.korello.domain.card.model.Card
 import com.donghyukki.korello.domain.common.BaseEntity
-import org.hibernate.annotations.CreationTimestamp
-import org.hibernate.annotations.UpdateTimestamp
-import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
