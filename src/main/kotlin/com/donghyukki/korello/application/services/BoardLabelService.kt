@@ -30,11 +30,11 @@ class BoardLabelService(
     }
 
     @Transactional
-    fun createLabel(boardId: String, labelCreateDTO: Create): Label {
+    fun createLabel(boardId: String, labelCreateDTO: Create): Response {
         val board = boardRepository.findById(boardId.toLong()).orElseThrow { KorelloNotFoundException() }
         val label = labelRepository.save(Label(board, labelCreateDTO.name, labelCreateDTO.color))
         applicationEventPublisher.publishEvent(EventDTO(board.id!!, KorelloSelectType.BOARD, KorelloEventType.LABEL, KorelloActionType.CREATE))
-        return label
+        return Response(label.id.toString(), label.name, label.color, label.createDate, label.updateDate)
     }
 
     @Transactional
@@ -46,7 +46,6 @@ class BoardLabelService(
 
     @Transactional
     fun deleteLabel(boardId: String, labelId: String) {
-        val board = boardRepository.findById(boardId.toLong()).orElseThrow { KorelloNotFoundException() }
         labelRepository.deleteById(labelId.toLong())
         applicationEventPublisher.publishEvent(EventDTO(boardId.toLong(), KorelloSelectType.BOARD, KorelloEventType.LABEL, KorelloActionType.DELETE))
     }

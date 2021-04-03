@@ -30,12 +30,12 @@ class CardTodoService(
     }
 
     @Transactional
-    fun createTodo(cardId: String, todoCreateDTO: Create): Todo {
+    fun createTodo(cardId: String, todoCreateDTO: Create): Response {
         val card = cardRepository.findById(cardId.toLong()).orElseThrow { KorelloNotFoundException() }
         val todo = Todo(todoCreateDTO.title, card)
         card.addTodo(todo)
         val savedTodo = todoRepository.save(todo)
         applicationEventPublisher.publishEvent(EventDTO(card.id!!, KorelloSelectType.CARD, KorelloEventType.TODO, KorelloActionType.CREATE))
-        return savedTodo
+        return Response(savedTodo.id.toString(), savedTodo.title, savedTodo.status)
     }
 }

@@ -30,8 +30,8 @@ class BoardCrudController(
     @Operation(summary = "BOARD 생성", description = "BOARD를 생성 한다.")
     @PostMapping("api/v1/board")
     fun createBoard(@RequestBody boardCreateDTO: Create): KorelloResponse {
-        val board = boardCrudService.createBoard(boardCreateDTO)
-        return KorelloResponse(HttpStatus.CREATED, board)
+        val response = boardCrudService.createBoard(boardCreateDTO)
+        return KorelloResponse(HttpStatus.CREATED, response)
     }
 
     @Operation(summary = "BOARD 수정", description = "BOARD를 수정 한다.")

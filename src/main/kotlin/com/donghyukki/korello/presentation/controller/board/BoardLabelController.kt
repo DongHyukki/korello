@@ -21,8 +21,8 @@ class BoardLabelController(
     @Operation(summary = "Label 생성", description = "특정 BOARD의 LABEL을 생성한다.")
     @PostMapping("api/v1/board/{id}/label")
     fun createLabel(@RequestBody labelCreateDTO: Create, @PathVariable id: String): KorelloResponse {
-        val label = boardLabelService.createLabel(id, labelCreateDTO)
-        return KorelloResponse(HttpStatus.CREATED, label)
+        val response = boardLabelService.createLabel(id, labelCreateDTO)
+        return KorelloResponse(HttpStatus.CREATED, response)
     }
 
     @Operation(summary = "Label 삭제", description = "특정 BOARD의 LABEL을 삭제한다.")
