@@ -50,10 +50,16 @@ class BoardCrudService(
     }
 
     @Transactional
-    fun createBoard(boardCreateDTO: Create): Board {
+    fun createBoard(boardCreateDTO: Create): Response {
         val board = boardRepository.save(boardCreateDTO.toEntity())
         applicationEventPublisher.publishEvent(EventDTO(board.id!!, KorelloSelectType.BOARD, KorelloEventType.BOARD, KorelloActionType.CREATE))
-        return board
+        return Response(
+            board.id.toString(),
+            board.name,
+            board.members.map { boardJoinMembers -> boardJoinMembers.member.name }.toList(),
+            board.createDate,
+            board.updateDate
+        )
     }
 
     @Transactional

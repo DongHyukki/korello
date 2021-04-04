@@ -30,6 +30,11 @@ class CardDTO {
             val memberNames: List<String>,
         )
 
+        data class UpdateDueDate(
+            val id: String,
+            val dueDate: String
+        )
+
         data class LabelResponse(
             val id: String,
             val name: String,
