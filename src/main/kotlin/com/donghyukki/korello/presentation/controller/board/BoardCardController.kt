@@ -1,11 +1,13 @@
 package com.donghyukki.korello.presentation.controller.board
 
 import com.donghyukki.korello.application.services.BoardCardService
+import com.donghyukki.korello.presentation.dto.CardDTO
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.Create
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.Delete
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateMembers
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateName
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateTag
+import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateDueDate
 import com.donghyukki.korello.presentation.dto.response.KorelloResponse
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.http.HttpStatus
@@ -25,8 +27,8 @@ class BoardCardController(
     @Operation(summary = "CARD 생성", description = "특정 BOARD의 CARD를 생성 한다")
     @PostMapping("api/v1/board/{id}/card")
     fun addCard(@PathVariable id: String, @RequestBody cardCreateDTO: Create): KorelloResponse {
-        boardCardService.addCardToBoard(id, cardCreateDTO)
-        return KorelloResponse(HttpStatus.CREATED)
+        val response = boardCardService.addCardToBoard(id, cardCreateDTO)
+        return KorelloResponse(HttpStatus.CREATED, response)
     }
 
     @Operation(summary = "CARD 삭제", description = "특정 BOARD의 CARD를 삭제 한다")
@@ -56,4 +58,19 @@ class BoardCardController(
         boardCardService.updateCardMembers(id, cardUpdateMembersDTO)
         return KorelloResponse()
     }
+
+    @Operation(summary = "CARD Due Date 수정", description = "특정 CARD의 Due Date를 수정한다.")
+    @PutMapping("api/v1/board/{id}/card/due-date")
+    fun updateCardDueDate(@PathVariable id: String, @RequestBody cardUpdateDueDateDTO: UpdateDueDate): KorelloResponse {
+        boardCardService.updateCardDueDate(id, cardUpdateDueDateDTO)
+        return KorelloResponse()
+    }
+
+    @Operation(summary = "CARD Due Date 삭제", description = "특정 CARD의 Due Date를 삭제한다.")
+    @DeleteMapping("api/v1/board/{id}/card/{cardId}/due-date")
+    fun deleteCardDueDate(@PathVariable id: String, @PathVariable cardId: String): KorelloResponse {
+        boardCardService.deleteCardDueDate(id, cardId)
+        return KorelloResponse()
+    }
+
 }

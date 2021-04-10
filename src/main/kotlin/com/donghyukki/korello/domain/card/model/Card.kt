@@ -5,6 +5,8 @@ import com.donghyukki.korello.domain.common.BaseEntity
 import com.donghyukki.korello.domain.label.model.Label
 import com.donghyukki.korello.domain.member.model.Member
 import com.donghyukki.korello.domain.todo.model.Todo
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import javax.persistence.*
 
 @Entity
@@ -24,7 +26,9 @@ class Card(
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "cards")
     var labels: MutableList<Label>,
     @OneToMany(mappedBy = "card", cascade = [CascadeType.ALL], orphanRemoval = true)
-    var todos: MutableSet<Todo>
+    var todos: MutableSet<Todo>,
+    @Column
+    var dueDate: LocalDateTime? = null
 
 ) : BaseEntity() {
 
@@ -58,6 +62,14 @@ class Card(
 
     fun changeMembers(members: List<Member>) {
         this@Card.members = members.toMutableList()
+    }
+
+    fun changeDueDate(dueDate: LocalDateTime) {
+        this@Card.dueDate = dueDate
+    }
+
+    fun deleteDueDate() {
+        this@Card.dueDate = null
     }
 
     fun addLabels(labels: List<Label>) {
@@ -94,7 +106,7 @@ class Card(
     }
 
     override fun toString(): String {
-        return "Card(id=$id, name='$name', cardTag=$cardTag, createDate=$createDate, updateDate=$updateDate)"
+        return "Card(id=$id, name='$name', cardTag=$cardTag, createDate=$createDate, updateDate=$updateDate, dueDate=$dueDate)"
     }
 
 
