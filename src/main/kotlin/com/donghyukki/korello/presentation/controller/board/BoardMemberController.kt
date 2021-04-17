@@ -35,9 +35,9 @@ class BoardMemberController(
     }
 
     @Operation(summary = "멤버가 속한 BOARD 리스트", description = "멤버가 속한 BOARD들을 가져온다.")
-    @PostMapping("api/v1/board/self")
-    fun getJoinBoards(@RequestBody memberBoardsDTO: MemberBoards): KorelloResponse {
-        return KorelloResponse(boardMemberService.getJoinBoards(memberBoardsDTO))
+    @GetMapping("api/v1/board/self")
+    fun getJoinBoards(): KorelloResponse {
+        return KorelloResponse(boardMemberService.getJoinBoards())
     }
 
 

@@ -20,11 +20,8 @@ class KorelloEventHandler(
     }
 
     private fun setMemberInfo(event: EventDTO) {
-        val principal = memberAuthentication.getAuthentication().principal as Map<*, *>
-        val memberName = principal["name"].toString()
-        val memberId = principal["id"] as Long
-        event.memberId = memberId
-        event.memberName = memberName
+        event.memberId = memberAuthentication.getMemberId()
+        event.memberName = memberAuthentication.getMemberName()
     }
 
 }

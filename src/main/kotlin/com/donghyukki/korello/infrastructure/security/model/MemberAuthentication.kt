@@ -11,6 +11,16 @@ class MemberAuthentication : AuthenticationFacade {
         return SecurityContextHolder.getContext().authentication
     }
 
+    fun getMemberId(): Long {
+        val principal = getAuthentication().principal as Map<*, *>
+        return principal["id"] as Long
+    }
+
+    fun getMemberName(): String {
+        val principal = getAuthentication().principal as Map<*, *>
+        return principal["name"] as String
+    }
+
 }
 
 interface AuthenticationFacade {
