@@ -19,8 +19,8 @@ class CardCrudService(
 ) {
 
     @Transactional
-    fun createCard(cardCreateDTO: Create, board: Board, members: List<Member>): Card {
-       return cardRepository.save(Card(cardCreateDTO.name, cardCreateDTO.tagValue, board, members))
+    fun createCard(cardCreateDTO: Create, board: Board, members: List<Member>, order: Int): Card {
+       return cardRepository.save(Card(cardCreateDTO.name, cardCreateDTO.tagValue, board, members, order))
     }
 
     @Transactional(readOnly = true)
@@ -46,6 +46,11 @@ class CardCrudService(
     @Transactional
     fun changeDueDate(card: Card, dueDate: LocalDateTime) {
         card.changeDueDate(dueDate)
+    }
+
+    @Transactional
+    fun changeOrder(card: Card, order: Int) {
+        card.changeOrder(order)
     }
 
     @Transactional

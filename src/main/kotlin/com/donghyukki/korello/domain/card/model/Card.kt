@@ -28,28 +28,34 @@ class Card(
     @OneToMany(mappedBy = "card", cascade = [CascadeType.ALL], orphanRemoval = true)
     var todos: MutableSet<Todo>,
     @Column
-    var dueDate: LocalDateTime? = null
+    var dueDate: LocalDateTime? = null,
+    @Column
+    var cardOrder: Int
 
 ) : BaseEntity() {
 
-    constructor(name: String, tagValue: String, board: Board) : this(
+    constructor(name: String, tagValue: String, board: Board, order: Int) : this(
         null,
         name,
         CardTag(tagValue),
         board,
         arrayListOf(),
         arrayListOf(),
-        mutableSetOf()
+        mutableSetOf(),
+        null,
+        order
     )
 
-    constructor(name: String, tagValue: String, board: Board, members: List<Member>) : this(
+    constructor(name: String, tagValue: String, board: Board, members: List<Member>, order: Int) : this(
         null,
         name,
         CardTag(tagValue),
         board,
         members.toMutableList(),
         arrayListOf(),
-        mutableSetOf()
+        mutableSetOf(),
+        null,
+        order
     )
 
     fun changeName(name: String) {
@@ -66,6 +72,10 @@ class Card(
 
     fun changeDueDate(dueDate: LocalDateTime) {
         this@Card.dueDate = dueDate
+    }
+
+    fun changeOrder(order: Int) {
+        this@Card.cardOrder = order
     }
 
     fun deleteDueDate() {

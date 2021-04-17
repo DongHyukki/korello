@@ -8,6 +8,7 @@ import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateMembers
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateName
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateTag
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateDueDate
+import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateOrder
 import com.donghyukki.korello.presentation.dto.response.KorelloResponse
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.http.HttpStatus
@@ -63,6 +64,13 @@ class BoardCardController(
     @PutMapping("api/v1/board/{id}/card/due-date")
     fun updateCardDueDate(@PathVariable id: String, @RequestBody cardUpdateDueDateDTO: UpdateDueDate): KorelloResponse {
         boardCardService.updateCardDueDate(id, cardUpdateDueDateDTO)
+        return KorelloResponse()
+    }
+
+    @Operation(summary = "CARD 순서 수정", description = "특정 CARD의 순서를 수정한다.")
+    @PutMapping("api/v1/board/{id}/card/order")
+    fun updateCardOrder(@PathVariable id: String, @RequestBody cardUpdateOrderDTO: UpdateOrder): KorelloResponse {
+        boardCardService.updateCardOrder(id, cardUpdateOrderDTO)
         return KorelloResponse()
     }
 
