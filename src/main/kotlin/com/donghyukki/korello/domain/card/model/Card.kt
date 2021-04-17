@@ -5,6 +5,7 @@ import com.donghyukki.korello.domain.common.BaseEntity
 import com.donghyukki.korello.domain.label.model.Label
 import com.donghyukki.korello.domain.member.model.Member
 import com.donghyukki.korello.domain.todo.model.Todo
+import com.donghyukki.korello.presentation.dto.CardDTO
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import javax.persistence.*
@@ -103,6 +104,28 @@ class Card(
         this@Card.labels.clear()
     }
 
+    fun toResponse(): CardDTO.Companion.Response {
+        return CardDTO.Companion.Response(
+            id!!.toString(),
+            name,
+            cardTag.tagValue,
+            members.map { member -> member.name }.toList(),
+            labels.map { label ->
+                CardDTO.Companion.LabelResponse(
+                    label.id.toString(),
+                    label.name,
+                    label.color,
+                    label.createDate,
+                    label.updateDate
+                )
+            },
+            createDate,
+            updateDate,
+            dueDate,
+            cardOrder
+        )
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is Card) return false
@@ -118,6 +141,5 @@ class Card(
     override fun toString(): String {
         return "Card(id=$id, name='$name', cardTag=$cardTag, createDate=$createDate, updateDate=$updateDate, dueDate=$dueDate)"
     }
-
 
 }
