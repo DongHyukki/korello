@@ -17,7 +17,9 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class BoardCrudService(
     private val boardRepository: BoardRepository,
+    private val boardJoinMembersService: BoardJoinMembersService,
     private val applicationEventPublisher: ApplicationEventPublisher,
+
 ) {
     @Transactional(readOnly = true)
     fun getAllBoards(): List<Response> {
@@ -52,6 +54,7 @@ class BoardCrudService(
     @Transactional
     fun createBoard(boardCreateDTO: Create): Response {
         val board = boardRepository.save(boardCreateDTO.toEntity())
+        boardJoinMembersService.selfJoinBoard(board)
         applicationEventPublisher.publishEvent(EventDTO(board.id!!, KorelloSelectType.BOARD, KorelloEventType.BOARD, KorelloActionType.CREATE))
         return Response(
             board.id.toString(),
