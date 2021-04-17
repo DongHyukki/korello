@@ -50,7 +50,8 @@ class CardDTO {
             val memberNames: List<String>?,
             val labels: List<LabelResponse>,
             val createDate: LocalDateTime,
-            val updateDate: LocalDateTime
+            val updateDate: LocalDateTime,
+            val dueDate: LocalDateTime?
         ) {
         }
     }

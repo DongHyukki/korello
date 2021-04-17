@@ -37,24 +37,29 @@ class BoardCardService(
     fun getAllCardsById(boardId: String): List<Response> {
         val board = boardRepository.findById(boardId.toLong()).orElseThrow { KorelloNotFoundException() }
         return board.cards.map { card ->
-            Response(
-                card.id!!.toString(),
-                card.name,
-                card.cardTag.tagValue,
-                card.members.map { member -> member.name }.toList(),
-                card.labels.map { label ->
-                    LabelResponse(
-                        label.id.toString(),
-                        label.name,
-                        label.color,
-                        label.createDate,
-                        label.updateDate
-                    )
-                },
-                card.createDate,
-                card.updateDate
-            )
+            toResponse(card)
         }.toList()
+    }
+
+    fun toResponse(card: Card): Response {
+        return Response(
+            card.id!!.toString(),
+            card.name,
+            card.cardTag.tagValue,
+            card.members.map { member -> member.name }.toList(),
+            card.labels.map { label ->
+                LabelResponse(
+                    label.id.toString(),
+                    label.name,
+                    label.color,
+                    label.createDate,
+                    label.updateDate
+                )
+            },
+            card.createDate,
+            card.updateDate,
+            card.dueDate
+        )
     }
 
     @Transactional
@@ -67,23 +72,7 @@ class BoardCardService(
         val savedCard = cardRepository.save(Card(cardCreateDTO.name, cardCreateDTO.tagValue, board, members))
         board.addCard(savedCard)
         applicationEventPublisher.publishEvent(EventDTO(board.id!!, KorelloSelectType.BOARD, KorelloEventType.CARD, KorelloActionType.ADD))
-        return Response(
-            savedCard.id!!.toString(),
-            savedCard.name,
-            savedCard.cardTag.tagValue,
-            savedCard.members.map { member -> member.name }.toList(),
-            savedCard.labels.map { label ->
-                LabelResponse(
-                    label.id.toString(),
-                    label.name,
-                    label.color,
-                    label.createDate,
-                    label.updateDate
-                )
-            },
-            savedCard.createDate,
-            savedCard.updateDate
-        )
+        return toResponse(savedCard)
     }
 
     @Transactional
