@@ -12,7 +12,7 @@ class Board(
     val id: Long? = null,
     @Column
     val name: String,
-    @OneToMany(mappedBy = "board")
+    @OneToMany(mappedBy = "board", cascade = [CascadeType.ALL], orphanRemoval = true)
     val members: MutableList<BoardJoinMembers>,
     @OneToMany(mappedBy = "board", cascade = [CascadeType.ALL], orphanRemoval = true)
     var cards: MutableSet<Card>,
@@ -51,7 +51,6 @@ class Board(
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is Board) return false
-
         if (id != other.id) return false
 
         return true

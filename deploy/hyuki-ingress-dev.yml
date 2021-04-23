@@ -4,7 +4,7 @@ metadata:
   name: hyuki.app
   namespace: hyuki-namespace
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    #nginx.ingress.kubernetes.io/rewrite-target: /
     kubernetes.io/ingress.class: "nginx"
     nginx.ingress.kubernetes.io/affinity: "cookie"
     nginx.ingress.kubernetes.io/session-cookie-name: "hyuki-app"
@@ -22,12 +22,12 @@ spec:
       http:
         paths:
           - pathType: Prefix
-            path: "/api/v1/events"
+            path: "/api/v2/events"
             backend:
               service:
                 name: korello-flux-svc-dev
                 port:
-                  number: 80
+                  number: 8084
           - pathType: Prefix
             path: "/"
             backend:

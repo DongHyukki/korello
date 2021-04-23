@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: hyuki-dev
-          image: kderr2791/hyuki-app:latest
+          image: kderr2791/korello-app:latest
           imagePullPolicy: Always
           resources:
             limits:
