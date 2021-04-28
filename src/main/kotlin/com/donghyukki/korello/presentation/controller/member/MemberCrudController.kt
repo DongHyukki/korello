@@ -1,6 +1,7 @@
 package com.donghyukki.korello.presentation.controller.member
 
 import com.donghyukki.korello.domain.member.service.MemberCrudService
+import com.donghyukki.korello.infrastructure.security.model.MemberAuthentication
 import com.donghyukki.korello.presentation.dto.MemberDTO.Companion.Create
 import com.donghyukki.korello.presentation.dto.MemberDTO.Companion.Delete
 import com.donghyukki.korello.presentation.dto.response.KorelloResponse
@@ -10,7 +11,8 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 class MemberCrudController(
-    private val memberCrudService: MemberCrudService
+    private val memberCrudService: MemberCrudService,
+    private val memberAuthentication: MemberAuthentication
 ) {
 
     @Operation(summary = "MEMBER 조회", description = "모든 MEMBER를 조회 한다", deprecated = true)
@@ -23,6 +25,12 @@ class MemberCrudController(
     @GetMapping("api/v1/member/{id}")
     fun getMember(@PathVariable id: String): KorelloResponse {
         return KorelloResponse(memberCrudService.getMember(id.toLong()))
+    }
+
+    @Operation(summary = "MEMBER 조회", description = "내 정보를 조회 한다")
+    @GetMapping("api/v1/member/self")
+    fun getMember(): KorelloResponse {
+        return KorelloResponse(memberCrudService.getMember(memberAuthentication.getMemberId()))
     }
 
     @Operation(summary = "MEMBER 생성", description = "MEMBER를 생성 한다.")

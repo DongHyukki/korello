@@ -2,6 +2,7 @@ package com.donghyukki.korello.domain.board.model
 
 import com.donghyukki.korello.domain.card.model.Card
 import com.donghyukki.korello.domain.common.BaseEntity
+import javax.annotation.PostConstruct
 import javax.persistence.*
 
 @Entity
@@ -17,6 +18,17 @@ class Board(
     @OneToMany(mappedBy = "board", cascade = [CascadeType.ALL], orphanRemoval = true)
     var cards: MutableSet<Card>,
 ) : BaseEntity() {
+
+    @PostConstruct
+    fun setUp() {
+        println("Board Constructed")
+    }
+
+    init {
+        println("Board Initialized")
+    }
+
+
     constructor(name: String) : this(null, name, arrayListOf(), hashSetOf())
 
     fun deleteMember(boardJoinMembers: BoardJoinMembers) {

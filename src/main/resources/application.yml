@@ -1,5 +1,6 @@
 springdoc:
   swagger-ui:
+
   path: /swagger-ui.html
   use-fqn: true
 logging:

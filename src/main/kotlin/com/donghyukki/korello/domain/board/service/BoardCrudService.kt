@@ -13,6 +13,7 @@ import com.donghyukki.korello.presentation.dto.type.KorelloSelectType
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import javax.annotation.PostConstruct
 
 @Service
 class BoardCrudService(
@@ -21,6 +22,15 @@ class BoardCrudService(
     private val applicationEventPublisher: ApplicationEventPublisher,
 
 ) {
+    @PostConstruct
+    fun setUp() {
+        println("BoardCrudService Constructed")
+    }
+
+    init {
+        println("BoardCrudService Initialized")
+    }
+
     @Transactional(readOnly = true)
     fun getAllBoards(): List<Response> {
         return boardRepository.findAll().map { board ->

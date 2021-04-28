@@ -29,7 +29,7 @@ class Member(
     var refreshToken: String
 ) : BaseEntity() {
     constructor(name: String, role: Role, providerId: String, registrationId: String, accessToken: String, refreshToken: String)
-            : this(null, name, arrayListOf(), arrayListOf(), role.type, providerId, registrationId, accessToken, refreshToken)
+            : this(null, name, arrayListOf(), arrayListOf(), role.value, providerId, registrationId, accessToken, refreshToken)
 
     fun addBoards(boardJoinMembers: BoardJoinMembers) {
         boardJoins.add(boardJoinMembers)
