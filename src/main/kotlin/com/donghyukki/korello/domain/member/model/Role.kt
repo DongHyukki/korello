@@ -12,7 +12,11 @@ enum class Role(
     fun toAuthorities() = mutableListOf(SimpleGrantedAuthority(this.value))
 
     companion object {
-        fun toAuthorities(value: String) = mutableListOf(SimpleGrantedAuthority(valueOf(value).value))
+        fun toAuthorities(value: String): MutableList<SimpleGrantedAuthority> {
+            val role = values().find { role -> role.value == value }?.value
+            return mutableListOf(SimpleGrantedAuthority(role))
+        }
+
         fun toAuthorities(role: Role) = mutableListOf(SimpleGrantedAuthority(role.value))
     }
 }
