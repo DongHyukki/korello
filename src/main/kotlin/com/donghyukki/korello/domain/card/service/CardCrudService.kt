@@ -29,6 +29,11 @@ class CardCrudService(
     }
 
     @Transactional
+    fun getCardByOrder(order: Int): Card {
+        return cardRepository.findByOrder(order)
+    }
+
+    @Transactional
     fun changeTag(card: Card, tagValue: String) {
         card.changeTag(tagValue)
     }

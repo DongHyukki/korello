@@ -7,7 +7,6 @@ import com.donghyukki.korello.domain.member.model.Member
 import com.donghyukki.korello.domain.todo.model.Todo
 import com.donghyukki.korello.presentation.dto.CardDTO
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import javax.persistence.*
 
 @Entity
@@ -31,7 +30,7 @@ class Card(
     @Column
     var dueDate: LocalDateTime? = null,
     @Column
-    var cardOrder: Int
+    var displayOrder: Int
 
 ) : BaseEntity() {
 
@@ -76,7 +75,7 @@ class Card(
     }
 
     fun changeOrder(order: Int) {
-        this@Card.cardOrder = order
+        this@Card.displayOrder = order
     }
 
     fun deleteDueDate() {
@@ -122,7 +121,7 @@ class Card(
             createDate,
             updateDate,
             dueDate,
-            cardOrder
+            displayOrder
         )
     }
 
