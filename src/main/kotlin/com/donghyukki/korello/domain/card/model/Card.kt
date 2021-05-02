@@ -5,8 +5,8 @@ import com.donghyukki.korello.domain.common.BaseEntity
 import com.donghyukki.korello.domain.label.model.Label
 import com.donghyukki.korello.domain.member.model.Member
 import com.donghyukki.korello.domain.todo.model.Todo
+import com.donghyukki.korello.presentation.dto.CardDTO
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import javax.persistence.*
 
 @Entity
@@ -28,28 +28,34 @@ class Card(
     @OneToMany(mappedBy = "card", cascade = [CascadeType.ALL], orphanRemoval = true)
     var todos: MutableSet<Todo>,
     @Column
-    var dueDate: LocalDateTime? = null
+    var dueDate: LocalDateTime? = null,
+    @Column
+    var displayOrder: Int
 
 ) : BaseEntity() {
 
-    constructor(name: String, tagValue: String, board: Board) : this(
+    constructor(name: String, tagValue: String, board: Board, order: Int) : this(
         null,
         name,
         CardTag(tagValue),
         board,
         arrayListOf(),
         arrayListOf(),
-        mutableSetOf()
+        mutableSetOf(),
+        null,
+        order
     )
 
-    constructor(name: String, tagValue: String, board: Board, members: List<Member>) : this(
+    constructor(name: String, tagValue: String, board: Board, members: List<Member>, order: Int) : this(
         null,
         name,
         CardTag(tagValue),
         board,
         members.toMutableList(),
         arrayListOf(),
-        mutableSetOf()
+        mutableSetOf(),
+        null,
+        order
     )
 
     fun changeName(name: String) {
@@ -66,6 +72,10 @@ class Card(
 
     fun changeDueDate(dueDate: LocalDateTime) {
         this@Card.dueDate = dueDate
+    }
+
+    fun changeOrder(order: Int) {
+        this@Card.displayOrder = order
     }
 
     fun deleteDueDate() {
@@ -93,6 +103,28 @@ class Card(
         this@Card.labels.clear()
     }
 
+    fun toResponse(): CardDTO.Companion.Response {
+        return CardDTO.Companion.Response(
+            id!!.toString(),
+            name,
+            cardTag.tagValue,
+            members.map { member -> member.name }.toList(),
+            labels.map { label ->
+                CardDTO.Companion.LabelResponse(
+                    label.id.toString(),
+                    label.name,
+                    label.color,
+                    label.createDate,
+                    label.updateDate
+                )
+            },
+            createDate,
+            updateDate,
+            dueDate,
+            displayOrder
+        )
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is Card) return false
@@ -108,6 +140,5 @@ class Card(
     override fun toString(): String {
         return "Card(id=$id, name='$name', cardTag=$cardTag, createDate=$createDate, updateDate=$updateDate, dueDate=$dueDate)"
     }
-
 
 }
