@@ -113,6 +113,7 @@ class BoardCardService(
         applicationEventPublisher.publishEvent(EventDTO(card.id!!, KorelloSelectType.CARD, KorelloEventType.CARD, KorelloActionType.UPDATE))
     }
 
+    @Transactional
     fun updateCardDisplayOrder(boardId: String, cardUpdateOrderDTO: UpdateOrder) {
         val board = boardRepository.findById(boardId.toLong()).orElseThrow { KorelloNotFoundException() }
         val updateCard = board.cards.firstOrNull { card -> card.id == cardUpdateOrderDTO.id.toLong() }
