@@ -67,7 +67,7 @@ class BoardCardController(
     }
 
     @Operation(summary = "CARD 순서 수정", description = "특정 CARD의 순서를 수정한다.")
-    @PutMapping("api/v1/board/{id}/card/order")
+    @PutMapping("api/v1/board/{id}/card/display-order")
     fun updateCardDisplayOrder(@PathVariable id: String, @RequestBody cardUpdateOrderDTO: UpdateOrder): KorelloResponse {
         boardCardService.updateCardDisplayOrder(id, cardUpdateOrderDTO)
         return KorelloResponse()
