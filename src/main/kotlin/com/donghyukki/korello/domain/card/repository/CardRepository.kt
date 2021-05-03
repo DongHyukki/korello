@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface CardRepository : JpaRepository<Card, Long> {
-    fun findByOrder(order: Int): Card
 }
