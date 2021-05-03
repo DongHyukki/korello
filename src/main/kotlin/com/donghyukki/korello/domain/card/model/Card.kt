@@ -34,7 +34,7 @@ class Card(
 
 ) : BaseEntity() {
 
-    constructor(name: String, tagValue: String, board: Board, order: Int) : this(
+    constructor(name: String, tagValue: String, board: Board, displayOrder: Int) : this(
         null,
         name,
         CardTag(tagValue),
@@ -43,10 +43,10 @@ class Card(
         arrayListOf(),
         mutableSetOf(),
         null,
-        order
+        displayOrder
     )
 
-    constructor(name: String, tagValue: String, board: Board, members: List<Member>, order: Int) : this(
+    constructor(name: String, tagValue: String, board: Board, members: List<Member>, displayOrder: Int) : this(
         null,
         name,
         CardTag(tagValue),
@@ -55,7 +55,7 @@ class Card(
         arrayListOf(),
         mutableSetOf(),
         null,
-        order
+        displayOrder
     )
 
     fun changeName(name: String) {
@@ -74,8 +74,8 @@ class Card(
         this@Card.dueDate = dueDate
     }
 
-    fun changeOrder(order: Int) {
-        this@Card.displayOrder = order
+    fun changeDisplayOrder(displayOrder: Int) {
+        this@Card.displayOrder = displayOrder
     }
 
     fun deleteDueDate() {

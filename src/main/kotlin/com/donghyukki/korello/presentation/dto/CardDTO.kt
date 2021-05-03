@@ -38,7 +38,7 @@ class CardDTO {
 
         data class UpdateOrder(
             val id: String,
-            val order: String
+            val displayOrder: String
         )
 
         data class LabelResponse(

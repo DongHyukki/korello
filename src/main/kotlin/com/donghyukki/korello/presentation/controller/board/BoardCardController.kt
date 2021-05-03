@@ -1,7 +1,6 @@
 package com.donghyukki.korello.presentation.controller.board
 
 import com.donghyukki.korello.application.services.BoardCardService
-import com.donghyukki.korello.presentation.dto.CardDTO
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.Create
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.Delete
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateMembers
@@ -69,8 +68,8 @@ class BoardCardController(
 
     @Operation(summary = "CARD 순서 수정", description = "특정 CARD의 순서를 수정한다.")
     @PutMapping("api/v1/board/{id}/card/order")
-    fun updateCardOrder(@PathVariable id: String, @RequestBody cardUpdateOrderDTO: UpdateOrder): KorelloResponse {
-        boardCardService.updateCardOrder(id, cardUpdateOrderDTO)
+    fun updateCardDisplayOrder(@PathVariable id: String, @RequestBody cardUpdateOrderDTO: UpdateOrder): KorelloResponse {
+        boardCardService.updateCardDisplayOrder(id, cardUpdateOrderDTO)
         return KorelloResponse()
     }
 
