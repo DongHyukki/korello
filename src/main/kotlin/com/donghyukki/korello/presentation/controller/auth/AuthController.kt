@@ -1,10 +1,10 @@
 package com.donghyukki.korello.presentation.controller.auth
 
-import com.donghyukki.korello.domain.member.service.MemberCrudService
+import com.donghyukki.korello.application.services.MemberCrudService
 import com.donghyukki.korello.infrastructure.exception.KorelloExpiredTokenException
 import com.donghyukki.korello.infrastructure.exception.KorelloIllegalTokenException
 import com.donghyukki.korello.infrastructure.exception.KorelloNullTokenException
-import com.donghyukki.korello.infrastructure.security.config.JwtConfig
+import com.donghyukki.korello.infrastructure.security.service.TokenService
 import com.donghyukki.korello.presentation.dto.MemberDTO
 import com.donghyukki.korello.presentation.dto.response.KorelloResponse
 import io.jsonwebtoken.ExpiredJwtException
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class AuthController(
     private val memberCrudService: MemberCrudService,
-    private val jwtConfig: JwtConfig
+    private val tokenService: TokenService
 ) {
     private companion object {
         const val AUTHORIZATION_HEADER_KEY = "authorization"
@@ -32,11 +32,11 @@ class AuthController(
         val refreshToken = getTokenFromHeader(headers)
 
         try {
-            val claims = jwtConfig.getClaim(refreshToken)
+            val claims = tokenService.getClaim(refreshToken)
             val providerId = claims[CLAIM_PROVIDER_KEY].toString()
             val name = claims[CLAIM_NAME_KEY].toString()
-            val newAccessToken = jwtConfig.createAccessToken(providerId, name)
-            val newRefreshToken = jwtConfig.createRefreshToken(providerId, name)
+            val newAccessToken = tokenService.createAccessToken(providerId, name)
+            val newRefreshToken = tokenService.createRefreshToken(providerId, name)
 
             memberCrudService.changeAuth(MemberDTO.Companion.Update(providerId, name, newAccessToken, newRefreshToken))
 

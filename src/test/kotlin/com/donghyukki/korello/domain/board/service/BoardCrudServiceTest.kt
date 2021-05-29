@@ -1,6 +1,7 @@
 package com.donghyukki.korello.domain.board.service
 
 import com.donghyukki.korello.KorelloApplicationTests
+import com.donghyukki.korello.application.services.BoardCrudService
 import com.donghyukki.korello.presentation.dto.BoardDTO
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

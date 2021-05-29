@@ -7,7 +7,7 @@ import com.donghyukki.korello.infrastructure.security.handler.OAuth2AccessDenied
 import com.donghyukki.korello.infrastructure.security.handler.OAuth2AuthenticationFailureHandler
 import com.donghyukki.korello.infrastructure.security.handler.OAuth2AuthenticationSuccessHandler
 import com.donghyukki.korello.infrastructure.security.model.MemberAuthentication
-import com.donghyukki.korello.infrastructure.security.service.CustomOAuth2UserService
+import com.donghyukki.korello.infrastructure.security.service.OAuthUserService
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -19,7 +19,7 @@ import org.springframework.security.web.session.SessionManagementFilter
 
 @Configuration
 class SecurityConfig(
-    private val customOAuth2UserService: CustomOAuth2UserService,
+    private val OAuthUserService: OAuthUserService,
     private val oAuth2AccessDeniedHandler: OAuth2AccessDeniedHandler,
     private val memberAuthentication: MemberAuthentication
 ): WebSecurityConfigurerAdapter() {
@@ -44,7 +44,7 @@ class SecurityConfig(
             .and()
                 .oauth2Login()
                     .userInfoEndpoint()
-                        .userService(customOAuth2UserService)
+                        .userService(OAuthUserService)
                         .and()
                     .successHandler(OAuth2AuthenticationSuccessHandler())
                     .failureHandler(OAuth2AuthenticationFailureHandler())

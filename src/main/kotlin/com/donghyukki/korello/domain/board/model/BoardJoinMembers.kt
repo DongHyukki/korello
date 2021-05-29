@@ -1,9 +1,14 @@
 package com.donghyukki.korello.domain.board.model
 
 import com.donghyukki.korello.domain.member.model.Member
+import org.hibernate.annotations.Cache
+import org.hibernate.annotations.CacheConcurrencyStrategy
+import org.springframework.cache.annotation.Cacheable
 import javax.persistence.*
 
 @Entity
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 class BoardJoinMembers(
 
     @Id

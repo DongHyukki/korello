@@ -1,6 +1,5 @@
 springdoc:
   swagger-ui:
-
   path: /swagger-ui.html
   use-fqn: true
 logging:
@@ -27,3 +26,9 @@ spring:
             token_uri: https://kauth.kakao.com/oauth/token
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user_name_attribute: id
+
+  redis:
+    host: localhost
+    port: 16379
+
+javax:

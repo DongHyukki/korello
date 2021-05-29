@@ -4,15 +4,21 @@ import com.donghyukki.korello.domain.board.model.BoardJoinMembers
 import com.donghyukki.korello.domain.card.model.Card
 import com.donghyukki.korello.domain.common.BaseEntity
 import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.Response
+import org.hibernate.annotations.Cache
+import org.hibernate.annotations.CacheConcurrencyStrategy
 import javax.persistence.*
 
 @Entity
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 class Member(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     val id: Long?,
     @Column
     var name: String,
+
+    @Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
     @OneToMany(mappedBy = "member")
     val boardJoins: MutableList<BoardJoinMembers>,
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "members")

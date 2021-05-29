@@ -1,4 +1,4 @@
-package com.donghyukki.korello.domain.member.service
+package com.donghyukki.korello.application.services
 
 import com.donghyukki.korello.domain.member.model.Member
 import com.donghyukki.korello.domain.member.repository.MemberRepository
@@ -52,6 +52,7 @@ class MemberCrudService(
         return memberRepository.deleteById(memberDeleteDTO.id.toLong())
     }
 
+//    @Cacheable(value = ["findMember"], key = "#providerId")
     @Transactional(readOnly = true)
     fun findMemberByNameAndProviderId(name: String, providerId: String): Optional<Member> {
         return memberRepository.findMemberByNameAndProviderId(name, providerId)

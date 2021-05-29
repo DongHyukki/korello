@@ -1,4 +1,4 @@
-package com.donghyukki.korello.domain.card.service
+package com.donghyukki.korello.application.services
 
 import com.donghyukki.korello.domain.board.model.Board
 import com.donghyukki.korello.domain.card.model.Card
@@ -6,10 +6,8 @@ import com.donghyukki.korello.domain.card.repository.CardRepository
 import com.donghyukki.korello.domain.member.model.Member
 import com.donghyukki.korello.infrastructure.exception.KorelloNotFoundException
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.Create
-import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.time.LocalDateTime
 
 @Service
 class CardCrudService(

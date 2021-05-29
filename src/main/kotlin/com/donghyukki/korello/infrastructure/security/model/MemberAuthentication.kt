@@ -1,9 +1,10 @@
 package com.donghyukki.korello.infrastructure.security.model
 
 import com.donghyukki.korello.domain.member.model.Role
-import com.donghyukki.korello.domain.member.service.MemberCrudService
+import com.donghyukki.korello.application.services.MemberCrudService
 import com.donghyukki.korello.infrastructure.exception.KorelloNotFoundException
 import com.donghyukki.korello.infrastructure.security.config.JwtConfig
+import com.donghyukki.korello.infrastructure.security.service.TokenService
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
@@ -12,7 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder
 @Configuration
 class MemberAuthentication(
     private val memberCrudService: MemberCrudService,
-    private val jwtConfig: JwtConfig
+    private val tokenService: TokenService
 ) : AuthenticationFacade {
 
     companion object {
@@ -35,7 +36,7 @@ class MemberAuthentication(
     }
 
     fun of(token: String): UsernamePasswordAuthenticationToken {
-        val claims = jwtConfig.getClaim(token)
+        val claims = tokenService.getClaim(token)
         val providerId = claims[CLAIM_PROVIDER_KEY].toString()
         val name = claims[CLAIM_NAME_KEY].toString()
         val findMember = memberCrudService.findMemberByNameAndProviderId(name, providerId).orElseThrow { KorelloNotFoundException() }

@@ -1,7 +1,8 @@
-package com.donghyukki.korello.domain.board.service
+package com.donghyukki.korello.application.services
 
 import com.donghyukki.korello.domain.board.model.Board
 import com.donghyukki.korello.domain.board.repository.BoardRepository
+import com.donghyukki.korello.domain.board.service.BoardJoinMembersService
 import com.donghyukki.korello.infrastructure.exception.KorelloNotFoundException
 import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.Create
 import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.Delete
@@ -13,7 +14,6 @@ import com.donghyukki.korello.presentation.dto.type.KorelloSelectType
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import javax.annotation.PostConstruct
 
 @Service
 class BoardCrudService(
@@ -22,14 +22,6 @@ class BoardCrudService(
     private val applicationEventPublisher: ApplicationEventPublisher,
 
 ) {
-    @PostConstruct
-    fun setUp() {
-        println("BoardCrudService Constructed")
-    }
-
-    init {
-        println("BoardCrudService Initialized")
-    }
 
     @Transactional(readOnly = true)
     fun getAllBoards(): List<Response> {
@@ -44,6 +36,7 @@ class BoardCrudService(
         }.toList()
     }
 
+//    @Cacheable(value = ["board"], key = "#id")
     @Transactional(readOnly = true)
     fun getBoard(id: Long): Response {
         val board = boardRepository.findById(id).orElseThrow { KorelloNotFoundException() }

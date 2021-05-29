@@ -1,4 +1,4 @@
-package com.donghyukki.korello.infrastructure.kafka.service
+package com.donghyukki.korello.infrastructure.kafka.client
 
 import com.donghyukki.korello.infrastructure.kafka.config.KafkaPropertyConfig
 import com.donghyukki.korello.presentation.dto.EventDTO
@@ -7,7 +7,7 @@ import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
 
 @Service
-class KafkaService(
+class KafkaClient(
     private val kafkaTemplate: KafkaTemplate<String, EventDTO>,
     private val kafkaPropertyConfig: KafkaPropertyConfig,
 ) {

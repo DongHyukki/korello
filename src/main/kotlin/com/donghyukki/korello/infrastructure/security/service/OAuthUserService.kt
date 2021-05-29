@@ -2,7 +2,7 @@ package com.donghyukki.korello.infrastructure.security.service
 
 import com.donghyukki.korello.domain.member.model.Member
 import com.donghyukki.korello.domain.member.model.Role
-import com.donghyukki.korello.domain.member.service.MemberCrudService
+import com.donghyukki.korello.application.services.MemberCrudService
 import com.donghyukki.korello.infrastructure.security.config.JwtConfig
 import com.donghyukki.korello.infrastructure.security.model.OAuthAttributes
 import com.donghyukki.korello.presentation.dto.MemberDTO
@@ -17,9 +17,9 @@ import java.lang.IllegalStateException
 import java.util.*
 
 @Service
-class CustomOAuth2UserService(
+class OAuthUserService(
     private val memberCrudService: MemberCrudService,
-    private val jwtConfig: JwtConfig
+    private val tokenService: TokenService
 ): OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
     override fun loadUser(userRequest: OAuth2UserRequest?): OAuth2User {
@@ -44,8 +44,8 @@ class CustomOAuth2UserService(
         val providerId = parseProviderId(oAuthAttributes.attributes, oAuthAttributes.nameAttributeKey)
         val registrationId = oAuthAttributes.registrationId
         val role = Role.USER
-        val accessToken = jwtConfig.createAccessToken(providerId, memberName)
-        val refreshToken = jwtConfig.createRefreshToken(providerId, memberName)
+        val accessToken = tokenService.createAccessToken(providerId, memberName)
+        val refreshToken = tokenService.createRefreshToken(providerId, memberName)
         val newAttributes = oAuthAttributes.attributes.toMutableMap()
 
         newAttributes["accessToken"] = accessToken

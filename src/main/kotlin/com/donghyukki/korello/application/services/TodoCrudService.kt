@@ -1,9 +1,8 @@
-package com.donghyukki.korello.domain.todo.service
+package com.donghyukki.korello.application.services
 
 import com.donghyukki.korello.domain.todo.repository.TodoRepository
 import com.donghyukki.korello.infrastructure.exception.KorelloNotFoundException
 import com.donghyukki.korello.presentation.dto.EventDTO
-import com.donghyukki.korello.presentation.dto.TodoDTO.Companion.Delete
 import com.donghyukki.korello.presentation.dto.TodoDTO.Companion.Update
 import com.donghyukki.korello.presentation.dto.type.KorelloActionType
 import com.donghyukki.korello.presentation.dto.type.KorelloEventType
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class TodoService(
+class TodoCrudService(
     private val todoRepository: TodoRepository,
     private val applicationEventPublisher: ApplicationEventPublisher
 ) {
