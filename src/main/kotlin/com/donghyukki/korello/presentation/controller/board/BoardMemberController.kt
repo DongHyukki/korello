@@ -1,7 +1,6 @@
 package com.donghyukki.korello.presentation.controller.board
 
-import com.donghyukki.korello.application.services.BoardMemberService
-import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.MemberBoards
+import com.donghyukki.korello.application.services.board.BoardMemberService
 import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.MemberExit
 import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.MemberJoin
 import com.donghyukki.korello.presentation.dto.response.KorelloResponse

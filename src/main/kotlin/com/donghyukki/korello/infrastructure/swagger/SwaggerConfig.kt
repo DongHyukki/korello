@@ -1,7 +1,7 @@
 package com.donghyukki.korello.infrastructure.swagger
 
 import com.donghyukki.korello.domain.member.model.Role
-import com.donghyukki.korello.application.services.MemberCrudService
+import com.donghyukki.korello.application.services.member.MemberCrudService
 import com.donghyukki.korello.presentation.dto.MemberDTO
 import org.springdoc.core.GroupedOpenApi
 import org.springframework.context.annotation.Bean

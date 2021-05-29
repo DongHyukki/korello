@@ -1,4 +1,4 @@
-package com.donghyukki.korello.application.services
+package com.donghyukki.korello.application.services.member
 
 import com.donghyukki.korello.domain.member.model.Member
 import com.donghyukki.korello.domain.member.repository.MemberRepository

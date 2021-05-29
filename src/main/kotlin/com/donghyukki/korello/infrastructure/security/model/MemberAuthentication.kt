@@ -1,9 +1,8 @@
 package com.donghyukki.korello.infrastructure.security.model
 
 import com.donghyukki.korello.domain.member.model.Role
-import com.donghyukki.korello.application.services.MemberCrudService
+import com.donghyukki.korello.application.services.member.MemberCrudService
 import com.donghyukki.korello.infrastructure.exception.KorelloNotFoundException
-import com.donghyukki.korello.infrastructure.security.config.JwtConfig
 import com.donghyukki.korello.infrastructure.security.service.TokenService
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken

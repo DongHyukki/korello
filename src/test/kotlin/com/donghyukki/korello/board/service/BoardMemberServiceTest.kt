@@ -2,7 +2,7 @@ package com.donghyukki.korello.board.service
 
 import com.donghyukki.korello.KorelloApplicationTests
 import com.donghyukki.korello.presentation.dto.BoardDTO
-import com.donghyukki.korello.application.services.BoardCrudService
+import com.donghyukki.korello.application.services.board.BoardCrudService
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired

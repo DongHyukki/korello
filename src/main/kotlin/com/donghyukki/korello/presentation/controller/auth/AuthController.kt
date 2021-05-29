@@ -1,6 +1,6 @@
 package com.donghyukki.korello.presentation.controller.auth
 
-import com.donghyukki.korello.application.services.MemberCrudService
+import com.donghyukki.korello.application.services.member.MemberCrudService
 import com.donghyukki.korello.infrastructure.exception.KorelloExpiredTokenException
 import com.donghyukki.korello.infrastructure.exception.KorelloIllegalTokenException
 import com.donghyukki.korello.infrastructure.exception.KorelloNullTokenException

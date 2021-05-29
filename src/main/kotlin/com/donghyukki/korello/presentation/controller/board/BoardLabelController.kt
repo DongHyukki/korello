@@ -1,6 +1,6 @@
 package com.donghyukki.korello.presentation.controller.board
 
-import com.donghyukki.korello.application.services.BoardLabelService
+import com.donghyukki.korello.application.services.board.BoardLabelService
 import com.donghyukki.korello.presentation.dto.LabelDTO.Companion.Create
 import com.donghyukki.korello.presentation.dto.response.KorelloResponse
 import io.swagger.v3.oas.annotations.Operation

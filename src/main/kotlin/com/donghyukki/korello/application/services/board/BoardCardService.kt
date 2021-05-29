@@ -1,4 +1,4 @@
-package com.donghyukki.korello.application.services
+package com.donghyukki.korello.application.services.board
 
 import com.donghyukki.korello.domain.board.repository.BoardRepository
 import com.donghyukki.korello.domain.card.model.Card

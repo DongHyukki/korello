@@ -1,6 +1,6 @@
 package com.donghyukki.korello.presentation.controller.member
 
-import com.donghyukki.korello.application.services.MemberCrudService
+import com.donghyukki.korello.application.services.member.MemberCrudService
 import com.donghyukki.korello.infrastructure.security.model.MemberAuthentication
 import com.donghyukki.korello.presentation.dto.MemberDTO.Companion.Create
 import com.donghyukki.korello.presentation.dto.MemberDTO.Companion.Delete

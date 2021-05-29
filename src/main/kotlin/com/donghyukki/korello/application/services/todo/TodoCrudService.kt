@@ -1,4 +1,4 @@
-package com.donghyukki.korello.application.services
+package com.donghyukki.korello.application.services.todo
 
 import com.donghyukki.korello.domain.todo.repository.TodoRepository
 import com.donghyukki.korello.infrastructure.exception.KorelloNotFoundException

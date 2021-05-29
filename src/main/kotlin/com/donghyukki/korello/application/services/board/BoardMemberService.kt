@@ -1,5 +1,6 @@
-package com.donghyukki.korello.application.services
+package com.donghyukki.korello.application.services.board
 
+import com.donghyukki.korello.application.services.member.MemberCrudService
 import com.donghyukki.korello.domain.board.model.BoardJoinMembers
 import com.donghyukki.korello.domain.board.service.BoardJoinMembersService
 import com.donghyukki.korello.infrastructure.security.model.MemberAuthentication

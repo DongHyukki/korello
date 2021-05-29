@@ -1,7 +1,7 @@
 package com.donghyukki.korello.presentation.controller.board
 
-import com.donghyukki.korello.application.services.CardTodoService
-import com.donghyukki.korello.application.services.TodoCrudService
+import com.donghyukki.korello.application.services.card.CardTodoService
+import com.donghyukki.korello.application.services.todo.TodoCrudService
 import com.donghyukki.korello.presentation.dto.TodoDTO.Companion.Create
 import com.donghyukki.korello.presentation.dto.TodoDTO.Companion.Update
 import com.donghyukki.korello.presentation.dto.response.KorelloResponse

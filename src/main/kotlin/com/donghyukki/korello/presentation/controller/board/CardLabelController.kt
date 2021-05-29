@@ -1,6 +1,6 @@
 package com.donghyukki.korello.presentation.controller.board
 
-import com.donghyukki.korello.application.services.CardLabelService
+import com.donghyukki.korello.application.services.card.CardLabelService
 import com.donghyukki.korello.presentation.dto.LabelDTO.Companion.AddCard
 import com.donghyukki.korello.presentation.dto.LabelDTO.Companion.Delete
 import com.donghyukki.korello.presentation.dto.LabelDTO.Companion.Update

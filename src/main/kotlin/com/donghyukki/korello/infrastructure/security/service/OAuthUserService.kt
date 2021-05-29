@@ -2,8 +2,7 @@ package com.donghyukki.korello.infrastructure.security.service
 
 import com.donghyukki.korello.domain.member.model.Member
 import com.donghyukki.korello.domain.member.model.Role
-import com.donghyukki.korello.application.services.MemberCrudService
-import com.donghyukki.korello.infrastructure.security.config.JwtConfig
+import com.donghyukki.korello.application.services.member.MemberCrudService
 import com.donghyukki.korello.infrastructure.security.model.OAuthAttributes
 import com.donghyukki.korello.presentation.dto.MemberDTO
 import org.springframework.security.core.authority.SimpleGrantedAuthority

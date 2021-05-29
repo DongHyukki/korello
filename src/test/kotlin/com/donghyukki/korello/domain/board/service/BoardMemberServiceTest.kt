@@ -1,9 +1,9 @@
 package com.donghyukki.korello.domain.board.service
 
 import com.donghyukki.korello.KorelloApplicationTests
-import com.donghyukki.korello.application.services.BoardCrudService
-import com.donghyukki.korello.application.services.BoardMemberService
-import com.donghyukki.korello.application.services.MemberCrudService
+import com.donghyukki.korello.application.services.board.BoardCrudService
+import com.donghyukki.korello.application.services.board.BoardMemberService
+import com.donghyukki.korello.application.services.member.MemberCrudService
 
 import org.springframework.beans.factory.annotation.Autowired
 

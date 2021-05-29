@@ -1,6 +1,6 @@
 package com.donghyukki.korello.presentation.controller.board
 
-import com.donghyukki.korello.application.services.BoardCardService
+import com.donghyukki.korello.application.services.board.BoardCardService
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.Create
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.Delete
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateMembers
