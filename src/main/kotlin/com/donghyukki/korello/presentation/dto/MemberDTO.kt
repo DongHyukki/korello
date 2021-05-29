@@ -41,7 +41,7 @@ class MemberDTO {
             val name: String,
             val providerId: String,
             val role: String
-        )
+        ): Serializable
 
     }
 }
