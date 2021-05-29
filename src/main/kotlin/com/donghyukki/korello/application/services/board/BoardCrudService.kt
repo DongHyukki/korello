@@ -11,6 +11,7 @@ import com.donghyukki.korello.presentation.dto.EventDTO
 import com.donghyukki.korello.presentation.dto.type.KorelloActionType
 import com.donghyukki.korello.presentation.dto.type.KorelloEventType
 import com.donghyukki.korello.presentation.dto.type.KorelloSelectType
+import org.springframework.cache.annotation.CacheEvict
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
@@ -70,6 +71,7 @@ class BoardCrudService(
         )
     }
 
+    @CacheEvict(value = ["board"], key = "#boardDeleteDTO.id")
     @Transactional
     fun deleteBoard(boardDeleteDTO: Delete) {
         val board = boardRepository.findById(boardDeleteDTO.id.toLong()).orElseThrow { KorelloNotFoundException() }

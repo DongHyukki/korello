@@ -2,6 +2,7 @@ package com.donghyukki.korello.presentation.dto
 
 import com.donghyukki.korello.domain.member.model.Member
 import com.donghyukki.korello.domain.member.model.Role
+import java.io.Serializable
 
 class MemberDTO {
 
@@ -18,7 +19,9 @@ class MemberDTO {
         }
 
         data class Delete(
-            val id: String
+            val id: String,
+            val providerId: String,
+            val name: String,
         )
 
         data class Update(
@@ -32,5 +35,13 @@ class MemberDTO {
             val id: String,
             val name: String
         )
+
+        data class InfoResponse(
+            val id: String,
+            val name: String,
+            val providerId: String,
+            val role: String
+        )
+
     }
 }

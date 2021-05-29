@@ -1,6 +1,7 @@
 package com.donghyukki.korello.presentation.dto
 
 import com.donghyukki.korello.domain.label.model.Label
+import java.io.Serializable
 import java.time.LocalDateTime
 
 class CardDTO {
@@ -66,6 +67,6 @@ class CardDTO {
             val updateDate: LocalDateTime,
             val dueDate: LocalDateTime?,
             val order: Int
-        )
+        ): Serializable
     }
 }

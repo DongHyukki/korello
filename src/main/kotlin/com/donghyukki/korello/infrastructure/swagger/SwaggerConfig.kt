@@ -2,6 +2,7 @@ package com.donghyukki.korello.infrastructure.swagger
 
 import com.donghyukki.korello.domain.member.model.Role
 import com.donghyukki.korello.application.services.member.MemberCrudService
+import com.donghyukki.korello.domain.member.repository.MemberRepository
 import com.donghyukki.korello.presentation.dto.MemberDTO
 import org.springdoc.core.GroupedOpenApi
 import org.springframework.context.annotation.Bean
@@ -11,20 +12,20 @@ import javax.annotation.PostConstruct
 
 @Configuration
 class SwaggerConfig(
-    private val memberCrudService: MemberCrudService
+    private val memberRepository: MemberRepository
 ) {
     @PostConstruct
     fun setUpSwaggerUser() {
-        val swaggerMember = memberCrudService.findMemberByNameAndProviderId("swagger-user", "swagger-providerId")
+        val swaggerMember = memberRepository.findMemberByNameAndProviderId("swagger-user", "swagger-providerId")
         if (!swaggerMember.isPresent) {
-            memberCrudService.createMember(MemberDTO.Companion.Create(
+            memberRepository.save(MemberDTO.Companion.Create(
                 name = "swagger-user",
                 role = Role.USER,
                 providerId = "swagger-providerId",
                 registrationId = "swagger-user",
                 accessToken = "swagger-token",
                 refreshToken = "swagger-token"
-            ))
+            ).toEntity())
         }
     }
 

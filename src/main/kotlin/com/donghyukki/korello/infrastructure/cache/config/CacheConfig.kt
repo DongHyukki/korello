@@ -14,6 +14,7 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer
 import org.springframework.data.redis.serializer.RedisSerializationContext
 import org.springframework.data.redis.serializer.StringRedisSerializer
+import java.time.Duration
 
 
 @Configuration
@@ -27,6 +28,7 @@ class CacheConfig(
 
         val redisConfiguration = RedisCacheConfiguration.defaultCacheConfig()
             .computePrefixWith(CacheKeyPrefix.prefixed(keyPrefix()))
+            .entryTtl(Duration.ofMinutes(30L))
             .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(StringRedisSerializer()))
             .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(JdkSerializationRedisSerializer()))
 

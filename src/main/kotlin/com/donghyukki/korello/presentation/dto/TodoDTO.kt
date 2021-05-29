@@ -1,5 +1,7 @@
 package com.donghyukki.korello.presentation.dto
 
+import java.io.Serializable
+
 class TodoDTO {
 
     companion object {
@@ -20,6 +22,6 @@ class TodoDTO {
             val todoId: String,
             val title: String,
             val status: Boolean,
-        )
+        ): Serializable
     }
 }

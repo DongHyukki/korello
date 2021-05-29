@@ -10,6 +10,8 @@ import com.donghyukki.korello.presentation.dto.LabelDTO.Companion.Response
 import com.donghyukki.korello.presentation.dto.type.KorelloActionType
 import com.donghyukki.korello.presentation.dto.type.KorelloEventType
 import com.donghyukki.korello.presentation.dto.type.KorelloSelectType
+import org.springframework.cache.annotation.CacheEvict
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -21,6 +23,7 @@ class BoardLabelService(
     private val applicationEventPublisher: ApplicationEventPublisher
 ) {
 
+    @Cacheable(value = ["label"], key = "#boardId")
     @Transactional(readOnly = true)
     fun getBoardLabels(boardId: String): List<Response> {
         return labelRepository.getLabelsByBoardId(boardId.toLong())
@@ -28,6 +31,7 @@ class BoardLabelService(
             .toList()
     }
 
+    @CacheEvict(value = ["label"], key = "#boardId")
     @Transactional
     fun createLabel(boardId: String, labelCreateDTO: Create): Response {
         val board = boardRepository.findById(boardId.toLong()).orElseThrow { KorelloNotFoundException() }
@@ -36,6 +40,7 @@ class BoardLabelService(
         return Response(label.id.toString(), label.name, label.color, label.createDate, label.updateDate)
     }
 
+    @CacheEvict(value = ["label"], key = "#boardId")
     @Transactional
     fun clearLabel(boardId: String) {
         val label =  labelRepository.getLabelsByBoardId(boardId.toLong()).forEach { label -> label.clearBoard() }
@@ -43,6 +48,7 @@ class BoardLabelService(
         return label
     }
 
+    @CacheEvict(value = ["label"], key = "#boardId")
     @Transactional
     fun deleteLabel(boardId: String, labelId: String) {
         labelRepository.deleteById(labelId.toLong())

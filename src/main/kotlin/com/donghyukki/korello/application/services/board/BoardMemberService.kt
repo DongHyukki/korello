@@ -12,6 +12,8 @@ import com.donghyukki.korello.presentation.dto.EventDTO
 import com.donghyukki.korello.presentation.dto.type.KorelloActionType
 import com.donghyukki.korello.presentation.dto.type.KorelloEventType
 import com.donghyukki.korello.presentation.dto.type.KorelloSelectType
+import org.springframework.cache.annotation.CacheEvict
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -25,6 +27,7 @@ class BoardMemberService(
     private val memberAuthentication: MemberAuthentication,
 ) {
 
+//    @Cacheable(value = ["board::self"], key = "#memberAuthentication.getMemberId()")
     @Transactional(readOnly = true)
     fun getJoinBoards(): List<Response> {
         val memberId = memberAuthentication.getMemberId()
@@ -32,6 +35,7 @@ class BoardMemberService(
         return member.getJoinBoards()
     }
 
+    @Cacheable(value = ["members"], key = "#boardId")
     @Transactional(readOnly = true)
     fun getJoinMembers(boardId: String): List<MemberResponse> {
         return boardCrudService.getBoardEntity(boardId.toLong()).members.map { boardMembers ->
@@ -39,6 +43,7 @@ class BoardMemberService(
         }.toList()
     }
 
+    @CacheEvict(value = ["members"], key = "#memberJoinDTO.boardId")
     @Transactional
     fun inviteMember(memberJoinDTO: MemberJoin): BoardJoinMembers {
         val member = memberCrudService.getMemberEntity(memberJoinDTO.memberId.toLong())
@@ -48,6 +53,7 @@ class BoardMemberService(
         return joinBoard
     }
 
+    @CacheEvict(value = ["members"], key = "#memberExitDTO.boardId")
     @Transactional
     fun exitJoinMember(memberExitDTO: MemberExit) {
         val board = boardCrudService.getBoardEntity(memberExitDTO.boardId.toLong())

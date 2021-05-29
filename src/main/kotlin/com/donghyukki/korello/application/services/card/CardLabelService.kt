@@ -10,6 +10,7 @@ import com.donghyukki.korello.presentation.dto.LabelDTO.Companion.Delete
 import com.donghyukki.korello.presentation.dto.type.KorelloActionType
 import com.donghyukki.korello.presentation.dto.type.KorelloEventType
 import com.donghyukki.korello.presentation.dto.type.KorelloSelectType
+import org.springframework.cache.annotation.CacheEvict
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -20,6 +21,7 @@ class CardLabelService(
     private val labelRepository: LabelRepository,
     private val applicationEventPublisher: ApplicationEventPublisher
 ) {
+
     @Transactional
     fun updateLabel(labelId: String, labelUpdateDTO: LabelDTO.Companion.Update) {
         val label = labelRepository.findById(labelId.toLong()).orElseThrow { KorelloNotFoundException() }

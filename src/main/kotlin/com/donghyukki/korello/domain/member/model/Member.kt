@@ -4,6 +4,8 @@ import com.donghyukki.korello.domain.board.model.BoardJoinMembers
 import com.donghyukki.korello.domain.card.model.Card
 import com.donghyukki.korello.domain.common.BaseEntity
 import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.Response
+import com.donghyukki.korello.presentation.dto.MemberDTO
+import com.donghyukki.korello.presentation.dto.MemberDTO.Companion.InfoResponse
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import javax.persistence.*
@@ -65,6 +67,10 @@ class Member(
 
     fun changeName(name: String) {
         this@Member.name = name
+    }
+
+    fun toInfoResponse(): InfoResponse {
+        return InfoResponse(id.toString(), name, providerId, role)
     }
 
     override fun toString(): String {

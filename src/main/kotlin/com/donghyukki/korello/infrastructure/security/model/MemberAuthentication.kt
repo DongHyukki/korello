@@ -38,14 +38,14 @@ class MemberAuthentication(
         val claims = tokenService.getClaim(token)
         val providerId = claims[CLAIM_PROVIDER_KEY].toString()
         val name = claims[CLAIM_NAME_KEY].toString()
-        val findMember = memberCrudService.findMemberByNameAndProviderId(name, providerId).orElseThrow { KorelloNotFoundException() }
+        val findMember = memberCrudService.findMemberByNameAndProviderId(name, providerId)
         val role = findMember.role
 
-        return UsernamePasswordAuthenticationToken(hashMapOf("name" to name, "id" to findMember.id!!), null, Role.toAuthorities(role))
+        return UsernamePasswordAuthenticationToken(hashMapOf("name" to name, "id" to findMember.id), null, Role.toAuthorities(role))
     }
 
     fun ofTestAuthentication(): UsernamePasswordAuthenticationToken {
-        val findTestMember = memberCrudService.findMemberByNameAndProviderId("swagger-user", "swagger-providerId").orElseThrow { KorelloNotFoundException() }
+        val findTestMember = memberCrudService.findMemberByNameAndProviderId("swagger-user", "swagger-providerId")
         return UsernamePasswordAuthenticationToken(hashMapOf("name" to findTestMember.name, "id" to findTestMember.id), null, Role.USER.toAuthorities())
     }
 

@@ -3,6 +3,7 @@ package com.donghyukki.korello.infrastructure.security.service
 import com.donghyukki.korello.domain.member.model.Member
 import com.donghyukki.korello.domain.member.model.Role
 import com.donghyukki.korello.application.services.member.MemberCrudService
+import com.donghyukki.korello.infrastructure.exception.KorelloNotFoundException
 import com.donghyukki.korello.infrastructure.security.model.OAuthAttributes
 import com.donghyukki.korello.presentation.dto.MemberDTO
 import org.springframework.security.core.authority.SimpleGrantedAuthority
@@ -19,7 +20,7 @@ import java.util.*
 class OAuthUserService(
     private val memberCrudService: MemberCrudService,
     private val tokenService: TokenService
-): OAuth2UserService<OAuth2UserRequest, OAuth2User> {
+) : OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
     override fun loadUser(userRequest: OAuth2UserRequest?): OAuth2User {
 
@@ -32,9 +33,7 @@ class OAuthUserService(
         val (member, newAttributes) = authenticateMember(oAuthAttributes)
 
         return DefaultOAuth2User(
-            Collections.singleton(SimpleGrantedAuthority(member.role))
-            , newAttributes
-            , oAuthAttributes.nameAttributeKey)
+            Collections.singleton(SimpleGrantedAuthority(member.role)), newAttributes, oAuthAttributes.nameAttributeKey)
 
     }
 
@@ -50,24 +49,16 @@ class OAuthUserService(
         newAttributes["accessToken"] = accessToken
         newAttributes["refreshToken"] = refreshToken
 
-        val findMember = memberCrudService.findMemberByNameAndProviderId(memberName, providerId)
-
-        if (!findMember.isPresent) {
-            return Pair(memberCrudService.createMember(
-                MemberDTO.Companion.Create(memberName
-                    , role
-                    , providerId
-                    , registrationId
-                    , accessToken
-                    , refreshToken))
-                , newAttributes)
+        return try {
+            Pair(memberCrudService.changeAuth(MemberDTO.Companion.Update(providerId, memberName, accessToken, refreshToken)), newAttributes)
+        } catch (e: KorelloNotFoundException) {
+            Pair(memberCrudService.createMember(MemberDTO.Companion.Create(memberName, role, providerId, registrationId, accessToken, refreshToken)), newAttributes)
         }
 
-        return Pair(memberCrudService.changeAuth(MemberDTO.Companion.Update(providerId, memberName, accessToken, refreshToken)), newAttributes)
+
     }
 
-    fun createOAuthAttributes(providerId: String, registrationId: String, userNameAttributeKey: String, attributes: MutableMap<String, Any>)
-            = OAuthAttributes(providerId, registrationId, userNameAttributeKey, attributes)
+    fun createOAuthAttributes(providerId: String, registrationId: String, userNameAttributeKey: String, attributes: MutableMap<String, Any>) = OAuthAttributes(providerId, registrationId, userNameAttributeKey, attributes)
 
     fun parseMemberName(attributes: Map<String, Any>): String {
         val account = attributes["kakao_account"] as Map<*, *>

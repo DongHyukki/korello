@@ -19,16 +19,6 @@ class Board(
     var cards: MutableSet<Card>,
 ) : BaseEntity() {
 
-    @PostConstruct
-    fun setUp() {
-        println("Board Constructed")
-    }
-
-    init {
-        println("Board Initialized")
-    }
-
-
     constructor(name: String) : this(null, name, arrayListOf(), hashSetOf())
 
     fun deleteMember(boardJoinMembers: BoardJoinMembers) {

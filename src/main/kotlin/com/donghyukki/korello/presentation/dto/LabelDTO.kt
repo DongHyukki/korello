@@ -1,5 +1,6 @@
 package com.donghyukki.korello.presentation.dto
 
+import java.io.Serializable
 import java.time.LocalDateTime
 
 class LabelDTO {
@@ -29,6 +30,6 @@ class LabelDTO {
             val color: String,
             val createDate: LocalDateTime,
             val updateDate: LocalDateTime
-        )
+        ): Serializable
     }
 }
