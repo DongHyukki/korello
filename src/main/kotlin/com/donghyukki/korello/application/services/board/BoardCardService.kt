@@ -36,6 +36,7 @@ class BoardCardService(
     @Transactional(readOnly = true)
     fun getAllCardsById(boardId: String): List<Response> {
         val board = boardRepository.findById(boardId.toLong()).orElseThrow { KorelloNotFoundException() }
+
         return board.cards.map { card -> card.toResponse() }.toList()
     }
 
@@ -47,10 +48,9 @@ class BoardCardService(
             members.plus(board.members.filter { boardMembers -> cardCreateDTO.members.contains(boardMembers.member.name) })
         }
         val savedCard = cardRepository.save(Card(cardCreateDTO.name, cardCreateDTO.tagValue, board, members, cardCreateDTO.order))
-
         board.addCard(savedCard)
-
         applicationEventPublisher.publishEvent(EventDTO(board.id!!, KorelloSelectType.BOARD, KorelloEventType.CARD, KorelloActionType.ADD))
+
         return savedCard.toResponse()
     }
 
@@ -115,8 +115,6 @@ class BoardCardService(
         card.changeDueDate(dueDate)
         applicationEventPublisher.publishEvent(EventDTO(card.id!!, KorelloSelectType.CARD, KorelloEventType.CARD, KorelloActionType.UPDATE))
     }
-
-
 
     @Transactional
     fun deleteCardDueDate(boardId: String, cardId: String) {

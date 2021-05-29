@@ -1,6 +1,7 @@
 package com.donghyukki.korello.presentation.dto
 
 import com.donghyukki.korello.domain.board.model.Board
+import java.io.Serializable
 import java.time.LocalDateTime
 
 class BoardDTO {
@@ -41,6 +42,6 @@ class BoardDTO {
             val memberNames: List<String>,
             val createDate: LocalDateTime,
             val updateDate: LocalDateTime
-        )
+        ): Serializable
     }
 }

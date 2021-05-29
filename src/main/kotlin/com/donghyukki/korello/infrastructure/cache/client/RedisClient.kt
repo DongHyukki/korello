@@ -32,7 +32,7 @@ class RedisClient {
         val redisTemplate: RedisTemplate<String, Any> = RedisTemplate()
         redisTemplate.setConnectionFactory(redisConnectionFactory())
         redisTemplate.keySerializer = StringRedisSerializer()
-        redisTemplate.valueSerializer = GenericJackson2JsonRedisSerializer()
+        redisTemplate.valueSerializer = StringRedisSerializer()
         return redisTemplate
     }
 }

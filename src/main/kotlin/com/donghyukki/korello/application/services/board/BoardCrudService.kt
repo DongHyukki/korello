@@ -11,6 +11,7 @@ import com.donghyukki.korello.presentation.dto.EventDTO
 import com.donghyukki.korello.presentation.dto.type.KorelloActionType
 import com.donghyukki.korello.presentation.dto.type.KorelloEventType
 import com.donghyukki.korello.presentation.dto.type.KorelloSelectType
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -36,17 +37,18 @@ class BoardCrudService(
         }.toList()
     }
 
-//    @Cacheable(value = ["board"], key = "#id")
+    @Cacheable(value = ["board"], key = "#id")
     @Transactional(readOnly = true)
     fun getBoard(id: Long): Response {
         val board = boardRepository.findById(id).orElseThrow { KorelloNotFoundException() }
-        return Response(
+        val response = Response(
             board.id.toString(),
             board.name,
             board.members.map { boardJoinMembers -> boardJoinMembers.member.name }.toList(),
             board.createDate,
             board.updateDate
         )
+        return response
     }
 
     @Transactional(readOnly = true)
