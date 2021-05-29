@@ -19,6 +19,7 @@ class CardDTO {
         data class UpdateTag(
             val id: String,
             val tagValue: String,
+            val displayOrder: String
         )
 
         data class UpdateName(
@@ -36,8 +37,14 @@ class CardDTO {
             val dueDate: String
         )
 
-        data class UpdateOrder(
+        data class UpdateDisplayOrder(
             val id: String,
+            val displayOrder: String
+        )
+
+        data class UpdateTagAndDisplayOrder(
+            val id: String,
+            val tagValue: String,
             val displayOrder: String
         )
 
@@ -59,7 +66,6 @@ class CardDTO {
             val updateDate: LocalDateTime,
             val dueDate: LocalDateTime?,
             val order: Int
-        ) {
-        }
+        )
     }
 }

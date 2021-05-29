@@ -78,6 +78,11 @@ class Card(
         this@Card.displayOrder = displayOrder
     }
 
+    fun changeTagAndDisplayOrder(name: String, displayOrder: Int) {
+        this@Card.cardTag = CardTag((name))
+        this@Card.displayOrder = displayOrder
+    }
+
     fun deleteDueDate() {
         this@Card.dueDate = null
     }

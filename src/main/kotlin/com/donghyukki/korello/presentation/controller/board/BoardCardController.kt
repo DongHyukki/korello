@@ -1,13 +1,15 @@
 package com.donghyukki.korello.presentation.controller.board
 
 import com.donghyukki.korello.application.services.board.BoardCardService
+import com.donghyukki.korello.presentation.dto.CardDTO
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.Create
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.Delete
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateMembers
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateName
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateTag
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateDueDate
-import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateOrder
+import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateDisplayOrder
+import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateTagAndDisplayOrder
 import com.donghyukki.korello.presentation.dto.response.KorelloResponse
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.http.HttpStatus
@@ -52,10 +54,17 @@ class BoardCardController(
         return KorelloResponse()
     }
 
-    @Operation(summary = "CARD 멤버 수정", description = "특정 CARD의 멤버들을 수정한다.")
-    @PutMapping("api/v1/board/{id}/card/members")
-    fun updateCardMembers(@PathVariable id: String, @RequestBody cardUpdateMembersDTO: UpdateMembers): KorelloResponse {
-        boardCardService.updateCardMembers(id, cardUpdateMembersDTO)
+    @Operation(summary = "CARD 순서 수정", description = "특정 CARD의 순서를 수정한다.")
+    @PutMapping("api/v1/board/{id}/card/display-order")
+    fun updateCardDisplayOrder(@PathVariable id: String, @RequestBody cardUpdateDisplayOrderDTO: UpdateDisplayOrder): KorelloResponse {
+        boardCardService.updateCardDisplayOrder(id, cardUpdateDisplayOrderDTO)
+        return KorelloResponse()
+    }
+
+    @Operation(summary = "CARD 태그 및 순서 수정", description = "특정 CARD의 태그 및 순서를 수정한다.")
+    @PutMapping("api/v1/board/{id}/card/tag-display-order")
+    fun updateCardTagAndDisplayOrder(@PathVariable id: String, @RequestBody cardUpdateDisplayOrderDTO: UpdateTagAndDisplayOrder): KorelloResponse {
+        boardCardService.updateCardTagAndDisplayOrder(id, cardUpdateDisplayOrderDTO)
         return KorelloResponse()
     }
 
@@ -66,17 +75,17 @@ class BoardCardController(
         return KorelloResponse()
     }
 
-    @Operation(summary = "CARD 순서 수정", description = "특정 CARD의 순서를 수정한다.")
-    @PutMapping("api/v1/board/{id}/card/display-order")
-    fun updateCardDisplayOrder(@PathVariable id: String, @RequestBody cardUpdateOrderDTO: UpdateOrder): KorelloResponse {
-        boardCardService.updateCardDisplayOrder(id, cardUpdateOrderDTO)
-        return KorelloResponse()
-    }
-
     @Operation(summary = "CARD Due Date 삭제", description = "특정 CARD의 Due Date를 삭제한다.")
     @DeleteMapping("api/v1/board/{id}/card/{cardId}/due-date")
     fun deleteCardDueDate(@PathVariable id: String, @PathVariable cardId: String): KorelloResponse {
         boardCardService.deleteCardDueDate(id, cardId)
+        return KorelloResponse()
+    }
+
+    @Operation(summary = "CARD 멤버 수정", description = "특정 CARD의 멤버들을 수정한다.")
+    @PutMapping("api/v1/board/{id}/card/members")
+    fun updateCardMembers(@PathVariable id: String, @RequestBody cardUpdateMembersDTO: UpdateMembers): KorelloResponse {
+        boardCardService.updateCardMembers(id, cardUpdateMembersDTO)
         return KorelloResponse()
     }
 
