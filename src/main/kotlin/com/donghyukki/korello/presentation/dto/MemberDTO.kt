@@ -37,7 +37,7 @@ class MemberDTO {
         )
 
         data class InfoResponse(
-            val id: String,
+            val id: Long,
             val name: String,
             val providerId: String,
             val role: String

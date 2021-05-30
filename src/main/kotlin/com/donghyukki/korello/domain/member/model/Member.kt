@@ -70,7 +70,7 @@ class Member(
     }
 
     fun toInfoResponse(): InfoResponse {
-        return InfoResponse(id.toString(), name, providerId, role)
+        return InfoResponse(id!!, name, providerId, role)
     }
 
     override fun toString(): String {
