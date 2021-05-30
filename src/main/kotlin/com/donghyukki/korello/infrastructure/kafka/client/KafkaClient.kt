@@ -15,6 +15,6 @@ class KafkaClient(
 
     fun sendAsyncMessage(eventDTO: EventDTO) {
         val future = kafkaTemplate.send(kafkaPropertyConfig.topicName, eventDTO)
-        future.addCallback({ result -> println(result?.recordMetadata?.offset()) }, { ex -> ex.printStackTrace() })
+        future.addCallback({ result -> kafkaLogger.info("kafka publish success {}", result?.recordMetadata?.offset()) }, { ex -> ex.printStackTrace() })
     }
 }

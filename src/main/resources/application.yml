@@ -28,5 +28,5 @@ spring:
             user_name_attribute: id
 
   redis:
-    host: localhost
+    host: hyuki.app
     port: 16379
