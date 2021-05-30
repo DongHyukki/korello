@@ -27,7 +27,6 @@ class BoardMemberService(
     private val memberAuthentication: MemberAuthentication,
 ) {
 
-//    @Cacheable(value = ["board::self"], key = "#memberAuthentication.getMemberId()")
     @Transactional(readOnly = true)
     fun getJoinBoards(): List<Response> {
         val memberId = memberAuthentication.getMemberId()
