@@ -6,9 +6,8 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ develop ]
-  pull_request:
-    branches: [ develop ]
+     tags:
+      - 'v*'
     
 env:
   REGISTRY: kderr2791
@@ -44,5 +43,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ github.ref }}
           labels: ${{ steps.meta.outputs.labels }}
