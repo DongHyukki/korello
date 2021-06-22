@@ -11,8 +11,8 @@ on:
     branches: [ develop ]
     
 env:
-  REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
-  IMAGE_NAME: ${{ github.repository }}
+  REGISTRY: kderr2791/korello-app
+  IMAGE_NAME: latest
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
