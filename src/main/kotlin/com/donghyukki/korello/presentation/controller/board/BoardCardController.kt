@@ -12,6 +12,7 @@ import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateDisplayOr
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateTagAndDisplayOrder
 import com.donghyukki.korello.presentation.dto.response.KorelloResponse
 import io.swagger.v3.oas.annotations.Operation
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 

@@ -1,9 +1,9 @@
 package com.donghyukki.korello.application.services.board
 
+import com.donghyukki.korello.application.port.AuthenticationFacade
 import com.donghyukki.korello.application.services.member.MemberCrudService
 import com.donghyukki.korello.domain.board.model.BoardJoinMembers
 import com.donghyukki.korello.domain.board.service.BoardJoinMembersService
-import com.donghyukki.korello.infrastructure.security.model.MemberAuthentication
 import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.MemberExit
 import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.MemberJoin
 import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.MemberResponse
@@ -24,12 +24,12 @@ class BoardMemberService(
     private val boardJoinMembersService: BoardJoinMembersService,
     private val memberCrudService: MemberCrudService,
     private val applicationEventPublisher: ApplicationEventPublisher,
-    private val memberAuthentication: MemberAuthentication,
+    private val authenticationFacade: AuthenticationFacade,
 ) {
 
     @Transactional(readOnly = true)
     fun getJoinBoards(): List<Response> {
-        val memberId = memberAuthentication.getMemberId()
+        val memberId = authenticationFacade.getMemberId()
         val member = memberCrudService.getMemberEntity(memberId)
         return member.getJoinBoards()
     }

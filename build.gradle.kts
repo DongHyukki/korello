@@ -58,6 +58,9 @@ dependencies {
 
     //kafka
     implementation("org.springframework.kafka:spring-kafka")
+
+    //archunit
+    testImplementation ("com.tngtech.archunit:archunit-junit5:0.20.0")
 }
 
 allOpen {
