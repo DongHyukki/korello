@@ -4,13 +4,13 @@ import com.donghyukki.korello.domain.card.repository.CardRepository
 import com.donghyukki.korello.domain.todo.model.Todo
 import com.donghyukki.korello.domain.todo.repository.TodoRepository
 import com.donghyukki.korello.infrastructure.exception.KorelloNotFoundException
+import com.donghyukki.korello.infrastructure.web.event.publisher.KorelloEventPublisher
 import com.donghyukki.korello.presentation.dto.EventDTO
 import com.donghyukki.korello.presentation.dto.TodoDTO.Companion.Create
 import com.donghyukki.korello.presentation.dto.TodoDTO.Companion.Response
 import com.donghyukki.korello.presentation.dto.type.KorelloActionType
 import com.donghyukki.korello.presentation.dto.type.KorelloEventType
 import com.donghyukki.korello.presentation.dto.type.KorelloSelectType
-import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional
 class CardTodoService(
     private val cardRepository: CardRepository,
     private val todoRepository: TodoRepository,
-    private val applicationEventPublisher: ApplicationEventPublisher
+    private val korelloEventPublisher: KorelloEventPublisher
 ) {
 
     @Transactional(readOnly = true)
@@ -33,7 +33,7 @@ class CardTodoService(
         val todo = Todo(todoCreateDTO.title, card)
         card.addTodo(todo)
         val savedTodo = todoRepository.save(todo)
-        applicationEventPublisher.publishEvent(EventDTO(card.id!!, KorelloSelectType.CARD, KorelloEventType.TODO, KorelloActionType.CREATE))
+        korelloEventPublisher.publishEvent(EventDTO(card.id!!, KorelloSelectType.CARD, KorelloEventType.TODO, KorelloActionType.CREATE))
         return Response(savedTodo.id.toString(), savedTodo.title, savedTodo.status)
     }
 }
