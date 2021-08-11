@@ -1,8 +1,8 @@
 package com.donghyukki.korello.application.services.todo
 
+import com.donghyukki.korello.application.port.KorelloEventPublisher
 import com.donghyukki.korello.domain.todo.repository.TodoRepository
 import com.donghyukki.korello.infrastructure.exception.KorelloNotFoundException
-import com.donghyukki.korello.infrastructure.web.event.publisher.KorelloEventPublisher
 import com.donghyukki.korello.presentation.dto.EventDTO
 import com.donghyukki.korello.presentation.dto.TodoDTO.Companion.Update
 import com.donghyukki.korello.presentation.dto.type.KorelloActionType

@@ -1,10 +1,10 @@
 package com.donghyukki.korello.application.services.board
 
 import com.donghyukki.korello.application.port.AuthenticationFacade
+import com.donghyukki.korello.application.port.KorelloEventPublisher
 import com.donghyukki.korello.application.services.member.MemberCrudService
 import com.donghyukki.korello.domain.board.model.BoardJoinMembers
 import com.donghyukki.korello.domain.board.service.BoardJoinMembersService
-import com.donghyukki.korello.infrastructure.web.event.publisher.KorelloEventPublisher
 import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.MemberExit
 import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.MemberJoin
 import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.MemberResponse

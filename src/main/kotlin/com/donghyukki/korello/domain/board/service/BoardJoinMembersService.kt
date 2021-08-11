@@ -1,13 +1,13 @@
 package com.donghyukki.korello.domain.board.service
 
 import com.donghyukki.korello.application.port.AuthenticationFacade
+import com.donghyukki.korello.application.port.KorelloEventPublisher
 import com.donghyukki.korello.domain.board.model.Board
 import com.donghyukki.korello.domain.board.model.BoardJoinMembers
 import com.donghyukki.korello.domain.board.repository.BoardMembersRepository
 import com.donghyukki.korello.domain.member.model.Member
 import com.donghyukki.korello.domain.member.repository.MemberRepository
 import com.donghyukki.korello.infrastructure.exception.KorelloNotFoundException
-import com.donghyukki.korello.infrastructure.web.event.publisher.KorelloEventPublisher
 import com.donghyukki.korello.presentation.dto.EventDTO
 import com.donghyukki.korello.presentation.dto.type.KorelloActionType
 import com.donghyukki.korello.presentation.dto.type.KorelloEventType

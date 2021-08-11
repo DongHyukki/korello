@@ -1,10 +1,10 @@
 package com.donghyukki.korello.application.services.card
 
+import com.donghyukki.korello.application.port.KorelloEventPublisher
 import com.donghyukki.korello.domain.card.repository.CardRepository
 import com.donghyukki.korello.domain.todo.model.Todo
 import com.donghyukki.korello.domain.todo.repository.TodoRepository
 import com.donghyukki.korello.infrastructure.exception.KorelloNotFoundException
-import com.donghyukki.korello.infrastructure.web.event.publisher.KorelloEventPublisher
 import com.donghyukki.korello.presentation.dto.EventDTO
 import com.donghyukki.korello.presentation.dto.TodoDTO.Companion.Create
 import com.donghyukki.korello.presentation.dto.TodoDTO.Companion.Response

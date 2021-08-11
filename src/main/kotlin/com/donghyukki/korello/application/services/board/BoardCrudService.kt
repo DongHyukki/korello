@@ -1,10 +1,10 @@
 package com.donghyukki.korello.application.services.board
 
+import com.donghyukki.korello.application.port.KorelloEventPublisher
 import com.donghyukki.korello.domain.board.model.Board
 import com.donghyukki.korello.domain.board.repository.BoardRepository
 import com.donghyukki.korello.domain.board.service.BoardJoinMembersService
 import com.donghyukki.korello.infrastructure.exception.KorelloNotFoundException
-import com.donghyukki.korello.infrastructure.web.event.publisher.KorelloEventPublisher
 import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.Create
 import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.Delete
 import com.donghyukki.korello.presentation.dto.BoardDTO.Companion.Response

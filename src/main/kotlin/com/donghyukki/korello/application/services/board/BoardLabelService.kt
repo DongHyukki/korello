@@ -1,10 +1,10 @@
 package com.donghyukki.korello.application.services.board
 
+import com.donghyukki.korello.application.port.KorelloEventPublisher
 import com.donghyukki.korello.domain.board.repository.BoardRepository
 import com.donghyukki.korello.domain.label.model.Label
 import com.donghyukki.korello.domain.label.repository.LabelRepository
 import com.donghyukki.korello.infrastructure.exception.KorelloNotFoundException
-import com.donghyukki.korello.infrastructure.web.event.publisher.KorelloEventPublisher
 import com.donghyukki.korello.presentation.dto.EventDTO
 import com.donghyukki.korello.presentation.dto.LabelDTO.Companion.Create
 import com.donghyukki.korello.presentation.dto.LabelDTO.Companion.Response

@@ -1,9 +1,9 @@
 package com.donghyukki.korello.application.services.card
 
+import com.donghyukki.korello.application.port.KorelloEventPublisher
 import com.donghyukki.korello.domain.card.repository.CardRepository
 import com.donghyukki.korello.domain.label.repository.LabelRepository
 import com.donghyukki.korello.infrastructure.exception.KorelloNotFoundException
-import com.donghyukki.korello.infrastructure.web.event.publisher.KorelloEventPublisher
 import com.donghyukki.korello.presentation.dto.EventDTO
 import com.donghyukki.korello.presentation.dto.LabelDTO
 import com.donghyukki.korello.presentation.dto.LabelDTO.Companion.AddCard
