@@ -61,6 +61,9 @@ dependencies {
 
     //archunit
     testImplementation ("com.tngtech.archunit:archunit-junit5:0.20.0")
+
+    //mockk
+    testImplementation("io.mockk:mockk:1.12.0")
 }
 
 allOpen {

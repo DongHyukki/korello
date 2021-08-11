@@ -6,6 +6,7 @@ import com.donghyukki.korello.domain.card.model.Card
 import com.donghyukki.korello.domain.card.repository.CardRepository
 import com.donghyukki.korello.domain.member.model.Member
 import com.donghyukki.korello.infrastructure.exception.KorelloNotFoundException
+import com.donghyukki.korello.presentation.dto.CardDTO
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.Create
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.Delete
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.Response
@@ -37,7 +38,7 @@ class BoardCardService(
     fun getAllCardsById(boardId: String): List<Response> {
         val board = boardRepository.findById(boardId.toLong()).orElseThrow { KorelloNotFoundException() }
 
-        return board.cards.map { card -> card.toResponse() }.toList()
+        return board.cards.map { card -> CardDTO.responseOf(card) }.toList()
     }
 
     @CacheEvict(value = ["board"], key = "#boardId")
@@ -60,7 +61,7 @@ class BoardCardService(
             )
         )
 
-        return savedCard.toResponse()
+        return CardDTO.responseOf(savedCard)
     }
 
     @CacheEvict(value = ["board"], key = "#boardId")

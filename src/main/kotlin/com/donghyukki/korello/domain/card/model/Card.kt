@@ -108,28 +108,6 @@ class Card(
         this@Card.labels.clear()
     }
 
-    fun toResponse(): CardDTO.Companion.Response {
-        return CardDTO.Companion.Response(
-            id!!.toString(),
-            name,
-            cardTag.tagValue,
-            members.map { member -> member.name }.toList(),
-            labels.map { label ->
-                CardDTO.Companion.LabelResponse(
-                    label.id.toString(),
-                    label.name,
-                    label.color,
-                    label.createDate,
-                    label.updateDate
-                )
-            },
-            createDate,
-            updateDate,
-            dueDate,
-            displayOrder
-        )
-    }
-
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is Card) return false
