@@ -67,6 +67,6 @@ class CardDTO {
             val updateDate: LocalDateTime,
             val dueDate: LocalDateTime?,
             val order: Int
-        ): Serializable
+        ) : Serializable
     }
 }

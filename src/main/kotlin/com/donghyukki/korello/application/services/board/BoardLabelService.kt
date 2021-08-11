@@ -36,15 +36,29 @@ class BoardLabelService(
     fun createLabel(boardId: String, labelCreateDTO: Create): Response {
         val board = boardRepository.findById(boardId.toLong()).orElseThrow { KorelloNotFoundException() }
         val label = labelRepository.save(Label(board, labelCreateDTO.name, labelCreateDTO.color))
-        korelloEventPublisher.publishEvent(EventDTO(board.id!!, KorelloSelectType.BOARD, KorelloEventType.LABEL, KorelloActionType.CREATE))
+        korelloEventPublisher.publishEvent(
+            EventDTO(
+                board.id!!,
+                KorelloSelectType.BOARD,
+                KorelloEventType.LABEL,
+                KorelloActionType.CREATE
+            )
+        )
         return Response(label.id.toString(), label.name, label.color, label.createDate, label.updateDate)
     }
 
     @CacheEvict(value = ["label"], key = "#boardId")
     @Transactional
     fun clearLabel(boardId: String) {
-        val label =  labelRepository.getLabelsByBoardId(boardId.toLong()).forEach { label -> label.clearBoard() }
-        korelloEventPublisher.publishEvent(EventDTO(boardId.toLong(), KorelloSelectType.BOARD, KorelloEventType.LABEL, KorelloActionType.UPDATE))
+        val label = labelRepository.getLabelsByBoardId(boardId.toLong()).forEach { label -> label.clearBoard() }
+        korelloEventPublisher.publishEvent(
+            EventDTO(
+                boardId.toLong(),
+                KorelloSelectType.BOARD,
+                KorelloEventType.LABEL,
+                KorelloActionType.UPDATE
+            )
+        )
         return label
     }
 
@@ -52,7 +66,14 @@ class BoardLabelService(
     @Transactional
     fun deleteLabel(boardId: String, labelId: String) {
         labelRepository.deleteById(labelId.toLong())
-        korelloEventPublisher.publishEvent(EventDTO(boardId.toLong(), KorelloSelectType.BOARD, KorelloEventType.LABEL, KorelloActionType.DELETE))
+        korelloEventPublisher.publishEvent(
+            EventDTO(
+                boardId.toLong(),
+                KorelloSelectType.BOARD,
+                KorelloEventType.LABEL,
+                KorelloActionType.DELETE
+            )
+        )
     }
 
 }

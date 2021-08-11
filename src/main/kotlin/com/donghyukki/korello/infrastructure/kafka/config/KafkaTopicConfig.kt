@@ -19,6 +19,10 @@ class KafkaTopicConfig(
 
     @Bean
     fun initTopic(): NewTopic {
-        return NewTopic(kafkaPropertyConfig.topicName, kafkaPropertyConfig.numPartitions.toInt(), kafkaPropertyConfig.replicationFactor.toShort())
+        return NewTopic(
+            kafkaPropertyConfig.topicName,
+            kafkaPropertyConfig.numPartitions.toInt(),
+            kafkaPropertyConfig.replicationFactor.toShort()
+        )
     }
 }

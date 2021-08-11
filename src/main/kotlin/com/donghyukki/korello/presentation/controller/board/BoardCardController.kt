@@ -57,14 +57,20 @@ class BoardCardController(
 
     @Operation(summary = "CARD 순서 수정", description = "특정 CARD의 순서를 수정한다.")
     @PutMapping("api/v1/board/{id}/card/display-order")
-    fun updateCardDisplayOrder(@PathVariable id: String, @RequestBody cardUpdateDisplayOrderDTO: UpdateDisplayOrder): KorelloResponse {
+    fun updateCardDisplayOrder(
+        @PathVariable id: String,
+        @RequestBody cardUpdateDisplayOrderDTO: UpdateDisplayOrder
+    ): KorelloResponse {
         boardCardService.updateCardDisplayOrder(id, cardUpdateDisplayOrderDTO)
         return KorelloResponse()
     }
 
     @Operation(summary = "CARD 태그 및 순서 수정", description = "특정 CARD의 태그 및 순서를 수정한다.")
     @PutMapping("api/v1/board/{id}/card/tag-display-order")
-    fun updateCardTagAndDisplayOrder(@PathVariable id: String, @RequestBody cardUpdateDisplayOrderDTO: UpdateTagAndDisplayOrder): KorelloResponse {
+    fun updateCardTagAndDisplayOrder(
+        @PathVariable id: String,
+        @RequestBody cardUpdateDisplayOrderDTO: UpdateTagAndDisplayOrder
+    ): KorelloResponse {
         boardCardService.updateCardTagAndDisplayOrder(id, cardUpdateDisplayOrderDTO)
         return KorelloResponse()
     }

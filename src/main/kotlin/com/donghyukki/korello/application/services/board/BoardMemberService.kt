@@ -48,7 +48,14 @@ class BoardMemberService(
         val member = memberCrudService.getMemberEntity(memberJoinDTO.memberId.toLong())
         val board = boardCrudService.getBoardEntity(memberJoinDTO.boardId.toLong())
         val joinBoard = boardJoinMembersService.joinBoard(member, board)
-        korelloEventPublisher.publishEvent(EventDTO(board.id!!, KorelloSelectType.BOARD, KorelloEventType.MEMBER, KorelloActionType.INVITE))
+        korelloEventPublisher.publishEvent(
+            EventDTO(
+                board.id!!,
+                KorelloSelectType.BOARD,
+                KorelloEventType.MEMBER,
+                KorelloActionType.INVITE
+            )
+        )
         return joinBoard
     }
 
@@ -61,6 +68,13 @@ class BoardMemberService(
         boardJoinMembersService.exitBoard(joinBoardMembers)
         board.deleteMember(joinBoardMembers)
         member.exitBoard(joinBoardMembers)
-        korelloEventPublisher.publishEvent(EventDTO(board.id!!, KorelloSelectType.BOARD, KorelloEventType.MEMBER, KorelloActionType.EXIT))
+        korelloEventPublisher.publishEvent(
+            EventDTO(
+                board.id!!,
+                KorelloSelectType.BOARD,
+                KorelloEventType.MEMBER,
+                KorelloActionType.EXIT
+            )
+        )
     }
 }

@@ -27,13 +27,21 @@ class BoardJoinMembersService(
         val boardMembers = BoardJoinMembers(board, member)
         val savedMembers = boardMembersRepository.save(boardMembers)
         savedMembers.joinBoard()
-        korelloEventPublisher.publishEvent(EventDTO(board.id!!, KorelloSelectType.BOARD, KorelloEventType.MEMBER, KorelloActionType.JOIN))
+        korelloEventPublisher.publishEvent(
+            EventDTO(
+                board.id!!,
+                KorelloSelectType.BOARD,
+                KorelloEventType.MEMBER,
+                KorelloActionType.JOIN
+            )
+        )
         return savedMembers
     }
 
     @Transactional
     fun selfJoinBoard(board: Board) {
-        val member = memberRepository.findById(authenticationFacade.getMemberId()).orElseThrow { KorelloNotFoundException() }
+        val member =
+            memberRepository.findById(authenticationFacade.getMemberId()).orElseThrow { KorelloNotFoundException() }
         val boardMembers = BoardJoinMembers(board, member)
         val savedMembers = boardMembersRepository.save(boardMembers)
         savedMembers.joinBoard()
@@ -42,7 +50,14 @@ class BoardJoinMembersService(
     @Transactional
     fun exitBoard(boardJoinMembers: BoardJoinMembers) {
         boardMembersRepository.delete(boardJoinMembers)
-        korelloEventPublisher.publishEvent(EventDTO(boardJoinMembers.board.id!!, KorelloSelectType.BOARD, KorelloEventType.MEMBER, KorelloActionType.EXIT))
+        korelloEventPublisher.publishEvent(
+            EventDTO(
+                boardJoinMembers.board.id!!,
+                KorelloSelectType.BOARD,
+                KorelloEventType.MEMBER,
+                KorelloActionType.EXIT
+            )
+        )
     }
 
 }

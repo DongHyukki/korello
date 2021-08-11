@@ -33,7 +33,14 @@ class CardTodoService(
         val todo = Todo(todoCreateDTO.title, card)
         card.addTodo(todo)
         val savedTodo = todoRepository.save(todo)
-        korelloEventPublisher.publishEvent(EventDTO(card.id!!, KorelloSelectType.CARD, KorelloEventType.TODO, KorelloActionType.CREATE))
+        korelloEventPublisher.publishEvent(
+            EventDTO(
+                card.id!!,
+                KorelloSelectType.CARD,
+                KorelloEventType.TODO,
+                KorelloActionType.CREATE
+            )
+        )
         return Response(savedTodo.id.toString(), savedTodo.title, savedTodo.status)
     }
 }

@@ -26,16 +26,31 @@ class CardLabelService(
         val label = labelRepository.findById(labelId.toLong()).orElseThrow { KorelloNotFoundException() }
         label.changeName(labelUpdateDTO.name)
         label.changeColor(labelUpdateDTO.color)
-        korelloEventPublisher.publishEvent(EventDTO(label.board!!.id!!, KorelloSelectType.BOARD, KorelloEventType.LABEL, KorelloActionType.UPDATE))
+        korelloEventPublisher.publishEvent(
+            EventDTO(
+                label.board!!.id!!,
+                KorelloSelectType.BOARD,
+                KorelloEventType.LABEL,
+                KorelloActionType.UPDATE
+            )
+        )
     }
 
     @Transactional
     fun addLabelToCard(cardId: String, labelAddCardDTO: AddCard) {
         val card = cardRepository.findById(cardId.toLong()).orElseThrow { KorelloNotFoundException() }
-        val label = labelRepository.findById(labelAddCardDTO.labelId.toLong()).orElseThrow { KorelloNotFoundException() }
+        val label =
+            labelRepository.findById(labelAddCardDTO.labelId.toLong()).orElseThrow { KorelloNotFoundException() }
         label.addCard(card)
         card.addLabels(listOf(label))
-        korelloEventPublisher.publishEvent(EventDTO(card.id!!, KorelloSelectType.CARD, KorelloEventType.LABEL, KorelloActionType.ADD))
+        korelloEventPublisher.publishEvent(
+            EventDTO(
+                card.id!!,
+                KorelloSelectType.CARD,
+                KorelloEventType.LABEL,
+                KorelloActionType.ADD
+            )
+        )
     }
 
     @Transactional
@@ -45,7 +60,14 @@ class CardLabelService(
         val labels = labelRepository.findAllById(labelIds)
         labels.forEach { label -> label.deleteCard(card) }
         card.deleteLabels(labels)
-        korelloEventPublisher.publishEvent(EventDTO(card.id!!, KorelloSelectType.CARD, KorelloEventType.LABEL, KorelloActionType.DELETE))
+        korelloEventPublisher.publishEvent(
+            EventDTO(
+                card.id!!,
+                KorelloSelectType.CARD,
+                KorelloEventType.LABEL,
+                KorelloActionType.DELETE
+            )
+        )
     }
 
 }

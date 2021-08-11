@@ -23,7 +23,7 @@ class BoardCrudService(
     private val boardJoinMembersService: BoardJoinMembersService,
     private val korelloEventPublisher: KorelloEventPublisher,
 
-) {
+    ) {
 
     @Transactional(readOnly = true)
     fun getAllBoards(): List<Response> {
@@ -61,7 +61,14 @@ class BoardCrudService(
     fun createBoard(boardCreateDTO: Create): Response {
         val board = boardRepository.save(boardCreateDTO.toEntity())
         boardJoinMembersService.selfJoinBoard(board)
-        korelloEventPublisher.publishEvent(EventDTO(board.id!!, KorelloSelectType.BOARD, KorelloEventType.BOARD, KorelloActionType.CREATE))
+        korelloEventPublisher.publishEvent(
+            EventDTO(
+                board.id!!,
+                KorelloSelectType.BOARD,
+                KorelloEventType.BOARD,
+                KorelloActionType.CREATE
+            )
+        )
         return Response(
             board.id.toString(),
             board.name,
@@ -76,7 +83,14 @@ class BoardCrudService(
     fun deleteBoard(boardDeleteDTO: Delete) {
         val board = boardRepository.findById(boardDeleteDTO.id.toLong()).orElseThrow { KorelloNotFoundException() }
         board.clearCard()
-        korelloEventPublisher.publishEvent(EventDTO(board.id!!, KorelloSelectType.BOARD, KorelloEventType.BOARD, KorelloActionType.DELETE))
+        korelloEventPublisher.publishEvent(
+            EventDTO(
+                board.id!!,
+                KorelloSelectType.BOARD,
+                KorelloEventType.BOARD,
+                KorelloActionType.DELETE
+            )
+        )
         return boardRepository.deleteById(boardDeleteDTO.id.toLong())
     }
 

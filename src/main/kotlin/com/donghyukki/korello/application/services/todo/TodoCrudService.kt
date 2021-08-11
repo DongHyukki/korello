@@ -22,20 +22,41 @@ class TodoCrudService(
         val cardId = findTodo.card!!.id
         findTodo.clearCard()
         todoRepository.deleteById(id.toLong())
-        korelloEventPublisher.publishEvent(EventDTO(cardId!!, KorelloSelectType.CARD, KorelloEventType.TODO, KorelloActionType.DELETE))
+        korelloEventPublisher.publishEvent(
+            EventDTO(
+                cardId!!,
+                KorelloSelectType.CARD,
+                KorelloEventType.TODO,
+                KorelloActionType.DELETE
+            )
+        )
     }
 
     @Transactional
     fun changeTodoStatus(id: String) {
         val findTodo = todoRepository.findById(id.toLong()).orElseThrow { KorelloNotFoundException() }
         findTodo.changeStatus()
-        korelloEventPublisher.publishEvent(EventDTO(findTodo.card!!.id!!, KorelloSelectType.CARD, KorelloEventType.TODO, KorelloActionType.UPDATE))
+        korelloEventPublisher.publishEvent(
+            EventDTO(
+                findTodo.card!!.id!!,
+                KorelloSelectType.CARD,
+                KorelloEventType.TODO,
+                KorelloActionType.UPDATE
+            )
+        )
     }
 
     @Transactional
     fun updateTodo(id: String, updateTodoDTO: Update) {
         val findTodo = todoRepository.findById(id.toLong()).orElseThrow { KorelloNotFoundException() }
         findTodo.changeTitle(updateTodoDTO.title)
-        korelloEventPublisher.publishEvent(EventDTO(findTodo.card!!.id!!, KorelloSelectType.CARD, KorelloEventType.TODO, KorelloActionType.UPDATE))
+        korelloEventPublisher.publishEvent(
+            EventDTO(
+                findTodo.card!!.id!!,
+                KorelloSelectType.CARD,
+                KorelloEventType.TODO,
+                KorelloActionType.UPDATE
+            )
+        )
     }
 }

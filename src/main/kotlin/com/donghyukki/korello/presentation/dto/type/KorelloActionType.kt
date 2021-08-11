@@ -5,7 +5,7 @@ import java.io.Serializable
 enum class KorelloActionType(
     val eng_name: String,
     val kor_name: String
-): Serializable {
+) : Serializable {
     CREATE("create", "생성"),
     UPDATE("update", "업데이트"),
     DELETE("delete", "삭제"),

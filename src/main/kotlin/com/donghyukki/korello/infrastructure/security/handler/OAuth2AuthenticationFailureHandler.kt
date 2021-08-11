@@ -5,7 +5,7 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-class OAuth2AuthenticationFailureHandler: AuthenticationFailureHandler {
+class OAuth2AuthenticationFailureHandler : AuthenticationFailureHandler {
 
     override fun onAuthenticationFailure(
         request: HttpServletRequest?,

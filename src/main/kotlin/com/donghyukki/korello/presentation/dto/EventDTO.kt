@@ -13,7 +13,15 @@ data class EventDTO(
     var memberName: String?,
     var message: String?,
 ) {
-    constructor(id: Long, selectType: KorelloSelectType, eventType: KorelloEventType, action: KorelloActionType): this(id, selectType, eventType, action,null, null, null)
+    constructor(id: Long, selectType: KorelloSelectType, eventType: KorelloEventType, action: KorelloActionType) : this(
+        id,
+        selectType,
+        eventType,
+        action,
+        null,
+        null,
+        null
+    )
 
     fun buildMessage() {
         this@EventDTO.message = "${eventType.toAddedPostName()} ${action.kor_name} 했습니다."
