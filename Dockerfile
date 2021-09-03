@@ -1,3 +1,11 @@
+FROM gradle:7-jdk11 AS builder
+COPY . /app
+WORKDIR /app
+RUN ./gradlew clean build -x test
+
+FROM adoptopenjdk/openjdk11:latest
+COPY --from=builder /app/build/libs /build/libs
+
 FROM adoptopenjdk/openjdk11:latest
 
 ARG HEAP_SIZE
