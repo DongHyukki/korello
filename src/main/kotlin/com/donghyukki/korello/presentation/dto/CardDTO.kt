@@ -1,5 +1,6 @@
 package com.donghyukki.korello.presentation.dto
 
+import com.donghyukki.korello.domain.card.model.Card
 import com.donghyukki.korello.domain.label.model.Label
 import java.io.Serializable
 import java.time.LocalDateTime
@@ -54,7 +55,7 @@ class CardDTO {
             val name: String,
             val color: String,
             val createDate: LocalDateTime,
-            val updateDate: LocalDateTime
+            val updateDate: LocalDateTime,
         )
 
         data class Response(
@@ -67,6 +68,28 @@ class CardDTO {
             val updateDate: LocalDateTime,
             val dueDate: LocalDateTime?,
             val order: Int
-        ): Serializable
+        ) : Serializable
+
+        fun responseOf(card: Card): Response {
+            return Response(
+                card.id!!.toString(),
+                card.name,
+                card.cardTag.tagValue,
+                card.members.map { member -> member.name }.toList(),
+                card.labels.map { label ->
+                    CardDTO.Companion.LabelResponse(
+                        label.id.toString(),
+                        label.name,
+                        label.color,
+                        label.createDate,
+                        label.updateDate
+                    )
+                },
+                card.createDate,
+                card.updateDate,
+                card.dueDate,
+                card.displayOrder
+            )
+        }
     }
 }

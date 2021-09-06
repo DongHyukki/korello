@@ -19,7 +19,6 @@ class Member(
     val id: Long?,
     @Column
     var name: String,
-
     @Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
     @OneToMany(mappedBy = "member")
     val boardJoins: MutableList<BoardJoinMembers>,
@@ -36,8 +35,24 @@ class Member(
     @Column
     var refreshToken: String
 ) : BaseEntity() {
-    constructor(name: String, role: Role, providerId: String, registrationId: String, accessToken: String, refreshToken: String)
-            : this(null, name, arrayListOf(), arrayListOf(), role.value, providerId, registrationId, accessToken, refreshToken)
+    constructor(
+        name: String,
+        role: Role,
+        providerId: String,
+        registrationId: String,
+        accessToken: String,
+        refreshToken: String
+    ) : this(
+        null,
+        name,
+        arrayListOf(),
+        arrayListOf(),
+        role.value,
+        providerId,
+        registrationId,
+        accessToken,
+        refreshToken
+    )
 
     fun addBoards(boardJoinMembers: BoardJoinMembers) {
         boardJoins.add(boardJoinMembers)
@@ -52,7 +67,8 @@ class Member(
             Response(
                 boardJoinMembers.board.id.toString(),
                 boardJoinMembers.board.name,
-                boardJoinMembers.board.members.map { boardJoinMembers -> boardJoinMembers.member.name }.toList(),
+                boardJoinMembers.board.members.map { boardJoinMembers -> boardJoinMembers.member.name }
+                    .toList(),
                 boardJoinMembers.board.createDate,
                 boardJoinMembers.board.updateDate
             )
@@ -92,6 +108,4 @@ class Member(
         result = 31 * result + providerId.hashCode()
         return result
     }
-
-
 }

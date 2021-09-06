@@ -38,7 +38,8 @@ class MemberCrudService(
     @CacheEvict(value = ["member"], key = "#memberUpdateDTO.providerId + '::' + #memberUpdateDTO.name")
     @Transactional
     fun changeAuth(memberUpdateDTO: Update): Member {
-        val member = memberRepository.findMemberByNameAndProviderId(memberUpdateDTO.name, memberUpdateDTO.providerId).orElseThrow { KorelloNotFoundException() }
+        val member = memberRepository.findMemberByNameAndProviderId(memberUpdateDTO.name, memberUpdateDTO.providerId)
+            .orElseThrow { KorelloNotFoundException() }
         member.changeAuth(memberUpdateDTO.name, memberUpdateDTO.accessToken, memberUpdateDTO.refreshToken)
         return member
     }
@@ -55,7 +56,8 @@ class MemberCrudService(
     @Cacheable(value = ["member"], key = "#providerId + '::' + #name")
     @Transactional(readOnly = true)
     fun findMemberByNameAndProviderId(name: String, providerId: String): InfoResponse {
-        val foundMember = memberRepository.findMemberByNameAndProviderId(name, providerId).orElseThrow { KorelloNotFoundException() }
+        val foundMember =
+            memberRepository.findMemberByNameAndProviderId(name, providerId).orElseThrow { KorelloNotFoundException() }
         return foundMember.toInfoResponse()
     }
 }

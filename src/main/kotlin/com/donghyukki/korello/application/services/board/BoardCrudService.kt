@@ -1,5 +1,6 @@
 package com.donghyukki.korello.application.services.board
 
+import com.donghyukki.korello.application.port.KorelloEventPublisher
 import com.donghyukki.korello.domain.board.model.Board
 import com.donghyukki.korello.domain.board.repository.BoardRepository
 import com.donghyukki.korello.domain.board.service.BoardJoinMembersService
@@ -13,7 +14,6 @@ import com.donghyukki.korello.presentation.dto.type.KorelloEventType
 import com.donghyukki.korello.presentation.dto.type.KorelloSelectType
 import org.springframework.cache.annotation.CacheEvict
 import org.springframework.cache.annotation.Cacheable
-import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -21,9 +21,9 @@ import org.springframework.transaction.annotation.Transactional
 class BoardCrudService(
     private val boardRepository: BoardRepository,
     private val boardJoinMembersService: BoardJoinMembersService,
-    private val applicationEventPublisher: ApplicationEventPublisher,
+    private val korelloEventPublisher: KorelloEventPublisher,
 
-) {
+    ) {
 
     @Transactional(readOnly = true)
     fun getAllBoards(): List<Response> {
@@ -61,7 +61,14 @@ class BoardCrudService(
     fun createBoard(boardCreateDTO: Create): Response {
         val board = boardRepository.save(boardCreateDTO.toEntity())
         boardJoinMembersService.selfJoinBoard(board)
-        applicationEventPublisher.publishEvent(EventDTO(board.id!!, KorelloSelectType.BOARD, KorelloEventType.BOARD, KorelloActionType.CREATE))
+        korelloEventPublisher.publishEvent(
+            EventDTO(
+                board.id!!,
+                KorelloSelectType.BOARD,
+                KorelloEventType.BOARD,
+                KorelloActionType.CREATE
+            )
+        )
         return Response(
             board.id.toString(),
             board.name,
@@ -76,7 +83,14 @@ class BoardCrudService(
     fun deleteBoard(boardDeleteDTO: Delete) {
         val board = boardRepository.findById(boardDeleteDTO.id.toLong()).orElseThrow { KorelloNotFoundException() }
         board.clearCard()
-        applicationEventPublisher.publishEvent(EventDTO(board.id!!, KorelloSelectType.BOARD, KorelloEventType.BOARD, KorelloActionType.DELETE))
+        korelloEventPublisher.publishEvent(
+            EventDTO(
+                board.id!!,
+                KorelloSelectType.BOARD,
+                KorelloEventType.BOARD,
+                KorelloActionType.DELETE
+            )
+        )
         return boardRepository.deleteById(boardDeleteDTO.id.toLong())
     }
 

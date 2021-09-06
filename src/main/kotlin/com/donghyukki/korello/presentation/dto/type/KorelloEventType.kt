@@ -5,7 +5,7 @@ import java.io.Serializable
 enum class KorelloEventType(
     val eng_name: String,
     var kor_name: String
-): Serializable {
+) : Serializable {
     BOARD("board", "보드"),
     CARD("card", "카드"),
     MEMBER("member", "멤버"),
@@ -20,7 +20,7 @@ enum class KorelloEventType(
     }
 
     fun toAddedPostName(): String {
-        return if(ulList.contains(this)) {
+        return if (ulList.contains(this)) {
             kor_name + ulPostposition
         } else {
             kor_name + leulPostposition

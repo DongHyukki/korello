@@ -22,6 +22,6 @@ class TodoDTO {
             val todoId: String,
             val title: String,
             val status: Boolean,
-        ): Serializable
+        ) : Serializable
     }
 }

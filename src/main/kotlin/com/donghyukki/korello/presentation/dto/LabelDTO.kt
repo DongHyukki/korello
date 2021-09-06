@@ -30,6 +30,6 @@ class LabelDTO {
             val color: String,
             val createDate: LocalDateTime,
             val updateDate: LocalDateTime
-        ): Serializable
+        ) : Serializable
     }
 }

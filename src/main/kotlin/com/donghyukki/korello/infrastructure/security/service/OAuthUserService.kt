@@ -29,11 +29,13 @@ class OAuthUserService(
         val oAuth2User = delegate.loadUser(userRequest)
         val nameAttributeKey = userRequest.clientRegistration.providerDetails.userInfoEndpoint.userNameAttributeName
 
-        val oAuthAttributes = createOAuthAttributes(oAuth2User.name, registrationId, nameAttributeKey, oAuth2User.attributes)
+        val oAuthAttributes =
+            createOAuthAttributes(oAuth2User.name, registrationId, nameAttributeKey, oAuth2User.attributes)
         val (member, newAttributes) = authenticateMember(oAuthAttributes)
 
         return DefaultOAuth2User(
-            Collections.singleton(SimpleGrantedAuthority(member.role)), newAttributes, oAuthAttributes.nameAttributeKey)
+            Collections.singleton(SimpleGrantedAuthority(member.role)), newAttributes, oAuthAttributes.nameAttributeKey
+        )
 
     }
 
@@ -50,15 +52,40 @@ class OAuthUserService(
         newAttributes["refreshToken"] = refreshToken
 
         return try {
-            Pair(memberCrudService.changeAuth(MemberDTO.Companion.Update(providerId, memberName, accessToken, refreshToken)), newAttributes)
+            Pair(
+                memberCrudService.changeAuth(
+                    MemberDTO.Companion.Update(
+                        providerId,
+                        memberName,
+                        accessToken,
+                        refreshToken
+                    )
+                ), newAttributes
+            )
         } catch (e: KorelloNotFoundException) {
-            Pair(memberCrudService.createMember(MemberDTO.Companion.Create(memberName, role, providerId, registrationId, accessToken, refreshToken)), newAttributes)
+            Pair(
+                memberCrudService.createMember(
+                    MemberDTO.Companion.Create(
+                        memberName,
+                        role,
+                        providerId,
+                        registrationId,
+                        accessToken,
+                        refreshToken
+                    )
+                ), newAttributes
+            )
         }
 
 
     }
 
-    fun createOAuthAttributes(providerId: String, registrationId: String, userNameAttributeKey: String, attributes: MutableMap<String, Any>) = OAuthAttributes(providerId, registrationId, userNameAttributeKey, attributes)
+    fun createOAuthAttributes(
+        providerId: String,
+        registrationId: String,
+        userNameAttributeKey: String,
+        attributes: MutableMap<String, Any>
+    ) = OAuthAttributes(providerId, registrationId, userNameAttributeKey, attributes)
 
     fun parseMemberName(attributes: Map<String, Any>): String {
         val account = attributes["kakao_account"] as Map<*, *>

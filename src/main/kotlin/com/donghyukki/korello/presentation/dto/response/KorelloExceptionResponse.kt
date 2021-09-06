@@ -9,7 +9,11 @@ data class KorelloExceptionResponse(
     val result_time: String
 ) {
     constructor(result_message: String) : this(9999, result_message, LocalDateTime.now().toString())
-    constructor(result_code: Int, result_message: String) : this(result_code, result_message, LocalDateTime.now().toString())
+    constructor(result_code: Int, result_message: String) : this(
+        result_code,
+        result_message,
+        LocalDateTime.now().toString()
+    )
 
     fun toJsonString(): String? {
         return ObjectMapper().writeValueAsString(this)

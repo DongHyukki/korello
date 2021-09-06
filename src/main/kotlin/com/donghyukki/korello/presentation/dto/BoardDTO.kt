@@ -34,7 +34,7 @@ class BoardDTO {
         data class MemberResponse(
             val memberId: String,
             val memberName: String
-        ): Serializable
+        ) : Serializable
 
         data class Response(
             val id: String,
@@ -42,6 +42,6 @@ class BoardDTO {
             val memberNames: List<String>,
             val createDate: LocalDateTime,
             val updateDate: LocalDateTime
-        ): Serializable
+        ) : Serializable
     }
 }

@@ -7,7 +7,6 @@ import javax.persistence.*
 
 @Entity
 class Board(
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     val id: Long? = null,

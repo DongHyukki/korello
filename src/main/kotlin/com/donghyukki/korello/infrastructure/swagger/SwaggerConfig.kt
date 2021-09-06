@@ -18,14 +18,16 @@ class SwaggerConfig(
     fun setUpSwaggerUser() {
         val swaggerMember = memberRepository.findMemberByNameAndProviderId("swagger-user", "swagger-providerId")
         if (!swaggerMember.isPresent) {
-            memberRepository.save(MemberDTO.Companion.Create(
-                name = "swagger-user",
-                role = Role.USER,
-                providerId = "swagger-providerId",
-                registrationId = "swagger-user",
-                accessToken = "swagger-token",
-                refreshToken = "swagger-token"
-            ).toEntity())
+            memberRepository.save(
+                MemberDTO.Companion.Create(
+                    name = "swagger-user",
+                    role = Role.USER,
+                    providerId = "swagger-providerId",
+                    registrationId = "swagger-user",
+                    accessToken = "swagger-token",
+                    refreshToken = "swagger-token"
+                ).toEntity()
+            )
         }
     }
 

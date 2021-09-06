@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Component
-class OAuth2AccessDeniedHandler: AccessDeniedHandler {
+class OAuth2AccessDeniedHandler : AccessDeniedHandler {
 
     override fun handle(
         request: HttpServletRequest?,
@@ -22,10 +22,25 @@ class OAuth2AccessDeniedHandler: AccessDeniedHandler {
     ) {
         response?.contentType = MediaType.APPLICATION_JSON_VALUE
 
-        when(response?.status) {
-            EXPIRED_TOKEN.result_code -> response.writer.write(KorelloExceptionResponse(EXPIRED_TOKEN.result_code, EXPIRED_TOKEN.result_message).toJsonString()!!)
-            ILLEGAL_TOKEN.result_code -> response.writer.write(KorelloExceptionResponse(ILLEGAL_TOKEN.result_code, ILLEGAL_TOKEN.result_message).toJsonString()!!)
-            else -> response?.writer?.write(KorelloExceptionResponse(NULL_TOKEN.result_code, NULL_TOKEN.result_message).toJsonString()!!)
+        when (response?.status) {
+            EXPIRED_TOKEN.result_code -> response.writer.write(
+                KorelloExceptionResponse(
+                    EXPIRED_TOKEN.result_code,
+                    EXPIRED_TOKEN.result_message
+                ).toJsonString()!!
+            )
+            ILLEGAL_TOKEN.result_code -> response.writer.write(
+                KorelloExceptionResponse(
+                    ILLEGAL_TOKEN.result_code,
+                    ILLEGAL_TOKEN.result_message
+                ).toJsonString()!!
+            )
+            else -> response?.writer?.write(
+                KorelloExceptionResponse(
+                    NULL_TOKEN.result_code,
+                    NULL_TOKEN.result_message
+                ).toJsonString()!!
+            )
         }
 
         response?.status = HttpStatus.UNAUTHORIZED.value()

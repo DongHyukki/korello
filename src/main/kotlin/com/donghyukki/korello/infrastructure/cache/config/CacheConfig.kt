@@ -30,13 +30,17 @@ class CacheConfig(
             .computePrefixWith(CacheKeyPrefix.prefixed(keyPrefix()))
             .entryTtl(Duration.ofMinutes(30L))
             .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(StringRedisSerializer()))
-            .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(JdkSerializationRedisSerializer()))
+            .serializeValuesWith(
+                RedisSerializationContext.SerializationPair.fromSerializer(
+                    JdkSerializationRedisSerializer()
+                )
+            )
 
         return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(connectionFactory)
             .cacheDefaults(redisConfiguration).build()
     }
 
     private fun keyPrefix() = if (springProfile.active == StringUtil.EMPTY_STRING) StringUtil.EMPTY_STRING
-                              else "${springProfile.active}::"
+    else "${springProfile.active}::"
 
 }
