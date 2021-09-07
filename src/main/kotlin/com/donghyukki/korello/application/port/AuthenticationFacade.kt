@@ -8,6 +8,6 @@ interface AuthenticationFacade {
     fun getMemberId(): Long
     fun getMemberName(): String
     fun of(token: String): UsernamePasswordAuthenticationToken
-    fun ofTestAuthentication(): UsernamePasswordAuthenticationToken
-    fun ofAnonymousAuthentication(): UsernamePasswordAuthenticationToken
+    fun getTestAuthentication(): UsernamePasswordAuthenticationToken
+    fun getAnonymousAuthentication(): UsernamePasswordAuthenticationToken
 }

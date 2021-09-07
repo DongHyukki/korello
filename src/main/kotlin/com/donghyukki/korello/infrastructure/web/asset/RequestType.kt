@@ -6,7 +6,8 @@ enum class RequestType {
     TEST,
     ACCESS,
     SWAGGER,
-    REFRESH
+    REFRESH,
+    COCO,
     ;
 
     companion object {
@@ -22,6 +23,9 @@ enum class RequestType {
             }
             if (request.getHeader("referer")?.contains("swagger-ui") == true) {
                 return SWAGGER
+            }
+            if (request.getHeader("coco")?.equals("coco") == true) {
+                return COCO
             }
 
             return ACCESS

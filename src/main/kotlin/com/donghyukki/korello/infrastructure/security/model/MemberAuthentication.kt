@@ -49,7 +49,7 @@ class MemberAuthentication(
         )
     }
 
-    override fun ofTestAuthentication(): UsernamePasswordAuthenticationToken {
+    override fun getTestAuthentication(): UsernamePasswordAuthenticationToken {
         val findTestMember = memberCrudService.findMemberByNameAndProviderId("swagger-user", "swagger-providerId")
         return UsernamePasswordAuthenticationToken(
             hashMapOf("name" to findTestMember.name, "id" to findTestMember.id),
@@ -58,7 +58,7 @@ class MemberAuthentication(
         )
     }
 
-    override fun ofAnonymousAuthentication(): UsernamePasswordAuthenticationToken {
+    override fun getAnonymousAuthentication(): UsernamePasswordAuthenticationToken {
         return UsernamePasswordAuthenticationToken(null, null, Role.ANONYMOUS.toAuthorities())
     }
 

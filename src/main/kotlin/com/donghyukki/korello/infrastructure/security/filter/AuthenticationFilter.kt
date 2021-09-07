@@ -25,7 +25,7 @@ class AuthenticationFilter(
 
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain) {
         val token = getTokenFromHeader(request.getHeader(AUTHORIZATION_HEADER_KEY))
-        var authentication = memberAuthentication.ofAnonymousAuthentication()
+        var authentication = memberAuthentication.getAnonymousAuthentication()
 
         authentication = when (RequestType.parse(request)) {
             RequestType.ACCESS -> {
@@ -42,8 +42,8 @@ class AuthenticationFilter(
             RequestType.REFRESH -> {
                 authentication
             }
-            RequestType.SWAGGER, RequestType.TEST -> {
-                memberAuthentication.ofTestAuthentication()
+            RequestType.SWAGGER, RequestType.TEST, RequestType.COCO -> {
+                memberAuthentication.getTestAuthentication()
             }
         }
 
