@@ -21,7 +21,7 @@ class CorsFilter : Filter {
         response.setHeader("Access-Control-Max-Age", "3600")
         response.setHeader(
             "Access-Control-Allow-Headers",
-            "Origin, X-Requested-With, Content-Type, Accept, Key, Authorization, username, password, Access-Control-Allow-Origin"
+            "Origin, X-Requested-With, Content-Type, Accept, Key, Authorization, username, password, Access-Control-Allow-Origin, coco"
         )
         if ("OPTIONS".equals(request.method, ignoreCase = true)) {
             response.status = HttpServletResponse.SC_OK
