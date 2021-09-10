@@ -5,7 +5,6 @@ import com.donghyukki.korello.domain.common.BaseEntity
 import com.donghyukki.korello.domain.label.model.Label
 import com.donghyukki.korello.domain.member.model.Member
 import com.donghyukki.korello.domain.todo.model.Todo
-import com.donghyukki.korello.presentation.dto.CardDTO
 import java.time.LocalDateTime
 import javax.persistence.*
 
@@ -30,23 +29,11 @@ class Card(
     @Column
     var dueDate: LocalDateTime? = null,
     @Column
-    var displayOrder: Int
+    var linkId: Long
 
 ) : BaseEntity() {
 
-    constructor(name: String, tagValue: String, board: Board, displayOrder: Int) : this(
-        null,
-        name,
-        CardTag(tagValue),
-        board,
-        arrayListOf(),
-        arrayListOf(),
-        mutableSetOf(),
-        null,
-        displayOrder
-    )
-
-    constructor(name: String, tagValue: String, board: Board, members: List<Member>, displayOrder: Int) : this(
+    constructor(name: String, tagValue: String, board: Board, members: List<Member>, linkId: Long?) : this(
         null,
         name,
         CardTag(tagValue),
@@ -55,7 +42,7 @@ class Card(
         arrayListOf(),
         mutableSetOf(),
         null,
-        displayOrder
+        linkId ?: 0
     )
 
     fun changeName(name: String) {
@@ -74,13 +61,21 @@ class Card(
         this@Card.dueDate = dueDate
     }
 
-    fun changeDisplayOrder(displayOrder: Int) {
-        this@Card.displayOrder = displayOrder
+    fun changeLinkId(linkId: Long) {
+        this@Card.linkId = linkId
     }
 
-    fun changeTagAndDisplayOrder(name: String, displayOrder: Int) {
+    fun initLinkId() {
+        this@Card.linkId = 0L
+    }
+
+    fun initLinkId(linkId: Long) {
+        this@Card.linkId = linkId
+    }
+
+    fun changeTagAndLinkId(name: String, linkId: Long) {
         this@Card.cardTag = CardTag((name))
-        this@Card.displayOrder = displayOrder
+        this@Card.linkId = linkId
     }
 
     fun deleteDueDate() {

@@ -1,18 +1,16 @@
 package com.donghyukki.korello.presentation.controller.board
 
 import com.donghyukki.korello.application.services.board.BoardCardService
-import com.donghyukki.korello.presentation.dto.CardDTO
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.Create
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.Delete
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateMembers
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateName
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateTag
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateDueDate
-import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateDisplayOrder
-import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateTagAndDisplayOrder
+import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateLinkId
+import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateTagAndLinkId
 import com.donghyukki.korello.presentation.dto.response.KorelloResponse
 import io.swagger.v3.oas.annotations.Operation
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
@@ -59,9 +57,9 @@ class BoardCardController(
     @PutMapping("api/v1/board/{id}/card/display-order")
     fun updateCardDisplayOrder(
         @PathVariable id: String,
-        @RequestBody cardUpdateDisplayOrderDTO: UpdateDisplayOrder
+        @RequestBody cardUpdateLinkIdDTO: UpdateLinkId
     ): KorelloResponse {
-        boardCardService.updateCardDisplayOrder(id, cardUpdateDisplayOrderDTO)
+        boardCardService.updateCardLinkId(id, cardUpdateLinkIdDTO)
         return KorelloResponse()
     }
 
@@ -69,9 +67,9 @@ class BoardCardController(
     @PutMapping("api/v1/board/{id}/card/tag-display-order")
     fun updateCardTagAndDisplayOrder(
         @PathVariable id: String,
-        @RequestBody cardUpdateDisplayOrderDTO: UpdateTagAndDisplayOrder
+        @RequestBody cardUpdateLinkIdDTO: UpdateTagAndLinkId
     ): KorelloResponse {
-        boardCardService.updateCardTagAndDisplayOrder(id, cardUpdateDisplayOrderDTO)
+        boardCardService.updateCardTagAndLinkId(id, cardUpdateLinkIdDTO)
         return KorelloResponse()
     }
 

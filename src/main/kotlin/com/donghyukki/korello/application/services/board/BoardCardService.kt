@@ -4,18 +4,19 @@ import com.donghyukki.korello.application.port.KorelloEventPublisher
 import com.donghyukki.korello.domain.board.repository.BoardRepository
 import com.donghyukki.korello.domain.card.model.Card
 import com.donghyukki.korello.domain.card.repository.CardRepository
+import com.donghyukki.korello.domain.card.service.CardDomainService
 import com.donghyukki.korello.domain.member.model.Member
 import com.donghyukki.korello.infrastructure.exception.KorelloNotFoundException
 import com.donghyukki.korello.presentation.dto.CardDTO
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.Create
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.Delete
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.Response
-import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateDisplayOrder
+import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateLinkId
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateDueDate
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateMembers
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateName
 import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateTag
-import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateTagAndDisplayOrder
+import com.donghyukki.korello.presentation.dto.CardDTO.Companion.UpdateTagAndLinkId
 import com.donghyukki.korello.presentation.dto.EventDTO
 import com.donghyukki.korello.presentation.dto.type.KorelloActionType
 import com.donghyukki.korello.presentation.dto.type.KorelloEventType
@@ -31,7 +32,8 @@ import java.time.format.DateTimeFormatter
 class BoardCardService(
     private val boardRepository: BoardRepository,
     private val cardRepository: CardRepository,
-    private val korelloEventPublisher: KorelloEventPublisher
+    private val korelloEventPublisher: KorelloEventPublisher,
+    private val cardDomainService: CardDomainService
 ) {
 
     @Transactional(readOnly = true)
@@ -49,9 +51,17 @@ class BoardCardService(
         if (cardCreateDTO.members != null) {
             members.plus(board.members.filter { boardMembers -> cardCreateDTO.members.contains(boardMembers.member.name) })
         }
-        val savedCard =
-            cardRepository.save(Card(cardCreateDTO.name, cardCreateDTO.tagValue, board, members, cardCreateDTO.order))
+        //1. 제일 첫번째 card의 경우 linkId = 0으로 셋팅..
+        //2. 기존에 카드가 있고 제일 첫번째에 추가 된다면 기존에 0번 카드의 link를 해당 card로 설정
+        //3. 중간에 카드가 추가된다면 요청온 linkId를 갖고있는 카드의 linkId를 생성된 카드의 Id로, 요청온 linkId는 해당 카드의 Id로
+        //4-1. 카드가 삭제된다면 삭제요청 카드가 갖고 있는 linkId를 삭제 요청 카드 id를 갖고있는 카드의 linkId로 변경
+        //4-2. 제일 앞 카드가 삭제된다면 해당 카드를 참조하는 linkId를 0으로 셋팅
+        //4-3. 제일 뒤 카드가 삭제된다면 그냥 해당 카드만 삭제
+        val savedCard = cardRepository.save(Card(cardCreateDTO.name, cardCreateDTO.tagValue, board, members, cardCreateDTO.linkId))
         board.addCard(savedCard)
+
+        cardDomainService.link(savedCard, cardCreateDTO.linkId ?: 0L);
+
         korelloEventPublisher.publishEvent(
             EventDTO(
                 board.id!!,
@@ -70,6 +80,9 @@ class BoardCardService(
         val board = boardRepository.findById(boardId.toLong()).orElseThrow { KorelloNotFoundException() }
         val card = cardRepository.findById(cardDeleteDTO.id.toLong()).orElseThrow { KorelloNotFoundException() }
         card.clearLabels()
+
+        cardDomainService.unLink(card, cardDeleteDTO.isLast)
+
         board.deleteCard(cardDeleteDTO.id.toLong())
         korelloEventPublisher.publishEvent(
             EventDTO(
@@ -100,12 +113,11 @@ class BoardCardService(
 
     @CacheEvict(value = ["board"], key = "#boardId")
     @Transactional
-    fun updateCardDisplayOrder(boardId: String, cardUpdateDisplayOrderDTO: UpdateDisplayOrder) {
+    fun updateCardLinkId(boardId: String, cardUpdateLinkIdDTO: UpdateLinkId) {
         val board = boardRepository.findById(boardId.toLong()).orElseThrow { KorelloNotFoundException() }
-        val updateCard =
-            board.cards.firstOrNull { card -> card.id == cardUpdateDisplayOrderDTO.id.toLong() } ?: throw KorelloNotFoundException()
-        val displayOrder = cardUpdateDisplayOrderDTO.displayOrder.toInt()
-        updateCard.changeDisplayOrder(displayOrder)
+        val updateCard = board.cards.firstOrNull { card -> card.id == cardUpdateLinkIdDTO.id.toLong() } ?: throw KorelloNotFoundException()
+        val linkId = cardUpdateLinkIdDTO.linkId
+        updateCard.changeLinkId(linkId)
         korelloEventPublisher.publishEvent(
             EventDTO(
                 updateCard.id!!,
@@ -118,12 +130,12 @@ class BoardCardService(
 
     @CacheEvict(value = ["board"], key = "#boardId")
     @Transactional
-    fun updateCardTagAndDisplayOrder(boardId: String, updateTagAndDisplayOrderDTO: UpdateTagAndDisplayOrder) {
+    fun updateCardTagAndLinkId(boardId: String, updateTagAndLinkIdDTO: UpdateTagAndLinkId) {
         val board = boardRepository.findById(boardId.toLong()).orElseThrow { KorelloNotFoundException() }
         val updateCard =
-            board.cards.firstOrNull { card -> card.id == updateTagAndDisplayOrderDTO.id.toLong() } ?: throw KorelloNotFoundException()
-        val displayOrder = updateTagAndDisplayOrderDTO.displayOrder.toInt()
-        updateCard.changeTagAndDisplayOrder(updateTagAndDisplayOrderDTO.tagValue, displayOrder)
+            board.cards.firstOrNull { card -> card.id == updateTagAndLinkIdDTO.id.toLong() } ?: throw KorelloNotFoundException()
+        val linkId = updateTagAndLinkIdDTO.linkId
+        updateCard.changeTagAndLinkId(updateTagAndLinkIdDTO.tagValue, linkId)
         korelloEventPublisher.publishEvent(
             EventDTO(
                 updateCard.id!!,

@@ -2,7 +2,6 @@ package com.donghyukki.korello.domain.board.model
 
 import com.donghyukki.korello.domain.card.model.Card
 import com.donghyukki.korello.domain.common.BaseEntity
-import javax.annotation.PostConstruct
 import javax.persistence.*
 
 @Entity
