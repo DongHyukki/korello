@@ -6,7 +6,9 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-class OAuth2AuthenticationSuccessHandler : AuthenticationSuccessHandler {
+class OAuth2AuthenticationSuccessHandler(
+    private val profile: String
+) : AuthenticationSuccessHandler {
 
     override fun onAuthenticationSuccess(
         request: HttpServletRequest?,
@@ -17,7 +19,9 @@ class OAuth2AuthenticationSuccessHandler : AuthenticationSuccessHandler {
         val accessToken = oAuth2User.attributes["accessToken"].toString()
         val refreshToken = oAuth2User.attributes["refreshToken"].toString()
 
-//        response?.sendRedirect("https://korello.app?accessToken=${accessToken}&refreshToken=${refreshToken}")
-        response?.sendRedirect("http://localhost:8082?accessToken=${accessToken}")
+        when(profile) {
+            "local" -> response?.sendRedirect("http://localhost:8082?accessToken=${accessToken}")
+            "dev" -> response?.sendRedirect("https://korello.app?accessToken=${accessToken}&refreshToken=${refreshToken}")
+        }
     }
 }

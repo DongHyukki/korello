@@ -1,6 +1,7 @@
 package com.donghyukki.korello.infrastructure.security.config
 
 import com.donghyukki.korello.domain.member.model.Role
+import com.donghyukki.korello.infrastructure.context.SpringProfile
 import com.donghyukki.korello.infrastructure.security.filter.CorsFilter
 import com.donghyukki.korello.infrastructure.security.filter.authenticateTokenFilter
 import com.donghyukki.korello.infrastructure.security.handler.OAuth2AccessDeniedHandler
@@ -21,7 +22,8 @@ import org.springframework.security.web.session.SessionManagementFilter
 class SecurityConfig(
     private val OAuthUserService: OAuthUserService,
     private val oAuth2AccessDeniedHandler: OAuth2AccessDeniedHandler,
-    private val memberAuthentication: MemberAuthentication
+    private val memberAuthentication: MemberAuthentication,
+    private val springProfile: SpringProfile
 ) : WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity) {
@@ -50,7 +52,7 @@ class SecurityConfig(
             .userInfoEndpoint()
             .userService(OAuthUserService)
             .and()
-            .successHandler(OAuth2AuthenticationSuccessHandler())
+            .successHandler(OAuth2AuthenticationSuccessHandler(springProfile.active))
             .failureHandler(OAuth2AuthenticationFailureHandler())
     }
 
