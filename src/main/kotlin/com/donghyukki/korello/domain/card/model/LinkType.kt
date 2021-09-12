@@ -25,7 +25,7 @@ enum class LinkType {
                 return FIRST
             }
 
-            if (cards.isEmpty() && linkId > FIRST_LINK_ID) {
+            if (cards.isNotEmpty() && linkId > FIRST_LINK_ID) {
                 return APPEND
             }
 

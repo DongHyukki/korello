@@ -21,9 +21,9 @@ class Card(
     @JoinColumn(name = "BOARD_ID")
     var board: Board?,
     @ManyToMany(fetch = FetchType.LAZY)
-    var members: MutableList<Member>,
+    var members: MutableSet<Member>,
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "cards")
-    var labels: MutableList<Label>,
+    var labels: MutableSet<Label>,
     @OneToMany(mappedBy = "card", cascade = [CascadeType.ALL], orphanRemoval = true)
     var todos: MutableSet<Todo>,
     @Column
@@ -33,13 +33,13 @@ class Card(
 
 ) : BaseEntity() {
 
-    constructor(name: String, tagValue: String, board: Board, members: List<Member>, linkId: Long?) : this(
+    constructor(name: String, tagValue: String, board: Board, members: Set<Member>, linkId: Long?) : this(
         null,
         name,
         CardTag(tagValue),
         board,
-        members.toMutableList(),
-        arrayListOf(),
+        members.toMutableSet(),
+        mutableSetOf(),
         mutableSetOf(),
         null,
         linkId ?: 0
@@ -53,8 +53,8 @@ class Card(
         this@Card.cardTag = CardTag((name))
     }
 
-    fun changeMembers(members: List<Member>) {
-        this@Card.members = members.toMutableList()
+    fun changeMembers(members: Set<Member>) {
+        this@Card.members = members.toMutableSet()
     }
 
     fun changeDueDate(dueDate: LocalDateTime) {

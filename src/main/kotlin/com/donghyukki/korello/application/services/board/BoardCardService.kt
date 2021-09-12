@@ -46,7 +46,7 @@ class BoardCardService(
     @Transactional
     fun addCardToBoard(boardId: String, cardCreateDTO: Create): Response {
         val board = boardRepository.findById(boardId.toLong()).orElseThrow { KorelloNotFoundException() }
-        val members: List<Member> = arrayListOf()
+        val members: Set<Member> = mutableSetOf()
         if (cardCreateDTO.members != null) {
             members.plus(board.members.filter { boardMembers -> cardCreateDTO.members.contains(boardMembers.member.name) })
         }
@@ -164,8 +164,8 @@ class BoardCardService(
         val board = boardRepository.findById(boardId.toLong()).orElseThrow { KorelloNotFoundException() }
         val card =
             board.cards.firstOrNull { card -> card.id == cardUpdateMembersDTO.id.toLong() } ?: throw KorelloNotFoundException()
-        val joinMembers = board.members.map { boardMembers -> boardMembers.member }.toList()
-        val updateMembers = joinMembers.filter { member -> cardUpdateMembersDTO.memberNames.contains(member.name) }
+        val joinMembers = board.members.map { boardMembers -> boardMembers.member }.toSet()
+        val updateMembers = joinMembers.filter { member -> cardUpdateMembersDTO.memberNames.contains(member.name) }.toSet()
         card.changeMembers(updateMembers)
         korelloEventPublisher.publishEvent(
             EventDTO(

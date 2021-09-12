@@ -38,6 +38,10 @@ class CardDomainService(
     }
 
     private fun parseCardByLinkId(cards: List<Card>, linkId: Long? = 0L): Card {
+        return cards.firstOrNull { it.linkId == linkId } ?: throw IllegalStateException()
+    }
+
+    private fun parseCardById(cards: List<Card>, linkId: Long? = 0L): Card {
         return cards.firstOrNull { it.id!! == linkId } ?: throw IllegalStateException()
     }
 

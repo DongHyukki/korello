@@ -19,9 +19,9 @@ class Label(
     @Column
     var color: String,
     @ManyToMany(fetch = FetchType.LAZY)
-    val cards: MutableList<Card>,
+    val cards: MutableSet<Card>,
 ) : BaseEntity() {
-    constructor(board: Board, name: String, color: String) : this(null, board, name, color, arrayListOf())
+    constructor(board: Board, name: String, color: String) : this(null, board, name, color, mutableSetOf())
 
     fun addCard(card: Card) {
         this@Label.cards.add(card)

@@ -21,9 +21,9 @@ class Member(
     var name: String,
     @Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
     @OneToMany(mappedBy = "member")
-    val boardJoins: MutableList<BoardJoinMembers>,
+    val boardJoins: MutableSet<BoardJoinMembers>,
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "members")
-    val cards: MutableList<Card>,
+    val cards: MutableSet<Card>,
     @Column
     val role: String,
     @Column
@@ -45,8 +45,8 @@ class Member(
     ) : this(
         null,
         name,
-        arrayListOf(),
-        arrayListOf(),
+        mutableSetOf(),
+        mutableSetOf(),
         role.value,
         providerId,
         registrationId,

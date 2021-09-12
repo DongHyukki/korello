@@ -56,8 +56,7 @@ class MemberCrudService(
     @Cacheable(value = ["member"], key = "#providerId + '::' + #name")
     @Transactional(readOnly = true)
     fun findMemberByNameAndProviderId(name: String, providerId: String): InfoResponse {
-        val foundMember =
-            memberRepository.findMemberByNameAndProviderId(name, providerId).orElseThrow { KorelloNotFoundException() }
+        val foundMember = memberRepository.findMemberByNameAndProviderId(name, providerId).orElseThrow { KorelloNotFoundException() }
         return foundMember.toInfoResponse()
     }
 }

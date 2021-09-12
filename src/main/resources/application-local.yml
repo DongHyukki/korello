@@ -16,6 +16,8 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        default_batch_fetch_size: 1000
+
 
 server:
   port: 8082
