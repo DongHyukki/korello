@@ -1,10 +1,11 @@
 package com.donghyukki.korello.domain.board.repository
 
 import com.donghyukki.korello.domain.board.model.Board
-import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.stereotype.Repository
+import java.util.Optional
 
-@Repository
-interface BoardRepository : JpaRepository<Board, Long> {
-
+interface BoardRepository {
+    fun save(board: Board): Board
+    fun findById(id: Long): Optional<Board>
+    fun findAll(): List<Board>
+    fun deleteById(id: Long)
 }

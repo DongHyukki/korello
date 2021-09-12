@@ -6,10 +6,12 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
+import java.util.Optional
 
-@Repository
-interface LabelRepository : JpaRepository<Label, Long> {
-
-    @Query("select l from Label l join fetch l.board where l.board.id=:boardId")
-    fun getLabelsByBoardId(@Param("boardId") boardId: Long): List<Label>
+interface LabelRepository {
+    fun save(label: Label): Label
+    fun findById(id: Long): Optional<Label>
+    fun deleteById(id: Long)
+    fun findAllById(ids: Iterable<Long>): List<Label>
+    fun getLabelsByBoardId(boardId: Long): List<Label>
 }

@@ -1,11 +1,13 @@
 package com.donghyukki.korello.infrastructure.web.event.handler
 
 import com.donghyukki.korello.application.port.AuthenticationFacade
+import com.donghyukki.korello.infrastructure.aop.DisabledLocal
 import com.donghyukki.korello.infrastructure.kafka.client.KafkaClient
 import com.donghyukki.korello.presentation.dto.EventDTO
 import org.springframework.stereotype.Component
 import org.springframework.transaction.event.TransactionalEventListener
 
+@DisabledLocal
 @Component
 class KorelloEventHandler(
     private val authenticationFacade: AuthenticationFacade,

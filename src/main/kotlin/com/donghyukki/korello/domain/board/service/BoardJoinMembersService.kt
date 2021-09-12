@@ -12,10 +12,11 @@ import com.donghyukki.korello.presentation.dto.EventDTO
 import com.donghyukki.korello.presentation.dto.type.KorelloActionType
 import com.donghyukki.korello.presentation.dto.type.KorelloEventType
 import com.donghyukki.korello.presentation.dto.type.KorelloSelectType
+import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
-@Service
+@Component
 class BoardJoinMembersService(
     private val boardMembersRepository: BoardMembersRepository,
     private val memberRepository: MemberRepository,
@@ -26,7 +27,9 @@ class BoardJoinMembersService(
     fun joinBoard(member: Member, board: Board): BoardJoinMembers {
         val boardMembers = BoardJoinMembers(board, member)
         val savedMembers = boardMembersRepository.save(boardMembers)
+
         savedMembers.joinBoard()
+
         korelloEventPublisher.publishEvent(
             EventDTO(
                 board.id!!,
@@ -40,16 +43,18 @@ class BoardJoinMembersService(
 
     @Transactional
     fun selfJoinBoard(board: Board) {
-        val member =
-            memberRepository.findById(authenticationFacade.getMemberId()).orElseThrow { KorelloNotFoundException() }
+        val member = memberRepository.findById(authenticationFacade.getMemberId())
+            .orElseThrow { KorelloNotFoundException() }
         val boardMembers = BoardJoinMembers(board, member)
         val savedMembers = boardMembersRepository.save(boardMembers)
+
         savedMembers.joinBoard()
     }
 
     @Transactional
     fun exitBoard(boardJoinMembers: BoardJoinMembers) {
         boardMembersRepository.delete(boardJoinMembers)
+
         korelloEventPublisher.publishEvent(
             EventDTO(
                 boardJoinMembers.board.id!!,
@@ -59,5 +64,4 @@ class BoardJoinMembersService(
             )
         )
     }
-
 }
