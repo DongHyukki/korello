@@ -17,17 +17,17 @@ class CardDomainService(
         when(LinkType.parse(cards, linkId)) {
             LinkType.INIT -> card.initLinkId()
             LinkType.FIRST -> { parseFirstCard(cards).changeLinkId(card.id!!); card.initLinkId() }
-            LinkType.APPEND -> { parseCardByLinkId(cards, linkId).changeLinkId(card.id!!); card.changeLinkId(linkId) }
+            LinkType.APPEND -> { parseLinkedCardById(cards, linkId).changeLinkId(card.id!!); card.changeLinkId(linkId) }
         }
     }
 
     fun unLink(card: Card, isLast: Boolean) {
         val cards = cardRepository.findAllByCardTagAndBoardId(card.cardTag, card.board?.id!!)
         when(UnLinkType.parse(cards, card.linkId, isLast)) {
-            UnLinkType.FIRST -> { parseCardByLinkId(cards, card.linkId).initLinkId() }
+            UnLinkType.FIRST -> { parseLinkedCardById(cards, card.id).initLinkId() }
             UnLinkType.MIDDLE -> {
-                val linkCard = parseCardByLinkId(cards, card.linkId)
-                parseCardByLinkId(cards, card.id!!).changeLinkId(linkCard.id!!)
+                val linkedCard = parseCardById(cards, card.linkId)
+                parseLinkedCardById(cards, card.id!!).changeLinkId(linkedCard.id!!)
             }
             UnLinkType.INIT, UnLinkType.LAST -> { Unit }
         }
@@ -37,13 +37,12 @@ class CardDomainService(
         return cards.firstOrNull { it.linkId == 0L } ?: throw IllegalStateException()
     }
 
-    private fun parseCardByLinkId(cards: List<Card>, linkId: Long? = 0L): Card {
-        return cards.firstOrNull { it.linkId == linkId } ?: throw IllegalStateException()
+    private fun parseLinkedCardById(cards: List<Card>, id: Long? = 0L): Card {
+        return cards.firstOrNull { it.linkId == id } ?: throw IllegalStateException()
     }
 
-    private fun parseCardById(cards: List<Card>, linkId: Long? = 0L): Card {
-        return cards.firstOrNull { it.id!! == linkId } ?: throw IllegalStateException()
+    private fun parseCardById(cards: List<Card>, id: Long? = 0L): Card {
+        return cards.firstOrNull { it.id == id } ?: throw IllegalStateException()
     }
-
 
 }
